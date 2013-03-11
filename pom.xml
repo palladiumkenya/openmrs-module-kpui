@@ -20,11 +20,10 @@
 	</organization>
 
 	<scm>
-		<connection>scm:git:git@github.com:I-TECH/openmrs-module-uilibrary.git</connection>
-		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-uilibrary.git</developerConnection>
-		<url>scm:git:git@github.com:openmrs/I-TECH-module-uilibrary.git</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<connection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</connection>
+		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</developerConnection>
+		<url>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</url>
+	</scm>
 
 	<modules>
 		<module>api</module>

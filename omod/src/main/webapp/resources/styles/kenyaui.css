@@ -74,23 +74,82 @@ span.error, div.error {
 
 /***** Buttons *****/
 
-input[type="button"], input[type="submit"], input[type="reset"], button {
-	text-align: center;
-	cursor: pointer;
-	padding: 4px;
+.ke-control {
 	color: #444;
+	background-color: #EEEEEE;
+	padding: 5px;
+	text-decoration: none;
+}
+
+.ke-button {
+	cursor: pointer;
+	border-radius: 3px;
+	font-weight: bold;
 	border-top: 0px;
 	border-bottom: 1px #BBB solid;
 	border-left: 0px;
 	border-right: 1px #BBB solid;
-	border-radius: 3px;
-	background-color: #e0e0e0;
-	font-weight: bold;
-	font-size: 14px;
+	text-align: center;
 }
 
-input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover, button:hover {
-	background-color: #E9E9E9;
+.ke-button:hover {
+	background-color: #DDD;
+}
+
+.ke-button .ke-icon {
+	float: left;
+	margin-right: 5px;
+}
+
+.ke-label {
+}
+
+.ke-extra {
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.ke-clickable {
+	cursor: pointer;
+}
+
+.ke-clickable:hover {
+	background-color: #FFD;
+}
+
+/***** Menus *****/
+
+.ke-menuitem {
+	overflow: auto;
+	border-top: 1px solid #FFF;
+	border-bottom: 1px solid #CCC;
+}
+
+.ke-menuitem:hover {
+	background-color: #DDD;
+}
+
+.ke-menuitem:first-child {
+	border-top: none;
+}
+.ke-menuitem:last-child {
+	border-bottom: none;
+}
+
+.ke-menuitem .ke-icon {
+	float: left;
+	margin-right: 5px;
+}
+
+.ke-menuitem a {
+	color: #444;
+	font-weight: bold;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.ke-menuitem-active, .ke-menuitem-active:hover {
+	background-color: #EEB;
 }
 
 /***** Tables *****/

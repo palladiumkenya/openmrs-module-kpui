@@ -1,5 +1,5 @@
 <% ui.includeCss("kenyaui", "jquery-ui.css") %>
-<% ui.includeCss("kenyaui", "uilibrary.css") %>
+<% ui.includeCss("kenyaui", "kenyaui.css") %>
 <% ui.includeCss("kenyaui", "tipTip.css") %>
 <% ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css") %>
 <% ui.includeJavascript("kenyaui", "jquery.js") %>

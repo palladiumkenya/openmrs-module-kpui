@@ -230,36 +230,6 @@ function closeDialog(doCallback) {
 	}
 }
 
-//// InfoBox //////////////////
-
-function InfoBox(id) {
-	var rootId = id;
-	
-	this.setTitle = function(html) {
-		jQuery('#' + rootId + ' > .title').html(html);
-	}
-	
-	this.setContent = function(html) {
-		jQuery('#' + rootId + ' > .content').html(html);
-	}
-	
-	this.showEncounterById = function(encounterId) {
-		var me = this;
-		jQuery.getJSON(OPENMRS_CONTEXT_PATH + '/infobox/getEncounterJson.action?returnFormat=json&encounterId=' + encounterId, function(encounter, textStatus) {
-			var title = encounter.encounterType + '<br/>';
-			title += 'Date: ' + encounter.encounterDatetime + '<br/>';
-			title += 'Location: ' + encounter.location + '<br/>';
-			me.setTitle(title);
-			var content = '<table>';
-			for (var i = 0; i < encounter.obs.length; ++i) {
-				content += '<tr><td class="small">' + encounter.obs[i].concept + ':</td><td>' + encounter.obs[i].value + '</td></tr>';
-			}
-			content += '</table>';
-			me.setContent(content);
-		});
-	}
-}
-
 function standardUiDecorations() {
 	$('.button').button();
 	$('.add-tool-tip').tipTip({ delay: 100 });

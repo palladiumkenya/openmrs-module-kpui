@@ -1,5 +1,5 @@
 <%
-    ui.includeJavascript("uilibrary", "coreFragments.js")
+    ui.includeJavascript("kenyaui", "coreFragments.js")
 %>
 
 <input id="${ config.id }" type="text" size="5" name="${ config.formFieldName }" value="${ config.initialValue ?: "" }"

@@ -24,13 +24,13 @@
 <% if (config.buttonConfig) {
 	config.buttonConfig.onClick = onClick
 %>
-	${ ui.includeFragment("uilibrary", "widget/button", config.buttonConfig) }
+	${ ui.includeFragment("kenyaui", "widget/button", config.buttonConfig) }
 <% } else {
 	config.linkConfig.onClick = onClick
 %>
-	${ ui.includeFragment("uilibrary", "widget/link", config.linkConfig) }
+	${ ui.includeFragment("kenyaui", "widget/link", config.linkConfig) }
 <% } %>
 
 <div id="${ id }_form" style="display: none">
-    ${ ui.includeFragment("uilibrary", "widget/form", config) }
+    ${ ui.includeFragment("kenyaui", "widget/form", config) }
 </div>

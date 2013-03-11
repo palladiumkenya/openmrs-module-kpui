@@ -1,6 +1,6 @@
-<% ui.includeJavascript("uilibrary", "coreFragments.js") %>
+<% ui.includeJavascript("kenyaui", "coreFragments.js") %>
 
-<%= ui.includeFragment("uilibrary", "widget/selectList", [
+<%= ui.includeFragment("kenyaui", "widget/selectList", [
 		id: config.id,
         selected: [ config.initialValue?.role ],
         formFieldName: config.formFieldName,

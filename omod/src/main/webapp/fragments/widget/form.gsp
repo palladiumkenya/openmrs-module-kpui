@@ -27,7 +27,7 @@
 	import org.openmrs.ui.framework.fragment.FragmentConfiguration
 	import org.apache.commons.beanutils.PropertyUtils
 
-	ui.includeJavascript("uilibrary", "coreFragments.js")
+	ui.includeJavascript("kenyaui", "coreFragments.js")
 	
     def id = config.id ?: ui.randomId("form")
 	def fields = config.fields ?: []
@@ -96,11 +96,11 @@
 	}
 	else if (it.class || (it.object && it.property)) {
         fragment = "widget/field"
-		fragmentProvider = "uilibrary"
+		fragmentProvider = "kenyaui"
 	}
     else if (it.value && !it.hiddenInputName) {
     	fragment = "widget/field"
-		fragmentProvider = "uilibrary"
+		fragmentProvider = "kenyaui"
 	}
 
 	if (fragment) {

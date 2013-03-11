@@ -3,10 +3,10 @@
 // supports config.size
 // supports config.type = textarea, config.type=password, config.rows, config.cols
 
-	ui.includeJavascript("uilibrary", "coreFragments.js")
+	ui.includeJavascript("kenyaui", "coreFragments.js")
 %>
 <% if (config?.config?.options) { %>
-    ${ ui.includeFragment("uilibrary", "widget/selectList", [
+    ${ ui.includeFragment("kenyaui", "widget/selectList", [
             id: config.id,
             formFieldName: config.formFieldName,
             options: config.config.options,

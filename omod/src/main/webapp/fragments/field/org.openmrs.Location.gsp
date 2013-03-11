@@ -1,5 +1,5 @@
 
-<%= ui.includeFragment("uilibrary", "widget/selectList", [
+<%= ui.includeFragment("kenyaui", "widget/selectList", [
         selected: [ config.initialValue?.id ],
         formFieldName: config.formFieldName,
         options: context.getLocationService().getAllLocations(),

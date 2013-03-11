@@ -11,8 +11,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.uilibrary;
 
+package org.openmrs.module.kenyaui;
 
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
@@ -21,7 +21,7 @@ import org.openmrs.module.ModuleActivator;
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class UILibraryActivator implements ModuleActivator {
+public class KenyaUIActivator implements ModuleActivator {
 	
 	protected Log log = LogFactory.getLog(getClass());
 		
@@ -29,42 +29,41 @@ public class UILibraryActivator implements ModuleActivator {
 	 * @see ModuleActivator#willRefreshContext()
 	 */
 	public void willRefreshContext() {
-		log.info("Refreshing UI Library Module");
+		log.info("Refreshing Kenya UI Library Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#contextRefreshed()
 	 */
 	public void contextRefreshed() {
-		log.info("UI Library Module refreshed");
+		log.info("Kenya UI Library Module refreshed");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStart()
 	 */
 	public void willStart() {
-		log.info("Starting UI Library Module");
+		log.info("Starting Kenya UI Library Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("UI Library Module started");
+		log.info("Kenya UI Library Module started");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStop()
 	 */
 	public void willStop() {
-		log.info("Stopping UI Library Module");
+		log.info("Stopping Kenya UI Library Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("UI Library Module stopped");
+		log.info("Kenya UI Library Module stopped");
 	}
-		
 }

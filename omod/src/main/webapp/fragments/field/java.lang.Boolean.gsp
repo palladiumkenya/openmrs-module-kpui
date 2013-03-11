@@ -1,5 +1,5 @@
 <%
-    ui.includeJavascript("uilibrary", "coreFragments.js")
+    ui.includeJavascript("kenyaui", "coreFragments.js")
 %>
 
 <input type="radio" name="${ config.formFieldName }" value="true" id="${ config.id }-true" <% if (config.initialValue) { %>checked="true"<% } %>/>

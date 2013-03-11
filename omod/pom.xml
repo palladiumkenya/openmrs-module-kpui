@@ -3,24 +3,16 @@
 
 	<parent>
 		<groupId>org.openmrs.module</groupId>
-		<artifactId>uilibrary</artifactId>
-		<version>2.0.4-SNAPSHOT</version>
+		<artifactId>kenyaui</artifactId>
+		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>uilibrary-omod</artifactId>
+	<artifactId>kenyaui-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>UI Library Module OMOD</name>
-	<description>OMOD project for UILibrary</description>
+	<name>Kenya EMR UI Library OMOD</name>
+	<description>OMOD project for Kenya EMR UI Library</description>
 
 	<dependencies>
-
-		<!-- 
-		Add other dependencies from parent's pom: 
-		<dependency> 
-			<groupId>org.other.library</groupId> 
-			<artifactId>library-name</artifactId> 
-		</dependency> 
-		-->
 		
 		<!-- Begin OpenMRS modules -->
 		
@@ -32,15 +24,11 @@
 		
 				
 		<dependency>
-
 			<groupId>org.openmrs.module</groupId>
-						
 			<artifactId>uiframework-api</artifactId>
-												
 		</dependency>
 						
 		<!-- End OpenMRS modules -->
-		
 
 		<!-- Begin OpenMRS core -->
 

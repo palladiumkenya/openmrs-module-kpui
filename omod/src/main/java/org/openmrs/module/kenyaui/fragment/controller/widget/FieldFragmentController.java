@@ -11,7 +11,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.uilibrary.fragment.controller.widget;
+
+package org.openmrs.module.kenyaui.fragment.controller.widget;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.openmrs.api.context.Context;
@@ -19,7 +20,6 @@ import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.fragment.FragmentRequest;
-
 
 /**
  * Widget that switches and shows the appropriate field given a value | class | object&property
@@ -68,5 +68,4 @@ public class FieldFragmentController {
 			return new FragmentRequest("*", "field/" + clazz.getName(), config);
 		}
 	}
-	
 }

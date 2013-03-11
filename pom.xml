@@ -2,31 +2,27 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.openmrs.module</groupId>
-	<artifactId>uilibrary</artifactId>
-	<version>2.0.4-SNAPSHOT</version>
+	<artifactId>kenyaui</artifactId>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>UI Library Module</name>
-	<description>Library of useful widgets, decorators, and fragments for the UI Framework module</description>
-	<url>https://wiki.openmrs.org/display/docs/UI+Library+Module+Module</url>
+	<name>Kenya EMR UI Library</name>
+	<description>Library of useful widgets, decorators, and fragments for the Kenya EMR</description>
 
 	<developers>
 		<developer>
-			<name>djazayeri</name>
-		</developer>
-		<developer>
-			<name>rowanseymour</name>
+			<name>I-TECH</name>
 		</developer>
 	</developers>
-	
+
 	<organization>
-		<name>OpenMRS</name>
-		<url>http://openmrs.org</url>
+		<name>I-TECH</name>
+		<url>http://www.go2itech.org</url>
 	</organization>
 
 	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-module-uilibrary.git</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-uilibrary.git</developerConnection>
-		<url>scm:git:git@github.com:openmrs/openmrs-module-uilibrary.git</url>
+		<connection>scm:git:git@github.com:I-TECH/openmrs-module-uilibrary.git</connection>
+		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-uilibrary.git</developerConnection>
+		<url>scm:git:git@github.com:openmrs/I-TECH-module-uilibrary.git</url>
 	  <tag>HEAD</tag>
   </scm>
 
@@ -154,13 +150,5 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
-	<distributionManagement>
-		<repository>
-			<id>openmrs-repo-modules</id>
-			<name>Modules</name>
-			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
-		</repository>
-	</distributionManagement>
 
 </project>

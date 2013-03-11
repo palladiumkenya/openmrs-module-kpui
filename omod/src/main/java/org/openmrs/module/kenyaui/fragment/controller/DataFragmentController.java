@@ -11,7 +11,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.uilibrary.fragment.controller;
+
+package org.openmrs.module.kenyaui.fragment.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,6 @@ import org.openmrs.api.context.Context;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 /**
  * Fragment whose actions let you fetch pieces of OpenMRS data as JSON
@@ -59,5 +59,4 @@ public class DataFragmentController {
 	private SimpleObject buildEncounter(UiUtils ui, Encounter enc) {
     	return SimpleObject.fromObject(enc, ui, "encounterId", "encounterDatetime", "encounterType", "location");
     }
-	
 }

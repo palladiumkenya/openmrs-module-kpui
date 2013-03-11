@@ -11,7 +11,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.uilibrary.fragment.controller;
+
+package org.openmrs.module.kenyaui.fragment.controller;
 
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
@@ -36,5 +37,4 @@ public class MaybeRequireLoginFragmentController {
 				throw new APIAuthenticationException("Login is required");
 		}
 	}
-	
 }

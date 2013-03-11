@@ -1,16 +1,16 @@
-<% ui.decorateWith("uilibrary", "standardPage") %>
+<% ui.decorateWith("kenyaui", "standardPage") %>
 
 <div style="float: right; width: 33%">
 	<fieldset>
 		<legend>Infobox</legend>
-		${ ui.includeFragment("uilibrary", "infobox", [id: "infobox"]) }
+		${ ui.includeFragment("kenyaui", "infobox", [id: "infobox"]) }
 	</fieldset>
 </div>
 
 <fieldset>
 	<legend>Encounter Field</legend>
 	
-	${ ui.includeFragment("uilibrary", "widget/labeledField", [ label: "Choose an Encounter", class: "org.openmrs.Encounter", formFieldName: "encId" ]) }
+	${ ui.includeFragment("kenyaui", "widget/labeledField", [ label: "Choose an Encounter", class: "org.openmrs.Encounter", formFieldName: "encId" ]) }
 	<input type="button" id="showEncounterButton" value="Show Encounter in Infobox"/>
 </fieldset>
 	 

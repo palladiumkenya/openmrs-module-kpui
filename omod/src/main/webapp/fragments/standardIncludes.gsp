@@ -1,16 +1,16 @@
-<% ui.includeCss("uilibrary", "jquery-ui.css") %>
-<% ui.includeCss("uilibrary", "uilibrary.css") %>
-<% ui.includeCss("uilibrary", "tipTip.css") %>
-<% ui.includeCss("uilibrary", "toastmessage/css/jquery.toastmessage.css") %>
-<% ui.includeJavascript("uilibrary", "jquery.js") %>
-<% ui.includeJavascript("uilibrary", "jquery-ui.js") %>
-<% ui.includeJavascript("uilibrary", "jquery.tipTip.minified.js") %>
-<% ui.includeJavascript("uilibrary", "jquery.toastmessage.js") %>
-<% ui.includeJavascript("uilibrary", "pagebus/simple/pagebus.js") %>
-<% ui.includeJavascript("uilibrary", "uiframework.js") %>
-<% ui.includeJavascript("uilibrary", "ui.js") %>
+<% ui.includeCss("kenyaui", "jquery-ui.css") %>
+<% ui.includeCss("kenyaui", "uilibrary.css") %>
+<% ui.includeCss("kenyaui", "tipTip.css") %>
+<% ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css") %>
+<% ui.includeJavascript("kenyaui", "jquery.js") %>
+<% ui.includeJavascript("kenyaui", "jquery-ui.js") %>
+<% ui.includeJavascript("kenyaui", "jquery.tipTip.minified.js") %>
+<% ui.includeJavascript("kenyaui", "jquery.toastmessage.js") %>
+<% ui.includeJavascript("kenyaui", "pagebus/simple/pagebus.js") %>
+<% ui.includeJavascript("kenyaui", "uiframework.js") %>
+<% ui.includeJavascript("kenyaui", "ui.js") %>
 
-${ ui.includeFragment("uilibrary", "maybeRequireLogin") }
+${ ui.includeFragment("kenyaui", "maybeRequireLogin") }
 
 <script>
     var jq = jQuery;

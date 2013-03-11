@@ -1,8 +1,8 @@
-${ ui.includeFragment("uilibrary", "standardIncludes") }
+${ ui.includeFragment("kenyaui", "standardIncludes") }
 
 <% if (config.beforeContent) { %>${ config.beforeContent }<% } %>
 
-${ ui.includeFragment("uilibrary", "flashMessage") }
+${ ui.includeFragment("kenyaui", "flashMessage") }
 
 <div id="content">
 	<%= config.content %>

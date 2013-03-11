@@ -119,7 +119,7 @@ var ui = (function($) {
 				$('body').append('<div id="loading-dialog-overlay"></div>');
 
 				var html = '<div id="loading-dialog-message">';
-				html += '<img src="' + this.resourceLink('uilibrary', 'images/loading.gif') + '"/>';
+				html += '<img src="' + this.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 				if (message) {
 					html += message;
 				}

@@ -1,33 +1,99 @@
-body {
-	margin: 0;
-	padding: 0;
-	font-family: Lucida Grande, Lucida Sans, Arial, sans-serif;  
+/**
+ * Kenya EMR UI Library styles
+ */
+
+/***** General fonts styles *****/
+
+html, body, p, input, button, select, legend, label {
+	font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	font-size: 14px;
 }
 
-#header {
-	background: #fff0b0;
+h4 {
+	font-size: 16px;
+}
+
+h3 {
+	font-size: 18px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+small {
+	font-size: 12px;
+}
+
+/***** Page layout *****/
+
+html, body {
+	margin: 0;
+	padding: 0;
 }
 
 #content {
-	padding: 0.25em 0.4em;
+	margin: 0;
+	padding: 5px;
+	position: relative;
+}
+
+/***** Forms *****/
+
+.field-label {
+	display: block;
+	background-color: #eeeeee;
+	font-size: 12px;
+}
+
+.field-content {
+	display: block;
+	padding-bottom: 0.5em;
+	margin-bottom: 0.5em;
 }
 
 #errors, .global-error-container {
-    background-color: lightpink;
+	background-color: lightpink;
 	font-weight: bold;
 }
 
-#flash {
-    background-color: lightyellow;
-	font-weight: bold;
-}
-
-#errors, #flash, .global-error-container {
+#errors, .global-error-container {
     margin-top: 3px;
     margin-bottom: 5px;
     border: 1px dashed;
     padding: 2px 2px 2px 18px;
 }
+
+span.error, div.error {
+	border: 1px dashed darkred;
+	padding: 1px 6px 1px 6px;
+	margin-left: 4px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+/***** Buttons *****/
+
+input[type="button"], input[type="submit"], input[type="reset"], button {
+	text-align: center;
+	cursor: pointer;
+	padding: 4px;
+	color: #444;
+	border-top: 0px;
+	border-bottom: 1px #BBB solid;
+	border-left: 0px;
+	border-right: 1px #BBB solid;
+	border-radius: 3px;
+	background-color: #e0e0e0;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover, input[type="reset"]:hover, button:hover {
+	background-color: #E9E9E9;
+}
+
+/***** Tables *****/
 
 table.bordered {
 	border: 1px black solid;
@@ -61,20 +127,8 @@ table.bordered th {
 }
 
 .metadata-description {
-	font-size: 0.8em;
+	font-size: 12px;
 	color: #333333;
-}
-
-.field-label {
-	display: block;
-	background-color: #eeeeee;
-	font-size: 0.8em;
-}
-
-.field-content {
-	display: block;
-	padding-bottom: 0.5em;
-	margin-bottom: 0.5em;
 }
 
 .retired-info {
@@ -184,14 +238,6 @@ table.decorated td,th {
 
 .more-emphasis {
 	font-weight: bold;
-}
-
-span.error, div.error {
-	border: 1px dashed darkred;
-	padding: 1px 6px 1px 6px;
-	margin-left: 4px;
-	margin-right: 4px;
-	vertical-align: middle;
 }
 
 img {

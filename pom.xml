@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>kenyaui</artifactId>
-	<version>1.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Kenya EMR UI Library</name>
 	<description>Library of useful widgets, decorators, and fragments for the Kenya EMR</description>
@@ -23,7 +23,7 @@
 		<connection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</connection>
 		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</developerConnection>
 		<url>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</url>
-	  <tag>1.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<modules>

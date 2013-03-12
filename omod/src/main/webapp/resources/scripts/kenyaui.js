@@ -1,52 +1,60 @@
+/**
+ * Kenya EMR UI Library main javascript
+ */
+
+/**
+ * Page initialization tasks
+ */
+$(function() {
+	/**
+	 * Clicking anywhere on a menu item should direct you to the target of it's <a> tag
+	 */
+	$('.ke-menuitem').click(function() {
+		var a = $(this).find('a').first();
+		var href = (a.length > 0) ? a.attr('href') : null;
+		if (href)
+			location.href = href;
+	});
+
+	/**
+	 * Clicking on a stack-item should direct you to the URL specified in the clickUrl hidden input
+	 */
+	$('.ke-stack-item').click(function(evt) {
+		var clickUrl = $(this).find('input[name=clickUrl]').first();
+		var url = (clickUrl.length > 0) ? clickUrl.val() : null;
+		if (url) {
+			location.href = url;
+		}
+	});
+
+	/**
+	 * Add icons to edit buttons
+	 */
+	$('.ke-editbutton .ke-label').each(function() {
+		$(this).prepend('<img src="/' + CONTEXT_PATH + '/ms/uiframework/resource/kenyaui/images/edit.png" /> ');
+	});
+
+	/**
+	 * Give html buttons same styles as kenyaui controls
+	 */
+	$('input[type="button"], input[type="submit"], input[type="reset"]')
+		.addClass('ke-control')
+		.addClass('ke-button')
+		.css('font-weight', 'bold');
+});
+
+
+/**
+ * Everything below here needs tidied up and migrated elsewhere
+ */
+
+
 // checks whether a javascript object (e.g. a json response) is empty
 function isEmpty(obj) {
 	for (var i in obj) {
 		return false;
 	}
 	return true;
-}
-
-// general UI utilities
-
-function setPageTitle(newTitle) {
-	document.title = newTitle;
-}
-
-function openmrsConfirm(message, id) {
-	// replace this with something actually pretty
-	return confirm(message)
-}
-
-// Deprecated - use ui.notifySuccess
-function notifySuccess(html) {
-	if (html && html != '') {
-		$().toastmessage('showSuccessToast', html);
-	}
-}
-
-// Deprecated - use ui.notifyError
-function notifyError(html) {
-	if (html && html != '') {
-		$().toastmessage('showToast', { text: html, sticky: true, type: 'error' });
-	}
-}
-
-// Deprecated - use ui.notifySuccess
-function flashSuccess(html) {
-	if (html && html != '') {
-		$().toastmessage('showSuccessToast', html);
-	}
-}
-
-// Deprecated - use ui.notifyError
-function flashError(html) {
-	if (html && html != '') {
-		$('#error-message').html(html);
-		$('#errors').show('fast');
-	} else {
-		$('#error-message').html('');
-		$('#errors').hide('fast');
-	}
 }
 
 // utility methods for handling error messages
@@ -230,22 +238,6 @@ function closeDialog(doCallback) {
 	}
 }
 
-function standardUiDecorations() {
-	$('.button').button();
-	$('.add-tool-tip').tipTip({ delay: 100 });
-	decorateTables();
-}
-
-function decorateTables() {
-	$('table.decorated').addClass("ui-widget");
-	$('table.decorated tr.alternate-shading-odd').removeClass('alternate-shading-odd');
-	$('table.decorated tr.alternate-shading-even').removeClass('alternate-shading-even');
-	$('table.decorated tr:odd').addClass("alternate-shading-odd");
-	$('table.decorated tr:even').addClass("alternate-shading-even");
-	$('table.decorated thead').addClass("ui-widget-header");
-	$('table.decorated tbody').addClass("ui-widget-content");
-}
-
 function escapeJs(string) {
 	string = string.replace(/'/g, "\\'");
 	string = string.replace(/"/g, '\\"');
@@ -256,12 +248,4 @@ function escapeHtml(string) {
 	string = string.replace(/</g, "&lt;");
 	string = string.replace(/>/g, "&gt;");
 	return string;
-}
-
-function debugObject(obj) {
-	var str = "";
-	for (key in obj) {
-		str += key + " -> " + obj[key] + "\n";
-	}
-	window.alert(str);
 }

@@ -1,14 +1,11 @@
 <%
-	/* Decorates content with a styled panel */
+	// Supports heading
 %>
-<div class="panel-frame" xmlns="http://www.w3.org/1999/html">
-	<% if (config.editUrl) { %>
-	<div class="panel-editlink ke-clickable" onclick="location.href='${ config.editUrl }'">Edit</div>
-	<% } %>
+<div class="ke-panel-frame">
 	<% if (config.heading) { %>
-	<div class="panel-heading">${ config.heading }</div>
+	<div class="ke-panel-heading">${ config.heading }</div>
 	<% } %>
-	<div class="panel-content">
+	<div class="ke-panel-content">
 		<%= config.content %>
 	</div>
 </div>

@@ -1,19 +1,26 @@
 <%
-// supports icon, iconProvider, label, extra
-// supports onClick (javascript snippet)
-// supports href (link url)
-// supports classes (applied to button)
+	// Supports icon, iconProvider, iconOverlay, label, extra
+	// Supports onClick (javascript snippet)
+	// Supports href (link url)
+	// Supports classes (applied to button)
 
-def id = config.id ?: ui.randomId("button")
+	def id = config.id ?: ui.randomId("button")
 
-def classes = [ "ke-control", "ke-button" ];
-if (config.classes) {
-	classes.addAll(config.classes)
-}
+	def hasIcon = config.icon && config.iconProvider
+
+	def classes = [ "ke-control", "ke-button" ];
+
+	if (hasIcon) {
+		classes << "ke-button-withicon"
+	}
+
+	if (config.classes) {
+		classes.addAll(config.classes)
+	}
 %>
-<button id="${ id }" class="${ classes.join(' ') }" style="min-width: 160px">
-	<% if (config.icon && config.iconProvider) { %>
-		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon ]) }
+<div id="${ id }" class="${ classes.join(' ') }">
+	<% if (hasIcon) { %>
+		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconOverlay ]) }
 	<% } %>
 	<div>
 	<% if (config.label) { %>
@@ -24,7 +31,7 @@ if (config.classes) {
 		<span class="ke-extra">${ config.extra }</span>
 	<% } %>
 	</div>
-</button>
+</div>
 
 <% if (config.href || config.onClick) { %>
 <script type="text/javascript">

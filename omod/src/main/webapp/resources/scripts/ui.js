@@ -1,4 +1,6 @@
-// we will migrate functionality from uiframework.js into here, refactoring it as we go 
+/**
+ * UI Utils
+ */
 var ui = (function($) {
 
 	var setupAjaxPostDefaults = {

@@ -1,8 +1,8 @@
 <% if (config.label) { %>
-    <label <% if (config.visibleFieldId) { %>for="${ config.visibleFieldId }"<% } %> class="field-label">
+    <label <% if (config.visibleFieldId) { %>for="${ config.visibleFieldId }"<% } %> class="ke-field-label">
         ${config.label}
     </label>
-    <span class="field-content">
+    <span class="ke-field-content">
 <% } %>
 
 ${ config.content }

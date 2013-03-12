@@ -4,8 +4,11 @@
 
 /***** General fonts styles *****/
 
-html, body, p, input, button, select, legend, label {
+* {
 	font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+html, body, p, input, button, select, legend, label {
 	font-size: 14px;
 }
 
@@ -40,40 +43,39 @@ html, body {
 
 /***** Forms *****/
 
-.field-label {
+
+fieldset {
+	border: 2px solid #D1D0C9;
+}
+
+legend {
+	color: #333;
+	font-weight: bold;
+}
+
+.ke-field-label {
 	display: block;
 	background-color: #eeeeee;
 	font-size: 12px;
 }
 
-.field-content {
+.ke-field-content {
 	display: block;
 	padding-bottom: 0.5em;
 	margin-bottom: 0.5em;
 }
 
-#errors, .global-error-container {
-	background-color: lightpink;
-	font-weight: bold;
-}
-
-#errors, .global-error-container {
-    margin-top: 3px;
-    margin-bottom: 5px;
-    border: 1px dashed;
-    padding: 2px 2px 2px 18px;
-}
-
-span.error, div.error {
-	border: 1px dashed darkred;
-	padding: 1px 6px 1px 6px;
-	margin-left: 4px;
-	margin-right: 4px;
-	vertical-align: middle;
-}
-
 .error {
-	background-color: lightpink;
+	padding: 2px;
+	border-radius: 2px;
+	display: inline-block;
+	background-color: #ffd1d7;
+}
+
+.global-error-container {
+	background-color: #ffd1d7;
+	font-weight: bold;
+	padding: 3px;
 }
 
 /***** Buttons *****/
@@ -87,6 +89,8 @@ span.error, div.error {
 
 .ke-button {
 	cursor: pointer;
+	display: inline-block;
+	position: relative;
 	border-radius: 3px;
 	font-weight: bold;
 	border-top: 0px;
@@ -100,12 +104,18 @@ span.error, div.error {
 	background-color: #DDD;
 }
 
-.ke-button .ke-icon {
-	float: left;
-	margin-right: 5px;
+.ke-button-withicon {
+	padding-left: 42px;
+	min-height: 32px;
 }
 
-.ke-label {
+.ke-button .ke-icon {
+	position: absolute;
+	left: 5px;
+	top: 5px;
+}
+
+.ke-button .ke-label {
 	font-weight: bold;
 }
 
@@ -157,83 +167,132 @@ span.error, div.error {
 	background-color: #EEB;
 }
 
+/*** Panel style set ***/
+
+.ke-panel-frame {
+	background-color: #D1D0C9;
+	border-radius: 3px;
+	margin-bottom: 5px;
+	padding: 3px;
+}
+
+#content-side .ke-panel-frame {
+	background-color: #858580;
+}
+
+.ke-panel-heading {
+	color: #333;
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+#content-side .ke-panel-heading {
+	color: white;
+}
+
+.ke-panel-content {
+	background-color: #FFF;
+	padding: 5px;
+}
+
+/*** Stacks (e.g. patient search results) ***/
+
+.ke-stack-item {
+	border-top: 2px dotted #d1d0c9;
+	padding: 3px;
+	overflow: auto;
+}
+
+.ke-stack-item:first-of-type {
+	border-top: 0;
+}
+
+.ke-stack-item .ke-icon {
+	float: left;
+	padding-right: 5px;
+}
+
+.ke-stack-item .ke-editbutton {
+	padding: 3px;
+	float: right;
+}
+
 /***** Tables *****/
 
-table.table-decorated {
+.ke-table-decorated {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
 }
 
-table.table-decorated th {
+.ke-table-decorated th {
 	font-weight: bold;
 	color: #444;
 }
 
-table.table-decorated th, table.table-decorated td {
+.ke-table-decorated th, .ke-table-decorated td {
 	padding: 2px;
 	text-align: center;
 }
 
-table.table-decorated th:first-of-type,  table.table-decorated td:first-of-type {
+.ke-table-decorated th:first-of-type, .ke-table-decorated td:first-of-type {
 	text-align: left;
 }
 
-table.table-vertical thead tr {
+.ke-table-vertical thead tr {
 	border-bottom: 2px solid #858580;
 }
 
-table.table-vertical tbody tr {
+.ke-table-vertical tbody tr {
 	border-top: 1px solid #AAA;
 }
 
-table.table-vertical tbody tr:first-of-type {
+.ke-table-vertical tbody tr:first-of-type {
 	border-top: 0;
 }
 
-table.table-vertical tbody tr:nth-child(odd) {
+.ke-table-vertical tbody tr:nth-child(odd) {
 	background-color: #F7F7F7;
 }
 
-/***** Other *****/
+/*** Data points ***/
 
-.small {
-	font-size: 0.8em;
+.ke-datapoint {
+	margin: 1px 0 1px 0;
 }
 
-.metadata {
-	border-bottom: 1px lightgrey solid;
+.ke-datapoint .ke-label {
 }
 
-.metadata-id {
+.ke-datapoint .ke-value {
+	font-weight: bold;
 }
 
-.metadata-name {
-}
-
-.metadata-description {
+.ke-datapoint .ke-extra {
 	font-size: 12px;
-	color: #333333;
 }
 
-.alternate-shading-odd {
-	background-color: #eeeeee
+/***** Tags *****/
+
+.ke-tag {
+	display: inline-block;
+	border-radius: 2px;
+	padding: 2px;
 }
 
-.alternate-shading-even {
+.ke-alerttag {
+	color: #332;
+	background-color: yellow;
 }
 
-.search-results-header {
-	font-size: 0.8em;
-	color: #888888;
+.ke-visittag {
+	color: #223;
+	background-color: #EEF;
 }
 
-ul.one-line {
-    display: inline;
-    list-style-type: none;
-    padding-top: 0px;
-    padding-right: 20px;
-}
+/*** Loading dialogs ***/
 
 #loading-dialog-overlay {
 	position: fixed;
@@ -264,4 +323,22 @@ ul.one-line {
 	position: relative;
 	left: 48%;
 	padding-bottom: 0.5em;
+}
+
+/***** Misc styles *****/
+
+.ke-identifier-type {
+	color: #777;
+}
+
+.ke-identifier-value {
+	font-weight: bold;
+}
+
+.ke-glowing {
+	text-shadow: 0 0 2px #FFD;
+}
+
+.ke-hidden {
+	display: none;
 }

@@ -1,5 +1,7 @@
 /**
  * UI Utils
+ *
+ * Eventually this will only contain methods that mirror UiUtils in the uiframework module
  */
 var ui = (function($) {
 

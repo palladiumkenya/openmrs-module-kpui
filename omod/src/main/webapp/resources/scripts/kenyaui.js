@@ -36,8 +36,37 @@ $(function() {
 		.css('font-weight', 'bold');
 });
 
-
 /**
+ * Utility methods
+ */
+var kenyaui = (function($) {
+
+	return {
+		/**
+		 * Updates a datetime control after any of its child controls have been changed
+		 * @param fieldId the datetime field id
+		 * @param hasTime whether field uses time
+		 */
+		updateDateTimeFromDisplay: function(fieldId, hasTime) {
+			var date = $('#' + fieldId + '_date').datepicker('getDate');
+			var hours = hasTime ? $('#' + fieldId + '_hour').val() : '00';
+			var minutes = hasTime ? $('#' + fieldId + '_minute').val() : '00';
+
+			if (date) {
+				// Format date with time fields
+				var timestamp = $.datepicker.formatDate($.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+				$('#' + fieldId).val(timestamp);
+			} else {
+				// Empty date means empty datetime
+				$('#' + fieldId).val('');
+			}
+		}
+	};
+
+})(jQuery);
+
+
+/************************************************************************************************
  * Everything below here needs tidied up and migrated elsewhere
  */
 

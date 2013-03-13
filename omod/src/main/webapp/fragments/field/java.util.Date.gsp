@@ -1,53 +1,85 @@
 <%
-    ui.includeJavascript("kenyaui", "coreFragments.js")
-%>
+	// Supports id, formFieldName, initialValue
+	// Supports showTime
 
-<script>
+	def initialDatetime, initialHour, initialMinute
+
+	if (config.initialValue) {
+		if (config.showTime) {
+			initialHour = config.initialValue.hours
+			initialMinute = config.initialValue.minutes
+
+			// This control only edits to minute accuracy
+			initialDatetime = new Date(config.initialValue.year, config.initialValue.month, config.initialValue.date, initialHour, initialMinute, 0)
+		}
+		else {
+			initialDatetime = new Date(config.initialValue.year, config.initialValue.month, config.initialValue.date, 0, 0, 0)
+		}
+	}
+
+	ui.includeJavascript("kenyaui", "coreFragments.js")
+%>
+<script type="text/javascript">
 	jq(function() {
-		jq('#${ config.id }').datepicker({
-            dateFormat: 'dd-M-yy',
-            altField: '#${ config.id }_hidden',
-		    altFormat: 'yy-mm-dd',
-		    changeMonth: true,
-		    changeYear: true,
-		    showButtonPanel: true,
-            yearRange: '-110:+5',
-		    autoSize: true
-			<% if (config.required) { %>
-				, onClose: function(dateText, inst) { clearErrors('${ config.id }-error'); validateRequired(dateText, '${ config.id }-error'); }
+		jq('#${ config.id }_date').datepicker({
+			dateFormat: 'dd-M-yy',
+			changeMonth: true,
+			changeYear: true,
+			showButtonPanel: true,
+			yearRange: '-110:+5',
+			autoSize: true
+			<% if (config.maxDate) { %>
+			, maxDate: '${ config.maxDate }'
 			<% } %>
-            <% if (config.maxDate) { %>
-                , maxDate: '${ config.maxDate }'
-            <% } %>
-            <% if (config.minDate) { %>
-                , minDate: '${ config.minDate }'
-            <% } %>
+			<% if (config.minDate) { %>
+			, minDate: '${ config.minDate }'
+			<% } %>
+		});
+
+		jq('#${ config.id }_date, #${ config.id }_hour, #${ config.id }_minute').change(function() {
+			kenyaui.updateDateTimeFromDisplay('${ config.id }', ${ config.showTime ? "true" : "false" });
 		});
 	});
 </script>
-
-<input id="${ config.id }_hidden" type="hidden" name="${ config.formFieldName }" <% if (config.initialValue) { %>value="${ ui.dateToString(config.initialValue) }"<% } %>/>
-<input id="${ config.id }" type="text" <% if (config.initialValue) { %>value="${ ui.format(config.initialValue) }"<% } %>/>
+<input id="${ config.id }" type="hidden" name="${ config.formFieldName }" <% if (initialDatetime) { %>value="${ ui.dateToString(initialDatetime) }"<% } %>/>
+<input id="${ config.id }_date" type="text" <% if (initialDatetime) { %>value="${ kenyaUi.formatDate(initialDatetime) }"<% } %>/>
+<% if (config.showTime) { %>
+<select id="${ config.id }_hour"><% for (def h in 0..23) { %><option ${ initialHour == h ? "selected" : "" }>${ String.format('%02d', h) }</option><% } %></select>:<select id="${ config.id }_minute"><% for (def m in 0..59) { %><option ${ initialMinute == m ? "selected" : "" }>${ String.format('%02d', m) }</option><% } %></select>
+<% } %>
 <span id="${ config.id }-error" class="error" style="display: none"></span>
 
-
 <% if (config.parentFormId) { %>
-<script>
-	subscribe('${ config.parentFormId }.reset', function() {
-		jq('#${ config.id }').datepicker('setDate', null);
-	    jq('#${ config.id }-error').html("").hide();
-	});
-	subscribe('${ config.parentFormId }.clear-errors', function() {
-	    jq('#${ config.id }-error').html("").hide();
-	});
-	subscribe('${ config.parentFormId }/${ config.formFieldName }.show-errors', function(message, payload) {
-	    FieldUtils.showErrorList('${ config.id }-error', payload);
-	});
-	
+<script type="text/javascript">
 	jq(function() {
-    	jq('#${ config.id }').change(function() {
-    		publish('${ config.parentFormId }/changed');
-    	});
-    });
+		// Save default input values
+		jq('#${ config.id }').data('default-value', jq('#${ config.id }').val());
+		jq('#${ config.id }_date').data('default-value', jq('#${ config.id }_date').val());
+		<% if (config.showTime) { %>
+		jq('#${ config.id }_hour').data('default-value', jq('#${ config.id }_hour').val());
+		jq('#${ config.id }_minute').data('default-value', jq('#${ config.id }_minute').val());
+		<% } %>
+
+		subscribe('${ config.parentFormId }.reset', function() {
+			jq('#${ config.id }').val(jq('#${ config.id }').data('default-value'));
+			jq('#${ config.id }_date').val(jq('#${ config.id }_date').data('default-value'));
+			<% if (config.showTime) { %>
+			jq('#${ config.id }_hour').val(jq('#${ config.id }_hour').data('default-value'));
+			jq('#${ config.id }_minute').val(jq('#${ config.id }_minute').data('default-value'));
+			<% } %>
+			jq('#${ config.id }-error').html("").hide();
+		});
+
+		subscribe('${ config.parentFormId }.clear-errors', function() {
+			jq('#${ config.id }-error').html("").hide();
+		});
+
+		subscribe('${ config.parentFormId }/${ config.formFieldName }.show-errors', function(message, payload) {
+			FieldUtils.showErrorList('${ config.id }-error', payload);
+		});
+
+		jq('#${ config.id }_date, #${ config.id }_hour, #${ config.id }_minute').change(function() {
+			publish('${ config.parentFormId }/changed');
+		});
+	});
 </script>
 <% } %>

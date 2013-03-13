@@ -46,9 +46,14 @@ jq(function() {
 		        jq('#${ config.id }').val("");
 		        jq('#${ config.id }_value').val("");
 		    }
+		},
+		open: function() {
+			// Make it appear in front of popups
+			jq(this).autocomplete('widget').css('z-index', 3000);
+			return false;
 		}
 	})
-	.data('autocomplete')._renderItem = function(ul, item ) {
+	.data('uiAutocomplete')._renderItem = function(ul, item ) {
 		return jq('<li></li>')
 			.data('item.autocomplete', item)
 			.append('<a>' + labelFunction(item) + '</a>')

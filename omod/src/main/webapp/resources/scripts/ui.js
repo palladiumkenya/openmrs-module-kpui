@@ -117,10 +117,10 @@ var ui = (function($) {
 		},
 		
 		openLoadingDialog: function(message) {
-			if ($('#loading-dialog-overlay').length == 0) {
-				$('body').append('<div id="loading-dialog-overlay"></div>');
+			if ($('#ke-loader-overlay').length == 0) {
+				$('body').append('<div id="ke-loader-overlay"></div>');
 
-				var html = '<div id="loading-dialog-message">';
+				var html = '<div id="ke-loader-dialog">';
 				html += '<img src="' + this.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 				if (message) {
 					html += message;
@@ -131,8 +131,8 @@ var ui = (function($) {
 		},
 		
 		closeLoadingDialog: function() {
-			$('#loading-dialog-overlay').remove();
-			$('#loading-dialog-message').remove();
+			$('#ke-loader-overlay').remove();
+			$('#ke-loader-dialog').remove();
 		},
 		
 		reloadPage: function() {

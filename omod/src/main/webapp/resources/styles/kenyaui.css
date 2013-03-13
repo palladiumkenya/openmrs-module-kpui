@@ -87,6 +87,12 @@ span.ke-field-label, label.ke-field-label {
 	padding: 3px;
 }
 
+.ke-form-instructions {
+	text-align: right;
+	color: #444;
+	font-size: 12px;
+}
+
 .ke-form-buttons {
 	text-align: center;
 	background-color: #D1D0C9;
@@ -159,6 +165,7 @@ span.ke-field-label, label.ke-field-label {
 .ke-menu-item:first-child {
 	border-top: none;
 }
+
 .ke-menu-item:last-child {
 	border-bottom: none;
 }
@@ -306,7 +313,7 @@ span.ke-field-label, label.ke-field-label {
 
 /*** Loading dialogs ***/
 
-#loading-dialog-overlay {
+#ke-loader-overlay {
 	position: fixed;
 	opacity: 0.5;
 	background: #000;
@@ -317,24 +324,22 @@ span.ke-field-label, label.ke-field-label {
 	left: 0;
 }
 
-#loading-dialog-message {
+#ke-loader-dialog {
 	position: fixed;
 	z-index: 2002;
-	border: 1px black solid;
+	border-radius: 3px;
 	background-color: white;
 	top: 40%;
 	left: 30%;
 	right: 30%;
-	padding: 2em;
+	padding: 14px;
 	font-weight: bold;
 	text-align: center;
 }
 
-#loading-dialog-message img {
+#ke-loader-dialog img {
 	display: block;
-	position: relative;
-	left: 48%;
-	padding-bottom: 0.5em;
+	margin: 5px auto 5px auto;
 }
 
 /***** Misc styles *****/

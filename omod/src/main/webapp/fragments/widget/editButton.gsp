@@ -3,4 +3,10 @@
 
 	// Supports href
 %>
-${ ui.includeFragment("kenyaui", "widget/button", [ classes: [ "ke-editbutton" ], label: "Edit", href: config.href ])}
+${ ui.includeFragment("kenyaui", "widget/button", [
+		iconProvider: "kenyaui",
+		icon: "edit.png",
+		classes: [ "ke-editbutton" ],
+		label: "Edit",
+		href: config.href
+])}

@@ -6,23 +6,17 @@
 
 	def id = config.id ?: ui.randomId("button")
 
-	def hasIcon = config.icon && config.iconProvider
-
 	def classes = [ "ke-control", "ke-button" ];
-
-	if (hasIcon) {
-		classes << "ke-button-withicon"
-	}
 
 	if (config.classes) {
 		classes.addAll(config.classes)
 	}
 %>
 <div id="${ id }" class="${ classes.join(' ') }">
-	<% if (hasIcon) { %>
-		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconOverlay ]) }
+	<% if (config.icon && config.iconProvider) { %>
+		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconProvider, iconOverlayProvider: config.iconOverlayProvider ]) }
 	<% } %>
-	<div>
+	<div style="float: left">
 	<% if (config.label) { %>
 		<span class="ke-label">${ config.label }</span>
 	<% } %>

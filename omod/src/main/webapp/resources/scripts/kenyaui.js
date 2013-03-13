@@ -9,7 +9,7 @@ $(function() {
 	/**
 	 * Clicking anywhere on a menu item should direct you to the target of it's <a> tag
 	 */
-	$('.ke-menuitem').click(function() {
+	$('.ke-menu-item').click(function() {
 		var a = $(this).find('a').first();
 		var href = (a.length > 0) ? a.attr('href') : null;
 		if (href)
@@ -25,13 +25,6 @@ $(function() {
 		if (url) {
 			location.href = url;
 		}
-	});
-
-	/**
-	 * Add icons to edit buttons
-	 */
-	$('.ke-editbutton .ke-label').each(function() {
-		$(this).prepend('<img src="/' + CONTEXT_PATH + '/ms/uiframework/resource/kenyaui/images/edit.png" /> ');
 	});
 
 	/**

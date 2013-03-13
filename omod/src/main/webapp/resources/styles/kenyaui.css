@@ -85,6 +85,7 @@ legend {
 	background-color: #EEEEEE;
 	padding: 5px;
 	text-decoration: none;
+	overflow: auto
 }
 
 .ke-button {
@@ -104,15 +105,9 @@ legend {
 	background-color: #DDD;
 }
 
-.ke-button-withicon {
-	padding-left: 42px;
-	min-height: 32px;
-}
-
 .ke-button .ke-icon {
-	position: absolute;
-	left: 5px;
-	top: 5px;
+	float: left;
+	padding-right: 5px;
 }
 
 .ke-button .ke-label {
@@ -134,36 +129,36 @@ legend {
 
 /***** Menus *****/
 
-.ke-menuitem {
+.ke-menu-item {
 	overflow: auto;
 	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #CCC;
 }
 
-.ke-menuitem:hover {
+.ke-menu-item:hover {
 	background-color: #DDD;
 }
 
-.ke-menuitem:first-child {
+.ke-menu-item:first-child {
 	border-top: none;
 }
-.ke-menuitem:last-child {
+.ke-menu-item:last-child {
 	border-bottom: none;
 }
 
-.ke-menuitem .ke-icon {
+.ke-menu-item .ke-icon {
 	float: left;
 	margin-right: 5px;
 }
 
-.ke-menuitem a {
+.ke-menu-item a {
 	color: #444;
 	font-weight: bold;
 	text-decoration: none;
 	display: inline-block;
 }
 
-.ke-menuitem-active, .ke-menuitem-active:hover {
+.ke-menu-item-active, .ke-menu-item-active:hover {
 	background-color: #EEB;
 }
 

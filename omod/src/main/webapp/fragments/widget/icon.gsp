@@ -1,25 +1,33 @@
 <%
-    // Supports icon, iconProvider, iconOverlay
+    // Supports icon, iconProvider, iconOverlay, iconOverlayProvider
 	// Supports useEditOverlay, useViewOverlay
 	// Supports tooltip
 
 	config.require("iconProvider")
 	config.require("icon")
 
-	def iconOverlay = config.iconOverlay
+	def iconOverlay, iconOverlayProvider
 
-	if (config.useEditOverlay)
+	if (config.useEditOverlay) {
+		iconOverlayProvider = "kenyaui"
 		iconOverlay = "buttons/_overlay_edit.png"
-	else if (config.useViewOverlay)
+	}
+	else if (config.useViewOverlay) {
+		iconOverlayProvider = "kenyaui"
 		iconOverlay = "buttons/_overlay_view.png"
+	}
+	else {
+		iconOverlay = config.iconOverlay
+		iconOverlayProvider = config.iconOverlayProvider
+	}
 
 	def tooltip = config.tooltip ?: ""
 %>
 <div class="ke-icon">
-	<div style="position: relative; width: 32px; height: 32px">
-		<img src="${ ui.resourceLink(config.iconProvider, "images/" + config.icon) }" style="position: absolute; top: 0; right: 0; width: 32px; height: 32px; z-index: 0" alt="${ tooltip }" />
-		<% if (iconOverlay) { %>
-		<img src="${ ui.resourceLink(config.iconProvider, "images/" + iconOverlay) }" style="position: absolute; top: 0; right: 0; width: 32px; height: 32px; z-index: 1" alt="${ tooltip }" />
+	<div style="position: relative">
+		<img src="${ ui.resourceLink(config.iconProvider, "images/" + config.icon) }" alt="${ tooltip }" />
+		<% if (iconOverlay && iconOverlayProvider) { %>
+		<img src="${ ui.resourceLink(config.iconOverlayProvider, "images/" + iconOverlay) }" style="position: absolute; top: 0; right: 0; z-index: 1" alt="${ tooltip }" />
 		<% } %>
 	</div>
 </div>

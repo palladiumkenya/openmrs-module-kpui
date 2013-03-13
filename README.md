@@ -1,9 +1,10 @@
-Kenya EMR UI Library OpenMRS Module
-===================================
+Kenya EMR UI OpenMRS Module
+===========================
 
 Overview
 --------
-Library of useful widgets, decorators, and fragments for use with the Kenya EMR. This was forked from uilibrary
+This module is a library of widgets, decorators, and fragments and resources for use with the Kenya EMR. This was forked
+from uilibrary as that module is being deprecated.
 
 Accreditation
 -------------

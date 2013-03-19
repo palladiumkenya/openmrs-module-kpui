@@ -21,9 +21,9 @@ import org.openmrs.module.ModuleActivator;
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
-public class KenyaUIActivator implements ModuleActivator {
+public class KenyaUiActivator implements ModuleActivator {
 	
-	protected static final Log log = LogFactory.getLog(KenyaUIActivator.class);
+	protected static final Log log = LogFactory.getLog(KenyaUiActivator.class);
 		
 	/**
 	 * @see ModuleActivator#willRefreshContext()

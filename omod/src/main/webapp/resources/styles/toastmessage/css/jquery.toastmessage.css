@@ -14,7 +14,6 @@
     opacity: 0.9;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-	color: #eee;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	padding-left: 6px;
@@ -30,6 +29,7 @@
 .toast-item p {
     text-align: left;
     margin-left: 50px;
+	color: white;
 }
 
 .toast-item-close {
@@ -75,22 +75,20 @@
  * 
  */
 .toast-type-notice {
-    color: white;    
 }
 
 .toast-type-success {
-    color: white;    
 }
 
 .toast-type-warning {
-    color: white;
     border-color: #FCBD57;
 }
 
 .toast-type-error {
-    color: white;
     border-color: #B32B2B;
 }
+
+
 
 /** 
  * positions 

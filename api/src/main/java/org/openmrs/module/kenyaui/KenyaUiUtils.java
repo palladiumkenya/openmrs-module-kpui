@@ -15,13 +15,18 @@
 package org.openmrs.module.kenyaui;
 
 import org.ocpsoft.prettytime.PrettyTime;
+import org.openmrs.Concept;
+import org.openmrs.api.context.Context;
 import org.openmrs.web.WebConstants;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * UI utility methods
@@ -97,5 +102,33 @@ public class KenyaUiUtils {
 	public String formatInterval(Date date) {
 		PrettyTime t = new PrettyTime(new Date());
 		return t.format(date);
+	}
+
+	/**
+	 * Fetches a list of concepts from a collection of concepts, concept ids or concept UUIDs
+	 * @param references the collection of concepts, concept ids or concept UUIDs
+	 * @return the list of concepts
+	 * @throws IllegalArgumentException if item in list is not a concept, and Integer or a String
+	 * @throws NumberFormatException if a String identifier is not a valid integer
+	 * @should fetch from concepts, integers or strings
+	 * @should throw exception for non concepts, integers or strings
+	 */
+	public List<Concept> fetchConcepts(Collection<?> references) {
+		List<Concept> concepts = new ArrayList<Concept>();
+		for (Object o : references) {
+			if (o instanceof Concept) {
+				concepts.add((Concept) o);
+			}
+			else if (o instanceof Integer) {
+				concepts.add(Context.getConceptService().getConcept((Integer) o));
+			}
+			else if (o instanceof String) {
+				concepts.add(Context.getConceptService().getConceptByUuid(o.toString()));
+			}
+			else {
+				throw new IllegalArgumentException("Must be a concept, and Integer or a String");
+			}
+		}
+		return concepts;
 	}
 }

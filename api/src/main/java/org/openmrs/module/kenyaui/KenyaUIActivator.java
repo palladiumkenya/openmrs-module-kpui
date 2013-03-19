@@ -23,47 +23,47 @@ import org.openmrs.module.ModuleActivator;
  */
 public class KenyaUIActivator implements ModuleActivator {
 	
-	protected Log log = LogFactory.getLog(getClass());
+	protected static final Log log = LogFactory.getLog(KenyaUIActivator.class);
 		
 	/**
 	 * @see ModuleActivator#willRefreshContext()
 	 */
 	public void willRefreshContext() {
-		log.info("Refreshing Kenya UI Library Module");
+		log.info("Refreshing Kenya UI Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#contextRefreshed()
 	 */
 	public void contextRefreshed() {
-		log.info("Kenya UI Library Module refreshed");
+		log.info("Kenya UI Library refreshed");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStart()
 	 */
 	public void willStart() {
-		log.info("Starting Kenya UI Library Module");
+		log.info("Starting Kenya UI Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("Kenya UI Library Module started");
+		log.info("Kenya UI Module started");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStop()
 	 */
 	public void willStop() {
-		log.info("Stopping Kenya UI Library Module");
+		log.info("Stopping Kenya UI Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("Kenya UI Library Module stopped");
+		log.info("Kenya UI Module stopped");
 	}
 }

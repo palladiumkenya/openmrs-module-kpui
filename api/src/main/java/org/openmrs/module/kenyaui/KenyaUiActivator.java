@@ -16,6 +16,8 @@ package org.openmrs.module.kenyaui;
 
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.ModuleActivator;
 
 /**
@@ -51,6 +53,9 @@ public class KenyaUiActivator implements ModuleActivator {
 	 */
 	public void started() {
 		log.info("Kenya UI Module started");
+
+		setGlobalProperty("uiframework.formatter.dateFormat", KenyaUiConstants.DATE_FORMAT);
+		setGlobalProperty("uiframework.formatter.timeFormat", KenyaUiConstants.TIME_FORMAT);
 	}
 	
 	/**
@@ -65,5 +70,22 @@ public class KenyaUiActivator implements ModuleActivator {
 	 */
 	public void stopped() {
 		log.info("Kenya UI Module stopped");
+	}
+
+	/**
+	 * Sets the given global property exists with the given value
+	 * @param property the property name
+	 * @param value the property value
+	 */
+	protected void setGlobalProperty(String property, String value) {
+		GlobalProperty gp = Context.getAdministrationService().getGlobalPropertyObject(property);
+		if (gp == null) {
+			gp = new GlobalProperty();
+			gp.setProperty(property);
+		}
+
+		gp.setPropertyValue(value);
+
+		Context.getAdministrationService().saveGlobalProperty(gp);
 	}
 }

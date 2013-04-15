@@ -34,9 +34,9 @@ import java.util.List;
 @Component
 public class KenyaUiUtils {
 
-	private static final DateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy");
+	private static final DateFormat dateFormatter = new SimpleDateFormat(KenyaUiConstants.DATE_FORMAT);
 
-	private static final DateFormat timeFormatter = new SimpleDateFormat("HH:mm");
+	private static final DateFormat timeFormatter = new SimpleDateFormat(KenyaUiConstants.TIME_FORMAT);
 
 	/**
 	 * Sets the notification success message

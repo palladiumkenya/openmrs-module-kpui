@@ -27,4 +27,8 @@ public class KenyaUiConstants {
 	public static final String MODULE_ID = "kenyaui";
 
 	public static final Locale LOCALE = Locale.ENGLISH;
+
+	public static final String DATE_FORMAT = "dd-MMM-yyyy";
+
+	public static final String TIME_FORMAT = "HH:mm";
 }

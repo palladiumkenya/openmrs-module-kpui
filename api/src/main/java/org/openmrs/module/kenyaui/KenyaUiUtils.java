@@ -96,11 +96,22 @@ public class KenyaUiUtils {
 	}
 
 	/**
-	 * Formats a date interval
+	 * Formats a date interval relative to now
 	 * @param date the date relative to now
+	 * @return the formatted interval
 	 */
 	public String formatInterval(Date date) {
-		PrettyTime t = new PrettyTime(new Date());
+		return formatInterval(date, new Date());
+	}
+
+	/**
+	 * Formats a date interval relative to the given date
+	 * @param date the date relative to the given now
+	 * @param now the given now
+	 * @return the formatted interval
+	 */
+	public String formatInterval(Date date, Date now) {
+		PrettyTime t = new PrettyTime(now);
 		return t.format(date);
 	}
 

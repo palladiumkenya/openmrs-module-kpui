@@ -56,6 +56,7 @@ public class KenyaUiActivator implements ModuleActivator {
 
 		setGlobalProperty("uiframework.formatter.dateFormat", KenyaUiConstants.DATE_FORMAT);
 		setGlobalProperty("uiframework.formatter.timeFormat", KenyaUiConstants.TIME_FORMAT);
+		setGlobalProperty("htmlformentry.dateFormat", KenyaUiConstants.DATE_FORMAT);
 	}
 	
 	/**

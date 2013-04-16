@@ -31,4 +31,6 @@ public class KenyaUiConstants {
 	public static final String DATE_FORMAT = "dd-MMM-yyyy";
 
 	public static final String TIME_FORMAT = "HH:mm";
+
+	public static final String DATETIME_FORMAT = "dd-MMM-yyyy HH:mm";
 }

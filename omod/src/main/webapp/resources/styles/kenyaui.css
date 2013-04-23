@@ -343,6 +343,12 @@ span.ke-field-label, label.ke-field-label {
 	margin: 5px auto 5px auto;
 }
 
+.ke-loading {
+	background-repeat: no-repeat;
+	min-height: 16px;
+	min-width: 16px;
+}
+
 /***** Misc styles *****/
 
 .ke-identifier-type {

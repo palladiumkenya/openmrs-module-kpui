@@ -41,6 +41,9 @@ $(function() {
  */
 var kenyaui = (function($) {
 
+	// For generating unique element ids
+	var next_generated_id = 0;
+
 	return {
 		/**
 		 * Updates a datetime control after any of its child controls have been changed
@@ -60,6 +63,14 @@ var kenyaui = (function($) {
 				// Empty date means empty datetime
 				$('#' + fieldId).val('');
 			}
+		},
+
+		/**
+		 * Generates a unique id suitable for a DOM element
+		 * @returns the id
+		 */
+		generateId: function() {
+			return 'ke-element-' + (++next_generated_id);
 		}
 	};
 

@@ -23,10 +23,10 @@
 	<textarea id="${ config.id }" name="${ config.formFieldName }" rows="${ rows }" cols="${ cols }">${ config.initialValue ?: "" }</textarea>
 	
 <% } else {
-	def size = config?.config?.size ?: 40
+	def width = config?.config?.width ?: 260
 	def inputType = config?.config?.type == "password" ? "password" : "text"
 %>
-	<input id="${ config.id }" type="${ inputType }" name="${ config.formFieldName }" size="${ size }" value="${ config.initialValue ?: "" }"/>
+	<input id="${ config.id }" type="${ inputType }" name="${ config.formFieldName }" style="width: ${ width }px" value="${ config.initialValue ?: "" }"/>
 <% } %>
 
 <span id="${ config.id }-error" class="error" style="display: none"></span>

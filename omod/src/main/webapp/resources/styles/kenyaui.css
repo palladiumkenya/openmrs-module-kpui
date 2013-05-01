@@ -106,10 +106,16 @@ span.ke-field-label, label.ke-field-label {
 	margin: 2px;
 }
 
+/* Datepicker uses size attribute which Chrome doesn't respect. This ensures inputs are wide enough */
 input.hasDatepicker {
 	width: 105px;
 }
 
+/* Make input field highlighting same across different browsers */
+input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
+	background-color: #FFD;
+	outline: none;
+}
 
 /***** Buttons *****/
 
@@ -207,11 +213,11 @@ input.hasDatepicker {
 }
 
 #content-side .ke-panel-frame {
-	background-color: #858580;
+	background-color: #7f7b72;
 }
 
 .ke-panel-heading {
-	color: #333;
+	color: #413c32;
 	padding: 5px;
 	text-align: center;
 	font-weight: bold;
@@ -272,7 +278,7 @@ input.hasDatepicker {
 }
 
 .ke-table-vertical thead tr {
-	border-bottom: 2px solid #858580;
+	border-bottom: 2px solid #7f7b72;
 }
 
 .ke-table-vertical tbody tr {
@@ -309,11 +315,11 @@ input.hasDatepicker {
 .ke-tag {
 	display: inline-block;
 	border-radius: 2px;
-	padding: 2px;
+	padding: 2px 4px 2px 4px;
 }
 
 .ke-alerttag {
-	color: #332;
+	color: #443;
 	background-color: yellow;
 }
 

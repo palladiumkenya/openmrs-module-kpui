@@ -1,6 +1,6 @@
 <%
 // supports config.options (will use an autocomplete)
-// supports config.size
+// supports config.width
 // supports config.type = textarea, config.type=password, config.rows, config.cols
 
 	ui.includeJavascript("kenyaui", "coreFragments.js")

@@ -116,8 +116,40 @@ public class KenyaUiUtils {
 	}
 
 	/**
-	 * Fetches a list of concepts from a collection of concepts, concept ids or concept UUIDs
-	 * @param references the collection of concepts, concept ids or concept UUIDs
+	 * Gets a concept by an identifier (id, mapping or UUID)
+	 * @param identifier the identifier
+	 * @return the concept
+	 * @throws RuntimeException if no concept could be found
+	 */
+	public static Concept getConcept(Object identifier) {
+		Concept concept = null;
+
+		if (identifier instanceof Integer) {
+			concept = Context.getConceptService().getConcept((Integer) identifier);
+		}
+		else if (identifier instanceof String) {
+			String str = (String) identifier;
+
+			if (str.contains(":")) {
+				String[] tokens = str.split(":");
+				concept = Context.getConceptService().getConceptByMapping(tokens[1].trim(), tokens[0].trim());
+			}
+			else {
+				// Assume its a UUID
+				concept = Context.getConceptService().getConceptByUuid(str);
+			}
+		}
+
+		if (concept == null) {
+			throw new IllegalArgumentException("No concept with identifier '" + identifier + "'");
+		}
+
+		return concept;
+	}
+
+	/**
+	 * Fetches a list of concepts from a collection of concepts, concept ids, concept mappings or concept UUIDs
+	 * @param references the collection of concepts, concept ids, concept mappings or concept UUIDs
 	 * @return the list of concepts
 	 * @throws IllegalArgumentException if item in list is not a concept, and Integer or a String
 	 * @throws NumberFormatException if a String identifier is not a valid integer
@@ -130,14 +162,8 @@ public class KenyaUiUtils {
 			if (o instanceof Concept) {
 				concepts.add((Concept) o);
 			}
-			else if (o instanceof Integer) {
-				concepts.add(Context.getConceptService().getConcept((Integer) o));
-			}
-			else if (o instanceof String) {
-				concepts.add(Context.getConceptService().getConceptByUuid(o.toString()));
-			}
 			else {
-				throw new IllegalArgumentException("Must be a concept, and Integer or a String");
+				concepts.add(getConcept(o));
 			}
 		}
 		return concepts;

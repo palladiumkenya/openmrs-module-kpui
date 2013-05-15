@@ -34,6 +34,11 @@ $(function() {
 		.addClass('ke-control')
 		.addClass('ke-button')
 		.css('font-weight', 'bold');
+
+	/**
+	 * Disable autocomplete on all text inputs
+	 */
+	$('input[type=text]').attr('autocomplete', 'off');
 });
 
 /**

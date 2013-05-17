@@ -42,6 +42,57 @@ html, body {
 	position: relative;
 }
 
+/***** Top menu *****/
+
+.ke-toolbar {
+	font-size: 14px;
+	color: white;
+	background-color: #464640;
+}
+
+.ke-toolbar-item {
+	display: inline-block;
+}
+
+.ke-toolbar-item > span, .ke-toolbar-item > a {
+	display: inline-block;
+	padding: 5px 10px 5px 10px;
+}
+
+.ke-toolbar-item > a {
+	font-weight: bold;
+	color: white;
+	text-decoration: none;
+}
+
+.ke-toolbar-item > a:hover {
+	background-color: #686862;
+}
+
+.ke-apptoolbar {
+	float: left;
+}
+
+.ke-apptoolbar .ke-toolbar-item {
+	border-right: 1px solid white;
+}
+
+.ke-apptoolbar .ke-toolbar-item:last-child {
+	border-right: 0;
+}
+
+.ke-usertoolbar {
+	float: right;
+}
+
+.ke-usertoolbar .ke-toolbar-item {
+	border-left: 1px solid white;
+}
+
+.ke-usertoolbar .ke-toolbar-item:first-child {
+	border-left: 0;
+}
+
 /***** Forms *****/
 
 fieldset {

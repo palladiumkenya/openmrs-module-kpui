@@ -138,7 +138,7 @@
 	            e.preventDefault();
 	            publish('${ id }.clear-errors');
 	            <% if (config.submitLoadingMessage) { %>
-	            	ui.openLoadingDialog('${ ui.escapeJs(config.submitLoadingMessage) }');
+	            	kenyaui.openLoadingDialog('${ ui.escapeJs(config.submitLoadingMessage) }');
 	            <% } %>
 	            var form = jq(this);
 	            var data = form.serialize();
@@ -165,7 +165,7 @@
 	            .error(function(jqXHR, textStatus, errorThrown) {
 	            	formWidget.handleSubmitError('${ id }', jqXHR);
 	            	<% if (config.submitLoadingMessage) { %>
-	                	ui.closeLoadingDialog();
+	                	kenyaui.closeModalDialog();
 	                <% } %>
 	            });
 	        });

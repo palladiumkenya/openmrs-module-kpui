@@ -118,27 +118,7 @@ var ui = (function($) {
 			});
 		},
 		
-		openLoadingDialog: function(message) {
-			if ($('#ke-loader-overlay').length == 0) {
-				$('body').append('<div id="ke-loader-overlay"></div>');
-
-				var html = '<div id="ke-loader-dialog">';
-				html += '<img src="' + this.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
-				if (message) {
-					html += message;
-				}
-				html += '</div>';
-				$('body').append(html);
-			}
-		},
-		
-		closeLoadingDialog: function() {
-			$('#ke-loader-overlay').remove();
-			$('#ke-loader-dialog').remove();
-		},
-		
 		reloadPage: function() {
-			this.openLoadingDialog();
 			location.href = location.href;
 		},
 		

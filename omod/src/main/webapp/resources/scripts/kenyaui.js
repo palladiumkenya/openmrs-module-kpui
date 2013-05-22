@@ -51,6 +51,55 @@ var kenyaui = (function($) {
 
 	return {
 		/**
+		 * Opens a modal loading dialog
+		 * @param message the loading message
+		 */
+		openLoadingDialog: function(message) {
+			var html = '<div style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
+			if (message) {
+				html += '<br /><br />' + message;
+			}
+			html += '</div>';
+			this.openPanelDialog(null, html, 40, 20);
+		},
+
+		/**
+		 * Opens a modal panel style dialog
+		 * @param heading the panel heading
+		 * @param content the panel content
+		 */
+		openPanelDialog: function(heading, content, width, height) {
+			var html = '<div class="ke-panel-frame">';
+			if (heading) {
+				html += '<div class="ke-panel-heading">' + heading + '</div>';
+			}
+			html += '<div class="ke-panel-content">' + content + '</div></div>';
+			this.openModalContent(html, width, height);
+		},
+
+		/**
+		 * Opens a generic modal dialog
+		 * @param html the content
+		 */
+		openModalContent: function(html, width, height) {
+			if ($('.ke-modal-overlay').length == 0) {
+				var top = height ? (50 - height / 2) : 25;
+				var side = width ? (50 - width / 2) : 25;
+				$('body').append('<div class="ke-modal-overlay"></div>');
+				$('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
+			}
+		},
+
+		/**
+		 * Closes any visible modal dialog
+		 */
+		closeModalDialog: function() {
+			// Clear any modal content
+			$('.ke-modal-overlay').remove();
+			$('.ke-modal-content').remove();
+		},
+
+		/**
 		 * Updates a datetime control after any of its child controls have been changed
 		 * @param fieldId the datetime field id
 		 * @param hasTime whether field uses time

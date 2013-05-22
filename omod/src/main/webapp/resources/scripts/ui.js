@@ -81,15 +81,6 @@ var ui = (function($) {
 			});
 		},
 		
-		applyAlternatingClasses: function(selector, first, second) {
-			if (typeof first === 'string') {
-				$(selector).children(':even').addClass(first);
-			}
-			if (typeof second === 'string') {
-				$(selector).children(':odd').addClass(second);
-			}
-		},
-		
 		pageLink: function(providerName, pageName, options) {
 			var ret = '/' + OPENMRS_CONTEXT_PATH + '/' + providerName + '/' + pageName + '.page';
 			return ret + toQueryString(options);

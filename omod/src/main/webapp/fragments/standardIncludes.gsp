@@ -8,9 +8,6 @@
 <% ui.includeJavascript("kenyaui", "kenyaui.js") %>
 <% ui.includeJavascript("kenyaui", "ui.js") %>
 
-${ ui.includeFragment("kenyaui", "maybeRequireLogin") }
-
 <script type="text/javascript">
-    var jq = jQuery;
-    var CONTEXT_PATH = '${ contextPath }';
+	var CONTEXT_PATH = '${ contextPath }';
 </script>

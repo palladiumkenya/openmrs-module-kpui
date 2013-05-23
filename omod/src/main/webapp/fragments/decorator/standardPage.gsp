@@ -1,8 +1,14 @@
 ${ ui.includeFragment("kenyaui", "standardIncludes") }
 
-<% if (config.beforeContent) { %>${ config.beforeContent }<% } %>
+<% if (config.beforeContent) { %>
+	${ config.beforeContent }
+<% } %>
 
 ${ ui.includeFragment("kenyaui", "notifications") }
+
+<% if (!config.allowAnonymous) { %>
+	${ ui.includeFragment("kenyaui", "maybeRequireLogin") }
+<% } %>
 
 <style type="text/css">
 	.ke-loading {

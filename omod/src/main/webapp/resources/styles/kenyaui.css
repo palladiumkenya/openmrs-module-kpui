@@ -218,6 +218,18 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	background-color: #FFD;
 }
 
+.ke-app-button {
+	padding: 8px;
+	width: 120px;
+	margin: 7px;
+	float: left;
+}
+
+.ke-app-button img {
+	width: 64px;
+	height: 64px;
+}
+
 /***** Menus *****/
 
 .ke-menu-item {

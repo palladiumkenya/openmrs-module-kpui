@@ -3,7 +3,7 @@
  *
  * Eventually this will only contain methods that mirror UiUtils in the uiframework module
  */
-var ui = (function($) {
+var ui = (function(jq) {
 
 	var setupAjaxPostDefaults = {
 		dataType: "json",
@@ -11,7 +11,7 @@ var ui = (function($) {
 		globalErrorContent: ".global-error-content",
 		onError: function(xhr, form, globalError) {
 			try {
-				var err = $.parseJSON(xhr.responseText);
+				var err = jq.parseJSON(xhr.responseText);
 				for (var i = 0; i < err.globalErrors.length; ++i) {
 					globalError.append('<li>' + err.globalErrors[i] + '</li>');
 				}
@@ -62,11 +62,11 @@ var ui = (function($) {
 				throw "onSuccess is required";
 			}
 			
-			var opts = $.extend({}, setupAjaxPostDefaults, options);
-			
-			$(formSelector).submit(function(event) {
+			var opts = jq.extend({}, setupAjaxPostDefaults, options);
+
+			jq(formSelector).submit(function(event) {
 				event.preventDefault();
-				var form = $(this);
+				var form = jq(this);
 
 				// find error fields (and clear them)
 				var globalError = form.find(opts.globalErrorContent).html('');
@@ -74,7 +74,7 @@ var ui = (function($) {
 				form.find('.error').html('').hide();
 				
 				// POST and get back the result as JSON
-				$.post(form.attr('action'), form.serialize(), opts.onSuccess, opts.dataType).error(function(xhr) {
+				jq.post(form.attr('action'), form.serialize(), opts.onSuccess, opts.dataType).error(function(xhr) {
 					globalErrorContainer.show();
 					opts.onError(xhr, form, globalError);
 				});
@@ -124,9 +124,8 @@ var ui = (function($) {
 			if (!confirmBeforeNavigationSetup.configured) {
 				window.onbeforeunload = function() {
 					if (confirmBeforeNavigationSetup.enabled) {
-						var blockers = $('.confirm-before-navigating').filter(function() {
-								var jq = $(this);
-								return jq.data('confirmBeforeNavigating') === 'dirty'
+						var blockers = jq('.confirm-before-navigating').filter(function() {
+								return (jq(this).data('confirmBeforeNavigating') === 'dirty');
 							}).length > 0;
 	
 						if (blockers) {
@@ -138,17 +137,17 @@ var ui = (function($) {
 				confirmBeforeNavigationSetup.enabled = true;
 			}
 
-			var jq = $(formSelector);
+			var jq = jq(formSelector);
 			
 			jq.addClass('confirm-before-navigating');
 			jq.data('confirmBeforeNavigating', 'clean');
 			jq.find(':input').on('change.confirm-before-navigating', function() {
-				$(this).parents('.confirm-before-navigating').data('confirmBeforeNavigating', 'dirty');
+				jq(this).parents('.confirm-before-navigating').data('confirmBeforeNavigating', 'dirty');
 			});
 		},
 		
 		cancelConfirmBeforeNavigating: function(formSelector) {
-			var jq = $(formSelector);
+			var jq = jq(formSelector);
 			jq.find(':input').off('change.confirm-before-navigating');
 			jq.data('confirmBeforeNavigating', null);
 			jq.removeClass('confirm-before-navigating');

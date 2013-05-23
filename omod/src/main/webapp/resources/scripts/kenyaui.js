@@ -2,15 +2,17 @@
  * Kenya EMR UI Library main javascript
  */
 
+jq = jQuery;
+
 /**
  * Page initialization tasks
  */
-$(function() {
+jq(function() {
 	/**
 	 * Clicking anywhere on a menu item should direct you to the target of it's <a> tag
 	 */
-	$('.ke-menu-item').click(function() {
-		var a = $(this).find('a').first();
+	jq('.ke-menu-item').click(function() {
+		var a = jq(this).find('a').first();
 		var href = (a.length > 0) ? a.attr('href') : null;
 		if (href)
 			location.href = href;
@@ -19,8 +21,8 @@ $(function() {
 	/**
 	 * Clicking on a stack-item should direct you to the URL specified in the clickUrl hidden input
 	 */
-	$('.ke-stack-item').click(function(evt) {
-		var clickUrl = $(this).find('input[name=clickUrl]').first();
+	jq('.ke-stack-item').click(function(evt) {
+		var clickUrl = jq(this).find('input[name=clickUrl]').first();
 		var url = (clickUrl.length > 0) ? clickUrl.val() : null;
 		if (url) {
 			location.href = url;
@@ -30,7 +32,7 @@ $(function() {
 	/**
 	 * Give html buttons same styles as kenyaui controls
 	 */
-	$('input[type="button"], input[type="submit"], input[type="reset"]')
+	jq('input[type="button"], input[type="submit"], input[type="reset"]')
 		.addClass('ke-control')
 		.addClass('ke-button')
 		.css('font-weight', 'bold');
@@ -38,13 +40,13 @@ $(function() {
 	/**
 	 * Disable autocomplete on all text inputs
 	 */
-	$('input[type=text]').attr('autocomplete', 'off');
+	jq('input[type=text]').attr('autocomplete', 'off');
 });
 
 /**
  * Utility methods
  */
-var kenyaui = (function($) {
+var kenyaui = (function(jq) {
 
 	// For generating unique element ids
 	var next_generated_id = 0;
@@ -82,11 +84,11 @@ var kenyaui = (function($) {
 		 * @param html the content
 		 */
 		openModalContent: function(html, width, height) {
-			if ($('.ke-modal-overlay').length == 0) {
+			if (jq('.ke-modal-overlay').length == 0) {
 				var top = height ? (50 - height / 2) : 25;
 				var side = width ? (50 - width / 2) : 25;
-				$('body').append('<div class="ke-modal-overlay"></div>');
-				$('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
+				jq('body').append('<div class="ke-modal-overlay"></div>');
+				jq('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
 			}
 		},
 
@@ -95,8 +97,8 @@ var kenyaui = (function($) {
 		 */
 		closeModalDialog: function() {
 			// Clear any modal content
-			$('.ke-modal-overlay').remove();
-			$('.ke-modal-content').remove();
+			jq('.ke-modal-overlay').remove();
+			jq('.ke-modal-content').remove();
 		},
 
 		/**
@@ -105,17 +107,17 @@ var kenyaui = (function($) {
 		 * @param hasTime whether field uses time
 		 */
 		updateDateTimeFromDisplay: function(fieldId, hasTime) {
-			var date = $('#' + fieldId + '_date').datepicker('getDate');
-			var hours = hasTime ? $('#' + fieldId + '_hour').val() : '00';
-			var minutes = hasTime ? $('#' + fieldId + '_minute').val() : '00';
+			var date = jq('#' + fieldId + '_date').datepicker('getDate');
+			var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
+			var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
 
 			if (date) {
 				// Format date with time fields
-				var timestamp = $.datepicker.formatDate($.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
-				$('#' + fieldId).val(timestamp);
+				var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+				jq('#' + fieldId).val(timestamp);
 			} else {
 				// Empty date means empty datetime
-				$('#' + fieldId).val('');
+				jq('#' + fieldId).val('');
 			}
 		},
 
@@ -147,7 +149,7 @@ function isEmpty(obj) {
 // utility methods for handling error messages
 function fragmentActionError(jqXHR, defaultMessage) {
 	try {
-		var err = $.parseJSON(jqXHR.responseText);
+		var err = jq.parseJSON(jqXHR.responseText);
 		for (var i = 0; i < err.globalErrors.length; ++i)
 			notifyError(err.globalErrors[i]);
 		for (key in err.fieldErrors) {
@@ -180,11 +182,11 @@ function isFalseHelper(test) {
 // validation for fields
 function clearErrors(errorDivId) {
 	if (errorDivId)
-		$('#' + errorDivId).html('').hide('fast');
+		jq('#' + errorDivId).html('').hide('fast');
 }
 
 function showError(errorDivId, message) {
-	$('#' + errorDivId).append(message).show('fast');
+	jq('#' + errorDivId).append(message).show('fast');
 }
 
 function validateRequired(val, errorDivId) {
@@ -255,22 +257,22 @@ function showDivAsDialog(selector, title, opts) {
 	// have to reattach them with normal DOM, not jquery's append, since the latter would also
 	// reexecute them
 	// TODO determine if we can rid of the hack. If not, refactor the hack, because it currently assumes the selector matches a single dialog 
-	var dialogContainer = $(selector);
+	var dialogContainer = jq(selector);
 	var dialogScripts = dialogContainer.find("script");
 	dialogScripts.remove();
 	var optsToUse = {
 			draggable: false,
 			resizable: false,
 			width: '90%',
-			height: $(window).height()-50,
+			height: jq(window).height()-50,
 			modal: true,
 			title: title
 		};
 	if (opts) {
-		optsToUse = $.extend(optsToUse, opts);
+		optsToUse = jq.extend(optsToUse, opts);
 	}
 	openmrsDialogSuccessCallback = optsToUse.successCallback; // TODO attach this to the close button
-	openmrsDialogCurrentlyShown = $(selector).dialog(optsToUse);
+	openmrsDialogCurrentlyShown = jq(selector).dialog(optsToUse);
 	dialogScripts.each(function() {
 		dialogContainer.get(0).appendChild(this);
 	});
@@ -297,19 +299,19 @@ function showDialog(opts) {
 		openmrsDialogIFrame.marginHeight = 0;
 		openmrsDialogIFrame.frameBorder = 0;
 		openmrsDialogIFrame.scrolling = 'auto';
-		$('#openmrsDialog').append(openmrsDialogIFrame);
+		jq('#openmrsDialog').append(openmrsDialogIFrame);
 	}
-	$("#openmrsDialog > iframe").attr("src", url);
+	jq("#openmrsDialog > iframe").attr("src", url);
 
 	if (!opts.title)
 		opts.title = "";
 	
 	openmrsDialogSuccessCallback = opts.successCallback; // TODO attach this to the close button
-	$('#openmrsDialog')
+	jq('#openmrsDialog')
 		.dialog('option', 'title', opts.title)
-		.dialog('option', 'height',$(window).height()-50) // TODO resize dialog on window resize?
+		.dialog('option', 'height', jq(window).height()-50) // TODO resize dialog on window resize?
 		.dialog('open');
-	openmrsDialogCurrentlyShown = $('#openmrsDialog');
+	openmrsDialogCurrentlyShown = jq('#openmrsDialog');
 }
 
 function closeDialog(doCallback) {

@@ -137,20 +137,20 @@ var ui = (function(jq) {
 				confirmBeforeNavigationSetup.enabled = true;
 			}
 
-			var jq = jq(formSelector);
-			
-			jq.addClass('confirm-before-navigating');
-			jq.data('confirmBeforeNavigating', 'clean');
-			jq.find(':input').on('change.confirm-before-navigating', function() {
+			var form = jq(formSelector);
+
+			form.addClass('confirm-before-navigating');
+			form.data('confirmBeforeNavigating', 'clean');
+			form.find(':input').on('change.confirm-before-navigating', function() {
 				jq(this).parents('.confirm-before-navigating').data('confirmBeforeNavigating', 'dirty');
 			});
 		},
 		
 		cancelConfirmBeforeNavigating: function(formSelector) {
-			var jq = jq(formSelector);
-			jq.find(':input').off('change.confirm-before-navigating');
-			jq.data('confirmBeforeNavigating', null);
-			jq.removeClass('confirm-before-navigating');
+			var form = jq(formSelector);
+			form.find(':input').off('change.confirm-before-navigating');
+			form.data('confirmBeforeNavigating', null);
+			form.removeClass('confirm-before-navigating');
 		},
 		
 		disableConfirmBeforeNavigating: function() {

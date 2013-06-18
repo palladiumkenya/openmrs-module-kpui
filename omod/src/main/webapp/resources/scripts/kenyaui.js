@@ -41,6 +41,35 @@ jq(function() {
 	 * Disable autocomplete on all text inputs
 	 */
 	jq('input[type=text]').attr('autocomplete', 'off');
+
+	/**
+	 * Initialize search widgets
+	 */
+	jq('.ke-search').each(function() {
+		var searchType = jq(this).data('searchtype');
+		var searchConfig = kenyaui.getSearchConfig(searchType);
+
+		jq(this).select2({
+			placeholder: 'Search for a ' + searchType,
+			minimumInputLength: 3,
+			ajax: {
+				url: searchConfig.search,
+				dataType: 'json',
+				data: function (term, page) { return { term: term }; },
+				results: function (data, page) { return { results: data }; }
+			},
+			formatResult: function(object, container, query) { return searchConfig.format(object); },
+			formatSelection: function(object, container) { return searchConfig.format(object); },
+			initSelection: function(element, callback) {
+				var id = jq(element).val();
+				if (id !== '') {
+					jq.ajax(searchConfig.fetch, { data: { id: id }, dataType: 'json'
+					}).done(function(data) { callback(data); });
+				}
+			},
+			escapeMarkup: function (m) { return m; } // don't escape
+		});
+	});
 });
 
 /**
@@ -50,6 +79,8 @@ var kenyaui = (function(jq) {
 
 	// For generating unique element ids
 	var next_generated_id = 0;
+
+	var searchConfigs = new Object();
 
 	return {
 		/**
@@ -127,6 +158,34 @@ var kenyaui = (function(jq) {
 		 */
 		generateId: function() {
 			return 'ke-element-' + (++next_generated_id);
+		},
+
+		/**
+		 * Registers a search configuration
+		 * @param searchType the search type, e.g. 'location'
+		 * @param configCallback the callback function which returns the configuration
+		 */
+		registerSearch: function(searchType, configCallback) {
+			searchConfigs[searchType] = configCallback;
+		},
+
+		/**
+		 * Gets a search configuration
+		 * @param searchType the search type, e.g. 'location'
+		 * @returns {*}
+		 */
+		getSearchConfig: function(searchType) {
+			var fn = searchConfigs[searchType];
+			return fn ? fn() : null;
+		},
+
+		/**
+		 * Updates a search field value
+		 * @param fieldId
+		 * @param value
+		 */
+		updateSearchDisplay: function(fieldId, value) {
+			jq('#' + fieldId).select2('val', value);
 		}
 	};
 

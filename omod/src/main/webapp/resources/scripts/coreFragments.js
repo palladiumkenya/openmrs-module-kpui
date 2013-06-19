@@ -3,7 +3,7 @@ var formWidget = {
     	try {
     	    var err = jq.parseJSON(jqXHR.responseText);
     	} catch (ex) {
-    		notifyError("form submission failed, and response couldn't be interpreted: " + ex);
+    		ui.notifyError("form submission failed, and response couldn't be interpreted: " + ex);
     		return;
     	}
 	    if (err.globalErrors && err.globalErrors.length > 0) {

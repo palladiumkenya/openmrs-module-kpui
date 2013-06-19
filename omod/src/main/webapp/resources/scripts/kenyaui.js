@@ -49,26 +49,31 @@ jq(function() {
 		var searchType = jq(this).data('searchtype');
 		var searchConfig = kenyaui.getSearchConfig(searchType);
 
-		jq(this).select2({
-			placeholder: 'Search for a ' + searchType,
-			minimumInputLength: 3,
-			ajax: {
-				url: searchConfig.search,
-				dataType: 'json',
-				data: function (term, page) { return { term: term }; },
-				results: function (data, page) { return { results: data }; }
-			},
-			formatResult: function(object, container, query) { return searchConfig.format(object); },
-			formatSelection: function(object, container) { return searchConfig.format(object); },
-			initSelection: function(element, callback) {
-				var id = jq(element).val();
-				if (id !== '') {
-					jq.ajax(searchConfig.fetch, { data: { id: id }, dataType: 'json'
-					}).done(function(data) { callback(data); });
-				}
-			},
-			escapeMarkup: function (m) { return m; } // don't escape
-		});
+		if (searchConfig) {
+			jq(this).select2({
+				placeholder: 'Search for a ' + searchType,
+				minimumInputLength: 3,
+				ajax: {
+					url: searchConfig.search,
+					dataType: 'json',
+					data: function (term, page) { return { term: term }; },
+					results: function (data, page) { return { results: data }; }
+				},
+				formatResult: function(object, container, query) { return searchConfig.format(object); },
+				formatSelection: function(object, container) { return searchConfig.format(object); },
+				initSelection: function(element, callback) {
+					var id = jq(element).val();
+					if (id !== '') {
+						jq.ajax(searchConfig.fetch, { data: { id: id }, dataType: 'json'
+						}).done(function(data) { callback(data); });
+					}
+				},
+				escapeMarkup: function (m) { return m; } // don't escape
+			});
+		}
+		else {
+			alert('Search type "' + searchType + '" not configured');
+		}
 	});
 });
 
@@ -153,6 +158,15 @@ var kenyaui = (function(jq) {
 		},
 
 		/**
+		 * Updates a search field value
+		 * @param fieldId
+		 * @param value
+		 */
+		updateSearchDisplay: function(fieldId, value) {
+			jq('#' + fieldId).select2('val', value);
+		},
+
+		/**
 		 * Generates a unique id suitable for a DOM element
 		 * @returns the id
 		 */
@@ -161,11 +175,11 @@ var kenyaui = (function(jq) {
 		},
 
 		/**
-		 * Registers a search configuration
+		 * Stores a search configuration
 		 * @param searchType the search type, e.g. 'location'
 		 * @param configCallback the callback function which returns the configuration
 		 */
-		registerSearch: function(searchType, configCallback) {
+		configureSearch: function(searchType, configCallback) {
 			searchConfigs[searchType] = configCallback;
 		},
 
@@ -177,15 +191,6 @@ var kenyaui = (function(jq) {
 		getSearchConfig: function(searchType) {
 			var fn = searchConfigs[searchType];
 			return fn ? fn() : null;
-		},
-
-		/**
-		 * Updates a search field value
-		 * @param fieldId
-		 * @param value
-		 */
-		updateSearchDisplay: function(fieldId, value) {
-			jq('#' + fieldId).select2('val', value);
 		}
 	};
 

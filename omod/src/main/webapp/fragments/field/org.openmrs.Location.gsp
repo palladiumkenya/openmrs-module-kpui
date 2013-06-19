@@ -1,0 +1,1 @@
+${ ui.includeFragment("kenyaui", "widget/search", config.mergeAttributes([ searchType: "location" ])) }

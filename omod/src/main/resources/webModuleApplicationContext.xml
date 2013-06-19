@@ -9,10 +9,10 @@
 		<property name="resourceShortcuts">
 			<map>
 				<entry key="scripts/jquery.js" value="scripts/jquery-1.9.1.min.js" />
-				<entry key="scripts/jquery-ui.js" value="scripts/jquery-ui-1.10.1.custom.min.js" />
+				<entry key="scripts/jquery-ui.js" value="scripts/jquery-ui-1.10.3.min.js" />
 				<entry key="scripts/select2.js" value="scripts/select2-3.4.0.min.js" />
 
-				<entry key="styles/jquery-ui.css" value="styles/jquery-ui-1.10.1.custom.css" />
+				<entry key="styles/jquery-ui.css" value="styles/jquery-ui-1.10.3.custom.css" />
 				<entry key="styles/select2.css" value="styles/select2-3.4.0.css" />
 			</map>
 		</property>

@@ -54,7 +54,7 @@ jq(function() {
 				placeholder: 'Search for a ' + searchType,
 				minimumInputLength: 3,
 				ajax: {
-					url: searchConfig.search,
+					url: ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType + 's'),
 					dataType: 'json',
 					data: function (term, page) { return { term: term }; },
 					results: function (data, page) { return { results: data }; }
@@ -64,11 +64,12 @@ jq(function() {
 				initSelection: function(element, callback) {
 					var id = jq(element).val();
 					if (id !== '') {
-						jq.ajax(searchConfig.fetch, { data: { id: id }, dataType: 'json'
+						jq.ajax(ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType), { data: { id: id }, dataType: 'json'
 						}).done(function(data) { callback(data); });
 					}
 				},
-				escapeMarkup: function (m) { return m; } // don't escape
+				escapeMarkup: function (m) { return m; }, // don't escape
+				dropdownCssClass: 'ui-dialog' // https://github.com/ivaynberg/select2/issues/940
 			});
 		}
 		else {
@@ -177,10 +178,10 @@ var kenyaui = (function(jq) {
 		/**
 		 * Stores a search configuration
 		 * @param searchType the search type, e.g. 'location'
-		 * @param configCallback the callback function which returns the configuration
+		 * @param config the configuration
 		 */
-		configureSearch: function(searchType, configCallback) {
-			searchConfigs[searchType] = configCallback;
+		configureSearch: function(searchType, config) {
+			searchConfigs[searchType] = config;
 		},
 
 		/**
@@ -189,8 +190,7 @@ var kenyaui = (function(jq) {
 		 * @returns {*}
 		 */
 		getSearchConfig: function(searchType) {
-			var fn = searchConfigs[searchType];
-			return fn ? fn() : null;
+			return searchConfigs[searchType];
 		}
 	};
 

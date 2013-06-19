@@ -6,14 +6,14 @@
 
 	if (config.initialValue) {
 		if (config.showTime) {
+			initialDatetime = config.initialValue
 			initialHour = config.initialValue.hours
 			initialMinute = config.initialValue.minutes
-
-			// This control only edits to minute accuracy
-			initialDatetime = new Date(config.initialValue.year, config.initialValue.month, config.initialValue.date, initialHour, initialMinute, 0)
 		}
 		else {
 			initialDatetime = new Date(config.initialValue.year, config.initialValue.month, config.initialValue.date, 0, 0, 0)
+			initialHour = 0
+			initialMinute = 0
 		}
 	}
 

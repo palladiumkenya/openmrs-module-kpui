@@ -6,7 +6,7 @@
 	<version>1.3.12-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
-	<name>Kenya EMR UI Library</name>
+	<name>Kenya UI Library</name>
 	<description>Library of useful widgets, decorators, and fragments for the Kenya EMR</description>
 
 	<developers>

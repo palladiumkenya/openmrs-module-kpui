@@ -18,14 +18,14 @@ var ui = (function(jq) {
 				for (key in err.fieldErrors) {
 					var errorMsg =  err.fieldErrors[key].join(', ');
 					var errorField = form.find('input[name="' + key + '"]').nextAll('.error');
-					if (errorField.length == 0) {
+					if (!errorField || errorField.length == 0) {
 						globalError.append('<li>' + errorMsg + '</li>');
 					} else {
 						errorField.append(errorMsg + '<br/>').show();
 					}
 				}
 			} catch (ex) {
-				notifyError("Failed " + ex + " (" + xhr.responseText + ")");
+				ui.notifyError("Failed " + ex + " (" + xhr.responseText + ")");
 			}
 		}
 	}

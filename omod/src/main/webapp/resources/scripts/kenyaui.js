@@ -144,17 +144,22 @@ var kenyaui = (function(jq) {
 		 * @param hasTime whether field uses time
 		 */
 		updateDateTimeFromDisplay: function(fieldId, hasTime) {
-			var date = jq('#' + fieldId + '_date').datepicker('getDate');
-			var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
-			var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
+			kenyaui.clearFieldErrors(fieldId); // clear field errors
+			jq('#' + fieldId).val(''); // clear field value
 
-			if (date) {
-				// Format date with time fields
-				var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
-				jq('#' + fieldId).val(timestamp);
-			} else {
-				// Empty date means empty datetime
-				jq('#' + fieldId).val('');
+			try {
+				var date = $.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
+				var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
+				var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
+
+				if (date) {
+					// Format date with time fields
+					var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+					jq('#' + fieldId).val(timestamp);
+				}
+			}
+			catch (err) {
+				kenyaui.showFieldError(fieldId, 'Invalid date');
 			}
 		},
 
@@ -191,6 +196,23 @@ var kenyaui = (function(jq) {
 		 */
 		getSearchConfig: function(searchType) {
 			return searchConfigs[searchType];
+		},
+
+		/**
+		 * Shows an error message for a field (assumes the field has an associated error field)
+		 * @param fieldId the field id
+		 * @param message the error message
+		 */
+		showFieldError: function(fieldId, message) {
+			jq('#' + fieldId + '-error').append(message + '<br />').show();
+		},
+
+		/**
+		 * Clears any errors being shown for the given field
+		 * @param fieldId the field id
+		 */
+		clearFieldErrors: function(fieldId) {
+			jq('#' + fieldId + '-error').html('').hide();
 		}
 	};
 

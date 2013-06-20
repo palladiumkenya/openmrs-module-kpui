@@ -26,7 +26,7 @@
 			changeMonth: true,
 			changeYear: true,
 			showButtonPanel: true,
-			yearRange: '-110:+5',
+			yearRange: '-120:+5',
 			autoSize: true
 			<% if (config.maxDate) { %>
 			, maxDate: '${ config.maxDate }'

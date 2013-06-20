@@ -4,31 +4,6 @@
  * Eventually this will only contain methods that mirror UiUtils in the uiframework module
  */
 var ui = (function(jq) {
-
-	var setupAjaxPostDefaults = {
-		dataType: "json",
-		globalErrorContainer: ".global-error-container",
-		globalErrorContent: ".global-error-content",
-		onError: function(xhr, form, globalError) {
-			try {
-				var err = jq.parseJSON(xhr.responseText);
-				for (var i = 0; i < err.globalErrors.length; ++i) {
-					globalError.append('<li>' + err.globalErrors[i] + '</li>');
-				}
-				for (key in err.fieldErrors) {
-					var errorMsg =  err.fieldErrors[key].join(', ');
-					var errorField = form.find('input[name="' + key + '"]').nextAll('.error');
-					if (!errorField || errorField.length == 0) {
-						globalError.append('<li>' + errorMsg + '</li>');
-					} else {
-						errorField.append(errorMsg + '<br/>').show();
-					}
-				}
-			} catch (ex) {
-				ui.notifyError("Failed " + ex + " (" + xhr.responseText + ")");
-			}
-		}
-	}
 	
 	var toQueryString = function(options) {
 		var ret = "?";
@@ -46,41 +21,6 @@ var ui = (function(jq) {
 	};
 	
 	return {
-		
-		/*
-		 * Takes an existing <form> element and sets it up to submit via AJAX and get a json response.
-		 * 
-		 * options:
-		 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
-		 * - onError (optional) should a function(jqXHR, form, globalErrorContent). Defaults to trying to show field errors in .error and globalErrorContent elements.
-		 * - dataType (default "json") should be a string representing the datatype of the returned data
-		 * - globalErrorContainer (default ".global-error-container")
-		 * - globalErrorContent (default ".global-error-content")
-		 */
-		setupAjaxPost: function(formSelector, options) {
-			if (typeof options.onSuccess !== 'function') {
-				throw "onSuccess is required";
-			}
-			
-			var opts = jq.extend({}, setupAjaxPostDefaults, options);
-
-			jq(formSelector).submit(function(event) {
-				event.preventDefault();
-				var form = jq(this);
-
-				// find error fields (and clear them)
-				var globalError = form.find(opts.globalErrorContent).html('');
-				var globalErrorContainer = form.find(opts.globalErrorContainer).hide();
-				form.find('.error').html('').hide();
-				
-				// POST and get back the result as JSON
-				jq.post(form.attr('action'), form.serialize(), opts.onSuccess, opts.dataType).error(function(xhr) {
-					globalErrorContainer.show();
-					opts.onError(xhr, form, globalError);
-				});
-			});
-		},
-		
 		pageLink: function(providerName, pageName, options) {
 			var ret = '/' + OPENMRS_CONTEXT_PATH + '/' + providerName + '/' + pageName + '.page';
 			return ret + toQueryString(options);

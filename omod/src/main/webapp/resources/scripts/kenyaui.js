@@ -88,7 +88,68 @@ var kenyaui = (function(jq) {
 
 	var searchConfigs = new Object();
 
+	var setupAjaxPostDefaults = {
+		dataType: "json",
+		globalErrorContainer: ".global-error-container",
+		globalErrorContent: ".global-error-content",
+		onError: function(xhr, form, globalError) {
+			try {
+				var err = jq.parseJSON(xhr.responseText);
+				for (var i = 0; i < err.globalErrors.length; ++i) {
+					globalError.append('<li>' + err.globalErrors[i] + '</li>');
+				}
+				for (key in err.fieldErrors) {
+					var fieldId = form.find('[name="' + key + '"]').attr('id');
+					var errorMsg =  err.fieldErrors[key].join(', ');
+
+					if (fieldId && kenyaui.hasErrorField(fieldId)) {
+						kenyaui.showFieldError(fieldId, errorMsg);
+					}
+					else {
+						globalError.append('<li>' + errorMsg + '</li>');
+					}
+				}
+			} catch (ex) {
+				ui.notifyError("Failed " + ex + " (" + xhr.responseText + ")");
+			}
+		}
+	}
+
 	return {
+		/**
+		 * Takes an existing <form> element and sets it up to submit via AJAX and get a json response.
+		 *
+		 * options:
+		 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
+		 * - onError (optional) should a function(jqXHR, form, globalErrorContent). Defaults to trying to show field errors in .error and globalErrorContent elements.
+		 * - dataType (default "json") should be a string representing the datatype of the returned data
+		 * - globalErrorContainer (default ".global-error-container")
+		 * - globalErrorContent (default ".global-error-content")
+		 */
+		setupAjaxPost: function(formSelector, options) {
+			if (typeof options.onSuccess !== 'function') {
+				throw "onSuccess is required";
+			}
+
+			var opts = jq.extend({}, setupAjaxPostDefaults, options);
+
+			jq(formSelector).submit(function(event) {
+				event.preventDefault();
+				var form = jq(this);
+
+				// find error fields (and clear them)
+				var globalError = form.find(opts.globalErrorContent).html('');
+				var globalErrorContainer = form.find(opts.globalErrorContainer).hide();
+				form.find('.error').html('').hide();
+
+				// POST and get back the result as JSON
+				jq.post(form.attr('action'), form.serialize(), opts.onSuccess, opts.dataType).error(function(xhr) {
+					globalErrorContainer.show();
+					opts.onError(xhr, form, globalError);
+				});
+			});
+		},
+
 		/**
 		 * Opens a modal loading dialog
 		 * @param message the loading message
@@ -199,6 +260,14 @@ var kenyaui = (function(jq) {
 		},
 
 		/**
+		 * Checks if the given field has an associated error field
+		 * @param fieldId the field id
+		 */
+		hasErrorField: function(fieldId) {
+			return jq('#' + fieldId + '-error').length > 0;
+		},
+
+		/**
 		 * Shows an error message for a field (assumes the field has an associated error field)
 		 * @param fieldId the field id
 		 * @param message the error message
@@ -223,72 +292,23 @@ var kenyaui = (function(jq) {
  * Everything below here needs tidied up and migrated elsewhere
  */
 
-
-// checks whether a javascript object (e.g. a json response) is empty
-function isEmpty(obj) {
-	for (var i in obj) {
-		return false;
-	}
-	return true;
-}
-
-// utility methods for handling error messages
-function fragmentActionError(jqXHR, defaultMessage) {
-	try {
-		var err = jq.parseJSON(jqXHR.responseText);
-		for (var i = 0; i < err.globalErrors.length; ++i)
-			notifyError(err.globalErrors[i]);
-		for (key in err.fieldErrors) {
-			for (var i = 0; i < err.fieldErrors[key].size(); ++i)
-				notifyError(key + ": " + err.fieldErrors[key][i]);
-		}
-		return;
-	} catch (ex) { }
-	notifyError(defaultMessage);
-}
-
-function isTrueHelper(test) {
-	if (!test)
-		return false;
-	if (typeof(test) == 'string')
-		return test.charAt(0) == 't';
-	else
-		return test == true;
-}
-
-function isFalseHelper(test) {
-	if (!test)
-		return true;
-	if (typeof(test) == 'string')
-		return test.charAt(0) == 'f';
-	else
-		return test == false;
-}
-
-// validation for fields
-function clearErrors(errorDivId) {
-	if (errorDivId)
-		jq('#' + errorDivId).html('').hide('fast');
-}
-
-function showError(errorDivId, message) {
-	jq('#' + errorDivId).append(message).show('fast');
-}
+//// Validation ///////////////////
 
 function validateRequired(val, errorDivId) {
-	if ((val + '').length == 0)
-		showError(errorDivId, 'Required');
+	if ((val + '').length == 0) {
+		kenyaui.showFieldError(errorDivId, 'Required');
+	}
 }
 
 function validateNumber(val, errorDivId) {
 	if (!isValidNumber(val)) {
-		showError(errorDivId, 'Error');
+		kenyaui.showFieldError(errorDivId, 'Error');
 	}
 }
 
 function validateInteger(val, errorDivId) {
 	if (!isValidInteger(val)) {
-		showError(errorDivId, 'Error');
+		kenyaui.showFieldError(errorDivId, 'Error');
 	}
 }
 

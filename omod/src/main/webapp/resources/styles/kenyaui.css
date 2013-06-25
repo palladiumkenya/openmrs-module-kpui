@@ -190,6 +190,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	border-left: 0px;
 	border-right: 1px #BBB solid;
 	text-align: center;
+	min-width: 75px;
 }
 
 .ke-button:hover {
@@ -228,6 +229,10 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 .ke-app-button img {
 	width: 64px;
 	height: 64px;
+}
+
+.ke-editbutton, .ke-app-button  {
+	min-width: inherit;
 }
 
 /***** Menus *****/
@@ -410,6 +415,16 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 }
 
 /***** Misc styles *****/
+
+.ke-warning {
+	color: #52040b;
+	background-color: #ffc7d3;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 14px;
+	border-radius: 3px;
+	margin-bottom: 5px;
+}
 
 .ke-loading {
 	background-repeat: no-repeat;

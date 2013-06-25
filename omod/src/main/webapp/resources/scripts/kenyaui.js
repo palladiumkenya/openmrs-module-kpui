@@ -164,6 +164,34 @@ var kenyaui = (function(jq) {
 		},
 
 		/**
+		 * Opens a modal confirm (OK/Cancel) dialog
+		 * @param message the loading message
+		 */
+		openConfirmDialog: function(heading, message, callback) {
+			var okButtonId = kenyaui.generateId();
+			var html = message + '<br /><br />';
+			html += '<div style="text-align: center">';
+			html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">OK</span></div></div>';
+			html += '&nbsp;'
+			html += '<div class="ke-control ke-button" onclick="kenyaui.closeModalDialog()"><div><span class="ke-label">Cancel</span></div></div>';
+			html += '</div>';
+
+			this.openPanelDialog(heading, html, 40, 20);
+
+			jq('#' + okButtonId).click(function() { callback(); kenyaui.closeModalDialog(); });
+		},
+
+		/**
+		 * Opens a modal alert (OK) dialog
+		 * @param message the loading message
+		 */
+		openAlertDialog: function(heading, message) {
+			var html = message + '<br /><br /><div style="text-align: center"><div class="ke-control ke-button" onclick="kenyaui.closeModalDialog()"><div><span class="ke-label">OK</span></div></div></div>';
+
+			this.openPanelDialog(heading, html, 40, 20);
+		},
+
+		/**
 		 * Opens a modal panel style dialog
 		 * @param heading the panel heading
 		 * @param content the panel content

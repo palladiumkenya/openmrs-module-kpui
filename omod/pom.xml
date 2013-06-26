@@ -9,8 +9,8 @@
 
 	<artifactId>kenyaui-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>Kenya EMR UI Library OMOD</name>
-	<description>OMOD project for Kenya EMR UI Library</description>
+	<name>Kenya UI Library OMOD</name>
+	<description>OMOD project for Kenya UI Library</description>
 
 	<dependencies>
 		<dependency>

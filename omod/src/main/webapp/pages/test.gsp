@@ -3,6 +3,23 @@
 
 	def defaultOnClick = "alert('Clicked');"
 %>
+<style type="text/css">
+h1 {
+	display: block;
+	background-color: #464640;
+	padding: 10px;
+	margin: 0;
+	color: white;
+}
+h2 {
+	display: block;
+	background-color: #7f7b72;
+	padding: 5px 10px 5px 10px;
+	margin: 0;
+	color: white;
+}
+</style>
+
 <h1>Kenya UI Library</h1>
 
 <h2>Widgets</h2>

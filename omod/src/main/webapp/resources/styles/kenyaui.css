@@ -223,21 +223,20 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	background-color: #FFD;
 }
 
-.ke-app-button {
+.ke-appbutton {
 	padding: 8px;
 	width: 120px;
-	margin: 7px;
 }
 
-.ke-app-button .ke-button-text {
+.ke-appbutton .ke-button-text {
 	float: none;
 }
 
-.ke-app-button .ke-button-text .ke-label {
+.ke-appbutton .ke-button-text .ke-label {
 	margin-top: 5px;
 }
 
-.ke-app-button .ke-icon {
+.ke-appbutton .ke-icon {
 	width: 64px;
 	height: 64px;
 	float: none;
@@ -246,7 +245,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	margin: auto;
 }
 
-.ke-editbutton .ke-button-text .ke-label, .ke-app-button .ke-button-text .ke-label {
+.ke-editbutton .ke-button-text .ke-label, .ke-appbutton .ke-button-text .ke-label {
 	min-width: inherit;
 }
 

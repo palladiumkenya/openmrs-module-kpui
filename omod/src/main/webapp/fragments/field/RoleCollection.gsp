@@ -6,9 +6,9 @@
 	
 	def separator = config.separator ?: "<br/>"
 
-	def assignableRoles = context.userService.allRoles.findAll {
-		it.role != "Anonymous" && it.role != "Authenticated"
-	}
+	def hideRoles = config.hideRoles ?: [ "Anonymous", "Authenticated" ]
+
+	def assignableRoles = context.userService.allRoles.findAll { role -> !hideRoles.contains(role.role) }
 %>
 
 <div id="${ config.id }">
@@ -17,6 +17,7 @@
 		<input type="checkbox" name="${ config.formFieldName }" value="${ it.role }" id="${ config.id }-${ it.uuid }"
 			<% if (config.initialValue && config.initialValue.contains(it)) { %> checked="true" <% } %> />
 			<label for="${ config.id }-${ it.uuid }">${ it.role }</label>
+			<span style="color: #777">(${ it.description })</span>
 		${ separator }
 	<% } %>
 </div>

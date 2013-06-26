@@ -190,7 +190,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	border-left: 0px;
 	border-right: 1px #BBB solid;
 	text-align: center;
-	min-width: 75px;
 }
 
 .ke-button:hover {
@@ -202,8 +201,13 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	padding-right: 5px;
 }
 
-.ke-button .ke-label {
+.ke-button .ke-button-text {
+	float: left;
+}
+
+.ke-button .ke-button-text .ke-label {
 	font-weight: bold;
+	min-width: 75px;
 }
 
 .ke-extra {
@@ -223,15 +227,26 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	padding: 8px;
 	width: 120px;
 	margin: 7px;
-	float: left;
 }
 
-.ke-app-button img {
+.ke-app-button .ke-button-text {
+	float: none;
+}
+
+.ke-app-button .ke-button-text .ke-label {
+	margin-top: 5px;
+}
+
+.ke-app-button .ke-icon {
 	width: 64px;
 	height: 64px;
+	float: none;
+	text-align: center;
+	padding: 0;
+	margin: auto;
 }
 
-.ke-editbutton, .ke-app-button  {
+.ke-editbutton .ke-button-text .ke-label, .ke-app-button .ke-button-text .ke-label {
 	min-width: inherit;
 }
 

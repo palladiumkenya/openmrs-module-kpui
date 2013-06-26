@@ -14,15 +14,14 @@
 %>
 <div id="${ id }" class="${ classes.join(' ') }">
 	<% if (config.icon && config.iconProvider) { %>
-		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconProvider, iconOverlayProvider: config.iconOverlayProvider ]) }
+		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconOverlay, iconOverlayProvider: config.iconOverlayProvider ]) }
 	<% } %>
-	<div style="float: left">
+	<div class="ke-button-text">
 	<% if (config.label) { %>
-		<span class="ke-label">${ config.label }</span>
+		<div class="ke-label">${ config.label }</div>
 	<% } %>
 	<% if (config.extra) { %>
-		<br/>
-		<span class="ke-extra">${ config.extra }</span>
+		<div class="ke-extra">${ config.extra }</div>
 	<% } %>
 	</div>
 </div>

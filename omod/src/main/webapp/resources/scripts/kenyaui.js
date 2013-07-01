@@ -88,64 +88,28 @@ var kenyaui = (function(jq) {
 
 	var searchConfigs = new Object();
 
-	var setupAjaxPostDefaults = {
-		dataType: "json",
-		globalErrorContainer: ".global-error-container",
-		globalErrorContent: ".global-error-content",
-		onError: function(xhr, form, globalError) {
-			try {
-				var err = jq.parseJSON(xhr.responseText);
-				for (var i = 0; i < err.globalErrors.length; ++i) {
-					globalError.append('<li>' + err.globalErrors[i] + '</li>');
-				}
-				for (key in err.fieldErrors) {
-					var fieldId = form.find('[name="' + key + '"]').attr('id');
-					var errorMsg =  err.fieldErrors[key].join(', ');
-
-					if (fieldId && kenyaui.hasErrorField(fieldId)) {
-						kenyaui.showFieldError(fieldId, errorMsg);
-					}
-					else {
-						globalError.append('<li>' + errorMsg + '</li>');
-					}
-				}
-			} catch (ex) {
-				ui.notifyError("Failed " + ex + " (" + xhr.responseText + ")");
-			}
-		}
-	}
-
 	return {
 		/**
-		 * Takes an existing <form> element and sets it up to submit via AJAX and get a json response.
-		 *
-		 * options:
+		 * Takes an existing form and sets it up to submit via AJAX and get a json response.
+		 * @param fieldId the field id
+		 * @param options:
 		 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
-		 * - onError (optional) should a function(jqXHR, form, globalErrorContent). Defaults to trying to show field errors in .error and globalErrorContent elements.
-		 * - dataType (default "json") should be a string representing the datatype of the returned data
-		 * - globalErrorContainer (default ".global-error-container")
-		 * - globalErrorContent (default ".global-error-content")
 		 */
-		setupAjaxPost: function(formSelector, options) {
+		setupAjaxPost: function(formId, options) {
 			if (typeof options.onSuccess !== 'function') {
 				throw "onSuccess is required";
 			}
 
-			var opts = jq.extend({}, setupAjaxPostDefaults, options);
-
-			jq(formSelector).submit(function(event) {
+			jq('#' + formId).submit(function(event) {
 				event.preventDefault();
 				var form = jq(this);
 
-				// find error fields (and clear them)
-				var globalError = form.find(opts.globalErrorContent).html('');
-				var globalErrorContainer = form.find(opts.globalErrorContainer).hide();
-				form.find('.error').html('').hide();
+				// Clear any existing errors
+				kenyaui.clearFormErrors(formId);
 
 				// POST and get back the result as JSON
-				jq.post(form.attr('action'), form.serialize(), opts.onSuccess, opts.dataType).error(function(xhr) {
-					globalErrorContainer.show();
-					opts.onError(xhr, form, globalError);
+				jq.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
+					kenyaui.showFormErrors(formId, xhr.responseText);
 				});
 			});
 		},
@@ -285,6 +249,48 @@ var kenyaui = (function(jq) {
 		 */
 		getSearchConfig: function(searchType) {
 			return searchConfigs[searchType];
+		},
+
+		/**
+		 * Shows errors on a form
+		 * @param formId the form id
+		 * @param xhr the request object
+		 */
+		showFormErrors: function(formId, response) {
+			var form = jq('#' + formId);
+			var globalError = form.find('.ke-form-globalerrors');
+			try {
+				var err = jq.parseJSON(response);
+
+				globalError.html('Please fix all errors...').show();
+
+				for (var i = 0; i < err.globalErrors.length; ++i) {
+					globalError.append('<div>' + err.globalErrors[i] + '</div>');
+				}
+
+				for (key in err.fieldErrors) {
+					var fieldId = form.find('[name="' + key + '"]').attr('id');
+					var errorMsg =  err.fieldErrors[key].join(', ');
+
+					if (fieldId && kenyaui.hasErrorField(fieldId)) {
+						kenyaui.showFieldError(fieldId, errorMsg);
+					}
+					else {
+						globalError.append('<div>' + errorMsg + '</div>');
+					}
+				}
+			} catch (ex) {
+				ui.notifyError("Failed " + ex + " (" + response + ")");
+			}
+		},
+
+		/**
+		 * Clears any errors being shown for the given form
+		 * @param formId the form id
+		 */
+		clearFormErrors: function(formId) {
+			jq('#' + formId + ' .ke-form-globalerrors').html('').hide();
+			jq('#' + formId + ' .error').html('').hide();
 		},
 
 		/**

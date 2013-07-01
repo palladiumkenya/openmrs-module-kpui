@@ -133,10 +133,13 @@ span.ke-field-label, label.ke-field-label {
 	background-color: #ffd1d7;
 }
 
-.global-error-container {
+.ke-form-globalerrors {
 	background-color: #ffd1d7;
-	font-weight: bold;
 	padding: 3px;
+}
+
+.ke-form-globalerrors div:before {
+	content: '\0000a0\002192\0000a0';
 }
 
 .ke-form-instructions {

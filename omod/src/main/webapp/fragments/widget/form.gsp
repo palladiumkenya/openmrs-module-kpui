@@ -86,7 +86,7 @@
 
 <form id="${ id }" action="${ url }" method="post"<% if (config.noDecoration) { %> style="display: inline"<% } %>>
 
-    <div style="display: none" id="${ id }-globalerror" class="error"></div> 
+    <div id="${ id }-globalerrors" class="ke-form-globalerrors" style="display: none"></div>
 
 <% fields.each {
     def fragment, fragmentProvider
@@ -136,18 +136,14 @@
     	jq(function() {
 	        jq('#${ id }').submit(function(e) {
 	            e.preventDefault();
-	            publish('${ id }.clear-errors');
+				kenyaui.clearFormErrors('${ id }');
+
 	            <% if (config.submitLoadingMessage) { %>
 	            	kenyaui.openLoadingDialog('${ ui.escapeJs(config.submitLoadingMessage) }');
 	            <% } %>
 	            var form = jq(this);
 	            var data = form.serialize();
-	            jq.ajax({
-	                type: "POST",
-	                url: form.attr('action'),
-	                data: data,
-	                dataType: "json"
-	            })
+	            jq.ajax({ type: "POST", url: form.attr('action'), data: data, dataType: "json" })
 	            .success(function(data) {
 	            	<% if (resetOnSubmit) { %>
 	                	publish('${ id }.reset');
@@ -163,7 +159,7 @@
 	                })
 	            <% } %>
 	            .error(function(jqXHR, textStatus, errorThrown) {
-	            	formWidget.handleSubmitError('${ id }', jqXHR);
+					kenyaui.showFormErrors('${ id }', jqXHR.responseText);
 	            	<% if (config.submitLoadingMessage) { %>
 	                	kenyaui.closeModalDialog();
 	                <% } %>

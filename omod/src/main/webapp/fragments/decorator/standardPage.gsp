@@ -15,8 +15,8 @@
 <html>
 	<head>
 		<title>Kenya EMR</title>
-		<link rel="shortcut icon" type="image/ico" href="/${ contextPath }/images/openmrs-favicon.ico">
-		<link rel="icon" type="image/png" href="/${ contextPath }/images/openmrs-favicon.png">
+		<link rel="shortcut icon" type="image/ico" href="${ ui.resourceLink("kenyaui", "images/logos/favicon.ico") }">
+		<link rel="icon" type="image/png" href="${ ui.resourceLink("kenyaui", "images/logos/favicon.png") }">
 
 		<%= ui.resourceLinks() %>
 

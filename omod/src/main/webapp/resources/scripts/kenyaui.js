@@ -1,5 +1,5 @@
 /**
- * Kenya EMR UI Library main javascript
+ * KenyaUI main javascript library
  */
 
 jq = jQuery;

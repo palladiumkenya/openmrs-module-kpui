@@ -88,236 +88,266 @@ var kenyaui = (function(jq) {
 
 	var searchConfigs = new Object();
 
-	return {
-		/**
-		 * Takes an existing form and sets it up to submit via AJAX and get a json response.
-		 * @param fieldId the field id
-		 * @param options:
-		 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
-		 */
-		setupAjaxPost: function(formId, options) {
-			if (typeof options.onSuccess !== 'function') {
-				throw "onSuccess is required";
-			}
+	var _public = {};
 
-			jq('#' + formId).submit(function(event) {
-				event.preventDefault();
-				var form = jq(this);
+	/**
+	 * Opens a generic modal dialog
+	 * @param html the content
+	 */
+	function openModalContent(html, width, height) {
+		if (jq('.ke-modal-overlay').length == 0) {
+			var top = height ? (50 - height / 2) : 25;
+			var side = width ? (50 - width / 2) : 25;
+			jq('body').append('<div class="ke-modal-overlay"></div>');
+			jq('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
+		}
+	}
 
-				// Clear any existing errors
-				kenyaui.clearFormErrors(formId);
+	/**
+	 * Closes any modal dialog
+	 * @param html the content
+	 */
+	function closeModalContent() {
+		// Clear any modal content
+		jq('.ke-modal-overlay').remove();
+		jq('.ke-modal-content').remove();
+	}
 
-				// POST and get back the result as JSON
-				jq.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
-					kenyaui.showFormErrors(formId, xhr.responseText);
-				});
+	/**
+	 * Takes an existing form and sets it up to submit via AJAX and get a json response.
+	 * @param fieldId the field id
+	 * @param options:
+	 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
+	 */
+	_public.setupAjaxPost = function(formId, options) {
+		if (typeof options.onSuccess !== 'function') {
+			throw "onSuccess is required";
+		}
+
+		jq('#' + formId).submit(function(event) {
+			event.preventDefault();
+			var form = jq(this);
+
+			// Clear any existing errors
+			_public.clearFormErrors(formId);
+
+			// POST and get back the result as JSON
+			jq.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
+				_public.showFormErrors(formId, xhr.responseText);
 			});
-		},
+		});
+	};
 
-		/**
-		 * Opens a modal loading dialog
-		 * @param message the loading message
-		 */
-		openLoadingDialog: function(message) {
-			var html = '<div style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
-			if (message) {
-				html += '<br /><br />' + message;
+	/**
+	 * Opens a modal loading dialog
+	 * @param options the options
+	 */
+	_public.openLoadingDialog = function(options) {
+		var defaults = { heading: null, message: null };
+		var options = options ? jq.extend(defaults, options) : defaults;
+
+		var html = '<div style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
+		if (options.message) {
+			html += '<br /><br />' + options.message;
+		}
+		html += '</div>';
+
+		_public.openPanelDialog(null, html, 40, 20);
+	};
+
+	/**
+	 * Opens a modal confirm (OK/Cancel) dialog
+	 * @param options the options
+	 */
+	_public.openConfirmDialog = function(options) {
+		var defaults = { heading: null, message: '', okLabel: 'OK', cancelLabel: 'Cancel', okCallback: function(){}, cancelCallback: function(){} };
+		var options = options ? jq.extend(defaults, options) : defaults;
+
+		var okButtonId = kenyaui.generateId();
+		var cancelButtonId = kenyaui.generateId();
+
+		var html = options.message + '<br /><br />';
+		html += '<div style="text-align: center">';
+		html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
+		html += '&nbsp;'
+		html += '<div class="ke-control ke-button" id="' + cancelButtonId + '"><div><span class="ke-label">' + options.cancelLabel + '</span></div></div>';
+		html += '</div>';
+
+		_public.openPanelDialog(options.heading, html, 40, 20);
+
+		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
+		jq('#' + cancelButtonId).click(function() { options.cancelCallback(); _public.closeDialog(); });
+	};
+
+	/**
+	 * Opens a modal alert (OK) dialog
+	 * @param options the options
+	 */
+	_public.openAlertDialog = function(options) {
+		var defaults = { heading: null, message: '', okLabel: 'OK', okCallback: function(){} };
+		var options = options ? jq.extend(defaults, options) : defaults;
+
+		var okButtonId = kenyaui.generateId();
+
+		var html = message + '<br /><br />';
+		html += '<div style="text-align: center">';
+		html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
+		html += '</div>';
+
+		_public.openPanelDialog(options.heading, html, 40, 20);
+
+		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
+	};
+
+	/**
+	 * Opens a modal panel style dialog
+	 * @param heading the panel heading
+	 * @param content the panel content
+	 */
+	_public.openPanelDialog = function(heading, content, width, height) {
+		var html = '<div class="ke-panel-frame">';
+		if (heading) {
+			html += '<div class="ke-panel-heading">' + heading + '</div>';
+		}
+		html += '<div class="ke-panel-content">' + content + '</div></div>';
+		openModalContent(html, width, height);
+	};
+
+	/**
+	 * Closes any visible dialog
+	 */
+	_public.closeDialog = function() {
+		closeModalContent();
+	};
+
+	/**
+	 * Updates a datetime control after any of its child controls have been changed
+	 * @param fieldId the datetime field id
+	 * @param hasTime whether field uses time
+	 */
+	_public.updateDateTimeFromDisplay = function(fieldId, hasTime) {
+		kenyaui.clearFieldErrors(fieldId); // clear field errors
+		jq('#' + fieldId).val(''); // clear field value
+
+		try {
+			var date = $.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
+			var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
+			var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
+
+			if (date) {
+				// Format date with time fields
+				var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+				jq('#' + fieldId).val(timestamp);
 			}
-			html += '</div>';
-			this.openPanelDialog(null, html, 40, 20);
-		},
-
-		/**
-		 * Opens a modal confirm (OK/Cancel) dialog
-		 * @param message the loading message
-		 */
-		openConfirmDialog: function(heading, message, callback) {
-			var okButtonId = kenyaui.generateId();
-			var html = message + '<br /><br />';
-			html += '<div style="text-align: center">';
-			html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">OK</span></div></div>';
-			html += '&nbsp;'
-			html += '<div class="ke-control ke-button" onclick="kenyaui.closeModalDialog()"><div><span class="ke-label">Cancel</span></div></div>';
-			html += '</div>';
-
-			this.openPanelDialog(heading, html, 40, 20);
-
-			jq('#' + okButtonId).click(function() { callback(); kenyaui.closeModalDialog(); });
-		},
-
-		/**
-		 * Opens a modal alert (OK) dialog
-		 * @param message the loading message
-		 */
-		openAlertDialog: function(heading, message) {
-			var html = message + '<br /><br /><div style="text-align: center"><div class="ke-control ke-button" onclick="kenyaui.closeModalDialog()"><div><span class="ke-label">OK</span></div></div></div>';
-
-			this.openPanelDialog(heading, html, 40, 20);
-		},
-
-		/**
-		 * Opens a modal panel style dialog
-		 * @param heading the panel heading
-		 * @param content the panel content
-		 */
-		openPanelDialog: function(heading, content, width, height) {
-			var html = '<div class="ke-panel-frame">';
-			if (heading) {
-				html += '<div class="ke-panel-heading">' + heading + '</div>';
-			}
-			html += '<div class="ke-panel-content">' + content + '</div></div>';
-			this.openModalContent(html, width, height);
-		},
-
-		/**
-		 * Opens a generic modal dialog
-		 * @param html the content
-		 */
-		openModalContent: function(html, width, height) {
-			if (jq('.ke-modal-overlay').length == 0) {
-				var top = height ? (50 - height / 2) : 25;
-				var side = width ? (50 - width / 2) : 25;
-				jq('body').append('<div class="ke-modal-overlay"></div>');
-				jq('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
-			}
-		},
-
-		/**
-		 * Closes any visible modal dialog
-		 */
-		closeModalDialog: function() {
-			// Clear any modal content
-			jq('.ke-modal-overlay').remove();
-			jq('.ke-modal-content').remove();
-		},
-
-		/**
-		 * Updates a datetime control after any of its child controls have been changed
-		 * @param fieldId the datetime field id
-		 * @param hasTime whether field uses time
-		 */
-		updateDateTimeFromDisplay: function(fieldId, hasTime) {
-			kenyaui.clearFieldErrors(fieldId); // clear field errors
-			jq('#' + fieldId).val(''); // clear field value
-
-			try {
-				var date = $.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
-				var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
-				var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
-
-				if (date) {
-					// Format date with time fields
-					var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
-					jq('#' + fieldId).val(timestamp);
-				}
-			}
-			catch (err) {
-				kenyaui.showFieldError(fieldId, 'Invalid date');
-			}
-		},
-
-		/**
-		 * Updates a search field value
-		 * @param fieldId
-		 * @param value
-		 */
-		updateSearchDisplay: function(fieldId, value) {
-			jq('#' + fieldId).select2('val', value);
-		},
-
-		/**
-		 * Generates a unique id suitable for a DOM element
-		 * @returns the id
-		 */
-		generateId: function() {
-			return 'ke-element-' + (++next_generated_id);
-		},
-
-		/**
-		 * Stores a search configuration
-		 * @param searchType the search type, e.g. 'location'
-		 * @param config the configuration
-		 */
-		configureSearch: function(searchType, config) {
-			searchConfigs[searchType] = config;
-		},
-
-		/**
-		 * Gets a search configuration
-		 * @param searchType the search type, e.g. 'location'
-		 * @returns {*}
-		 */
-		getSearchConfig: function(searchType) {
-			return searchConfigs[searchType];
-		},
-
-		/**
-		 * Shows errors on a form
-		 * @param formId the form id
-		 * @param xhr the request object
-		 */
-		showFormErrors: function(formId, response) {
-			var form = jq('#' + formId);
-			var globalError = form.find('.ke-form-globalerrors');
-			try {
-				var err = jq.parseJSON(response);
-
-				globalError.html('Please fix all errors...').show();
-
-				for (var i = 0; i < err.globalErrors.length; ++i) {
-					globalError.append('<div>' + err.globalErrors[i] + '</div>');
-				}
-
-				for (key in err.fieldErrors) {
-					var fieldId = form.find('[name="' + key + '"]').attr('id');
-					var errorMsg =  err.fieldErrors[key].join(', ');
-
-					if (fieldId && kenyaui.hasErrorField(fieldId)) {
-						kenyaui.showFieldError(fieldId, errorMsg);
-					}
-					else {
-						globalError.append('<div>' + errorMsg + '</div>');
-					}
-				}
-			} catch (ex) {
-				ui.notifyError("Failed " + ex + " (" + response + ")");
-			}
-		},
-
-		/**
-		 * Clears any errors being shown for the given form
-		 * @param formId the form id
-		 */
-		clearFormErrors: function(formId) {
-			jq('#' + formId + ' .ke-form-globalerrors').html('').hide();
-			jq('#' + formId + ' .error').html('').hide();
-		},
-
-		/**
-		 * Checks if the given field has an associated error field
-		 * @param fieldId the field id
-		 */
-		hasErrorField: function(fieldId) {
-			return jq('#' + fieldId + '-error').length > 0;
-		},
-
-		/**
-		 * Shows an error message for a field (assumes the field has an associated error field)
-		 * @param fieldId the field id
-		 * @param message the error message
-		 */
-		showFieldError: function(fieldId, message) {
-			jq('#' + fieldId + '-error').append(message + '<br />').show();
-		},
-
-		/**
-		 * Clears any errors being shown for the given field
-		 * @param fieldId the field id
-		 */
-		clearFieldErrors: function(fieldId) {
-			jq('#' + fieldId + '-error').html('').hide();
+		}
+		catch (err) {
+			_public.showFieldError(fieldId, 'Invalid date');
 		}
 	};
+
+	/**
+	 * Updates a search field value
+	 * @param fieldId
+	 * @param value
+	 */
+	_public.updateSearchDisplay = function(fieldId, value) {
+		jq('#' + fieldId).select2('val', value);
+	};
+
+	/**
+	 * Generates a unique id suitable for a DOM element
+	 * @returns the id
+	 */
+	_public.generateId = function() {
+		return 'ke-element-' + (++next_generated_id);
+	};
+
+	/**
+	 * Stores a search configuration
+	 * @param searchType the search type, e.g. 'location'
+	 * @param config the configuration
+	 */
+	_public.configureSearch = function(searchType, config) {
+		searchConfigs[searchType] = config;
+	};
+
+	/**
+	 * Gets a search configuration
+	 * @param searchType the search type, e.g. 'location'
+	 * @returns {*}
+	 */
+	_public.getSearchConfig = function(searchType) {
+		return searchConfigs[searchType];
+	};
+
+	/**
+	 * Shows errors on a form
+	 * @param formId the form id
+	 * @param xhr the request object
+	 */
+	_public.showFormErrors = function(formId, response) {
+		var form = jq('#' + formId);
+		var globalError = form.find('.ke-form-globalerrors');
+		try {
+			var err = jq.parseJSON(response);
+
+			globalError.html('Please fix all errors...').show();
+
+			for (var i = 0; i < err.globalErrors.length; ++i) {
+				globalError.append('<div>' + err.globalErrors[i] + '</div>');
+			}
+
+			for (key in err.fieldErrors) {
+				var fieldId = form.find('[name="' + key + '"]').attr('id');
+				var errorMsg =  err.fieldErrors[key].join(', ');
+
+				if (fieldId && kenyaui.hasErrorField(fieldId)) {
+					_public.showFieldError(fieldId, errorMsg);
+				}
+				else {
+					globalError.append('<div>' + errorMsg + '</div>');
+				}
+			}
+		} catch (ex) {
+			ui.notifyError("Failed " + ex + " (" + response + ")");
+		}
+	};
+
+	/**
+	 * Clears any errors being shown for the given form
+	 * @param formId the form id
+	 */
+	_public.clearFormErrors = function(formId) {
+		jq('#' + formId + ' .ke-form-globalerrors').html('').hide();
+		jq('#' + formId + ' .error').html('').hide();
+	};
+
+	/**
+	 * Checks if the given field has an associated error field
+	 * @param fieldId the field id
+	 */
+	_public.hasErrorField = function(fieldId) {
+		return jq('#' + fieldId + '-error').length > 0;
+	};
+
+	/**
+	 * Shows an error message for a field (assumes the field has an associated error field)
+	 * @param fieldId the field id
+	 * @param message the error message
+	 */
+	_public.showFieldError = function(fieldId, message) {
+		jq('#' + fieldId + '-error').append(message + '<br />').show();
+	};
+
+	/**
+	 * Clears any errors being shown for the given field
+	 * @param fieldId the field id
+	 */
+	_public.clearFieldErrors = function(fieldId) {
+		jq('#' + fieldId + '-error').html('').hide();
+	};
+
+	return _public;
 
 })(jQuery);
 

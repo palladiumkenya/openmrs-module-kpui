@@ -105,6 +105,12 @@ legend {
 	font-weight: bold;
 }
 
+.ke-form-header {
+	background-color: #D1D0C9;
+	padding: 3px;
+	border-radius: 3px;
+}
+
 .ke-field-label {
 	padding: 2px;
 	background-color: #F7F7F7;
@@ -148,7 +154,7 @@ span.ke-field-label, label.ke-field-label {
 	font-size: 12px;
 }
 
-.ke-form-buttons {
+.ke-form-footer, .ke-form-buttons {
 	text-align: center;
 	background-color: #D1D0C9;
 	border-radius: 3px;
@@ -156,7 +162,7 @@ span.ke-field-label, label.ke-field-label {
 	margin-top: 5px;
 }
 
-.ke-form-buttons .ke-button {
+.ke-form-footer .ke-button, .ke-form-buttons .ke-button {
 	margin: 2px;
 }
 

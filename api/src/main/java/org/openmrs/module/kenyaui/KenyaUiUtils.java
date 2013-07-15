@@ -17,6 +17,8 @@ package org.openmrs.module.kenyaui;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.openmrs.Concept;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.appframework.AppDescriptor;
+import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.web.WebConstants;
 import org.springframework.stereotype.Component;
 
@@ -167,5 +169,14 @@ public class KenyaUiUtils {
 			}
 		}
 		return concepts;
+	}
+
+	/**
+	 * Convenience method to get the current app for the request
+	 * @param request the request
+	 * @return the app descriptor
+	 */
+	public AppDescriptor getCurrentApp(PageRequest request) {
+		return (AppDescriptor) request.getRequest().getAttribute("currentApp");
 	}
 }

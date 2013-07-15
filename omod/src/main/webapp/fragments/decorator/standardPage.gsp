@@ -6,10 +6,6 @@ ${ ui.includeFragment("kenyaui", "standardIncludes") }
 
 ${ ui.includeFragment("kenyaui", "notifications") }
 
-<% if (!config.allowAnonymous) { %>
-	${ ui.includeFragment("kenyaui", "maybeRequireLogin") }
-<% } %>
-
 <style type="text/css">
 	.ke-loading {
 		background-image: url('${ ui.resourceLink("kenyaui", "images/loader_small.gif") }');

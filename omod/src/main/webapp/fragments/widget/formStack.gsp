@@ -1,22 +1,11 @@
 <%
-	config.require("forms")
-%>
+config.require("forms")
 
-<script type="text/javascript" xmlns="http://www.w3.org/1999/html">
-	function enterHtmlForm(visitId, patientId, formUuid) {
-		var opts = { patientId: patientId, formUuid: formUuid, returnUrl: location.href };
-		if (visitId) {
-			opts.visitId = visitId;
-		}
-		location.href = ui.pageLink('kenyaemr', 'enterHtmlForm', opts);
-	}
-</script>
-
-<% if (config.forms && config.forms.size() > 0) {
+if (config.forms && config.forms.size() > 0) {
 	config.forms.each { form ->
-		def formOnClick = """enterHtmlForm(${ config.visit ? config.visit.visitId : "null" }, ${ patient.id }, '${ form.formUuid }')"""
+		def onClick = config.onFormClick instanceof Closure ? config.onFormClick(form) : config.onFormClick
 %>
-<div class="ke-stack-item ke-clickable" onclick="${ formOnClick }">
+<div class="ke-stack-item ke-clickable" onclick="${ onClick }">
 	${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: form.iconProvider, icon: form.icon, useEditOverlay: true, tooltip: "Enter form" ]) }
 	<b>${ form.label }</b>
 	<div style="clear: both"></div>

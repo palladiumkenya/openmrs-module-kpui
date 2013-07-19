@@ -56,7 +56,7 @@ jq(function() {
 				ajax: {
 					url: ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType + 's'),
 					dataType: 'json',
-					data: function (term, page) { return { term: term }; },
+					data: function (term, page) { return { q: term }; },
 					results: function (data, page) { return { results: data }; }
 				},
 				formatResult: function(object, container, query) { return searchConfig.format(object); },

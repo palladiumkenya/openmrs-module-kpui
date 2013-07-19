@@ -14,11 +14,17 @@
 
 package org.openmrs.module.kenyaui;
 
+import org.apache.commons.lang3.BooleanUtils;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.openmrs.Concept;
+import org.openmrs.Person;
+import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.ui.framework.page.PageRequest;
+import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.WebConstants;
 import org.springframework.stereotype.Component;
 
@@ -115,6 +121,53 @@ public class KenyaUiUtils {
 	public String formatInterval(Date date, Date now) {
 		PrettyTime t = new PrettyTime(now);
 		return t.format(date);
+	}
+
+	/**
+	 * Formats a person's name
+	 * @param person the person
+	 * @return the string value
+	 */
+	public String formatPersonName(Person person) {
+		PersonName name = person.getPersonName();
+		List<String> items = new ArrayList<String>();
+		if (name.getFamilyName() != null) {
+			items.add(name.getFamilyName() + ",");
+		}
+		if (name.getGivenName() != null) {
+			items.add(name.getGivenName());
+		}
+		if (name.getMiddleName() != null) {
+			items.add(name.getMiddleName());
+		}
+		return OpenmrsUtil.join(items, " ");
+	}
+
+	/**
+	 * Formats a person's age
+	 * @param person the person
+	 * @return the string value
+	 */
+	public String formatPersonAge(Person person) {
+		String prefix = BooleanUtils.isTrue(person.isBirthdateEstimated()) ? "~" : "";
+		int ageYears = person.getAge();
+
+		if (ageYears < 1) {
+			Period p = new Period(person.getBirthdate().getTime(), System.currentTimeMillis(), PeriodType.yearMonthDay());
+			return prefix + p.getMonths() + " month(s), " + p.getDays() + " day(s)";
+		}
+		else {
+			return prefix + ageYears + " year(s)";
+		}
+	}
+
+	/**
+	 * Formats a person's birth date
+	 * @param person the person
+	 * @return the string value
+	 */
+	public String formatPersonBirthdate(Person person) {
+		return (BooleanUtils.isTrue(person.isBirthdateEstimated()) ? "approx " : "") + formatDate(person.getBirthdate());
 	}
 
 	/**

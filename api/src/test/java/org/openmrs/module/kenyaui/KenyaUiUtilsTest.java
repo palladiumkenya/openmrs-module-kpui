@@ -14,11 +14,14 @@
 
 package org.openmrs.module.kenyaui;
 
-import junit.framework.Assert;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openmrs.Concept;
+import org.openmrs.Person;
+import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.kenyaui.test.TestUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.web.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,15 @@ import org.springframework.mock.web.MockHttpSession;
 
 import java.util.*;
 
+import static org.hamcrest.Matchers.*;
+
+/**
+ * Test for {@link KenyaUiUtils}
+ */
 public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 
 	@Autowired
-	KenyaUiUtils kenyaUi;
+	private KenyaUiUtils kenyaUi;
 
 	@Test
 	public void notifySuccess_shouldSetMessageSessionAttribute() {
@@ -80,6 +88,44 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void formatInterval_shouldReturnNonEmptyString() throws Exception {
 		Assert.assertTrue(StringUtils.isNotEmpty(kenyaUi.formatInterval(new Date())));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatPersonName(org.openmrs.Person)
+	 */
+	@Test
+	public void formatPersonName_shouldFormatPersonName() {
+		PersonName pn = new PersonName();
+		pn.setFamilyName("fff");
+		pn.setGivenName("ggg");
+		pn.setMiddleName("mmm");
+
+		Person p = new Person();
+		p.setNames(Collections.singleton(pn));
+		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg mmm"));
+
+		// Check no middle name
+		pn = new PersonName();
+		pn.setFamilyName("fff");
+		pn.setGivenName("ggg");
+
+		p.setNames(Collections.singleton(pn));
+		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatPersonBirthdate(org.openmrs.Person)
+	 */
+	@Test
+	public void formatPersonBirthdate() {
+		Person p = new Person();
+		p.setBirthdate(TestUtils.date(2000, 1, 1));
+		Assert.assertThat(kenyaUi.formatPersonBirthdate(p), is("01-Jan-2000"));
+
+		p = new Person();
+		p.setBirthdate(TestUtils.date(1980, 6, 30));
+		p.setBirthdateEstimated(true);
+		Assert.assertThat(kenyaUi.formatPersonBirthdate(p), is("approx 30-Jun-1980"));
 	}
 
 	/**

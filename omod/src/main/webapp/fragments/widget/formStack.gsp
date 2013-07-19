@@ -7,7 +7,7 @@ if (config.forms && config.forms.size() > 0) {
 %>
 <div class="ke-stack-item ke-clickable" onclick="${ onClick }">
 	${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: form.iconProvider, icon: form.icon, useEditOverlay: true, tooltip: "Enter form" ]) }
-	<b>${ form.label }</b>
+	<b>${ form.name }</b>
 	<div style="clear: both"></div>
 </div>
 <%

@@ -409,7 +409,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	padding: 2px 4px 2px 4px;
 }
 
-.ke-alerttag {
+.ke-flagtag {
 	color: #443;
 	background-color: yellow;
 }

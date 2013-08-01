@@ -54,6 +54,21 @@
 	${ ui.includeFragment("kenyaui", "widget/appButton", [ label: "My App", iconProvider: "kenyaui", icon: "apps/admin.png", onClick: defaultOnClick ]) }
 </div>
 
+<h3>tabMenu</h3>
+<div class="holder">
+	${ ui.includeFragment("kenyaui", "widget/tabMenu", [ items: [
+			[ label: "Tab #1", tabid: "tab1" ],
+			[ label: "Tab #2", tabid: "tab2" ],
+			[ label: "Tab #3", tabid: "tab3" ],
+			[ label: "Tab #4", tabid: "tab4" ]
+	] ]) }
+
+	<div class="ke-tab" data-tabid="tab1">First tab content</div>
+	<div class="ke-tab" data-tabid="tab2">Second tab content</div>
+	<div class="ke-tab" data-tabid="tab3">Third tab content</div>
+	<div class="ke-tab" data-tabid="tab4">Fourth tab content</div>
+</div>
+
 <h2>Icons</h2>
 
 <h3>Apps</h3>
@@ -64,23 +79,4 @@
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/chart.png") }" />
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/reports.png") }" />
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/admin.png") }" />
-</div>
-
-<h2>Layout</h2>
-
-<h3>Tabs</h3>
-<div class="holder">
-	<div class="ke-page-tabs">
-		<div class="ke-page-tab" data-tabid="tab1">Tab #1</div>
-		<div class="ke-page-tab" data-tabid="tab2">Tab #2</div>
-		<div class="ke-page-tab" data-tabid="tab3">Tab #3</div>
-		<div class="ke-page-tab" data-tabid="tab4">Tab #4</div>
-	</div>
-
-	<div class="ke-page-tabcontents">
-		<div class="ke-page-tabcontent" data-tabid="tab1">Lorem ipsum...</div>
-		<div class="ke-page-tabcontent" data-tabid="tab2">Lorem ipsum...</div>
-		<div class="ke-page-tabcontent" data-tabid="tab3">Lorem ipsum...</div>
-		<div class="ke-page-tabcontent" data-tabid="tab4">Lorem ipsum...</div>
-	</div>
 </div>

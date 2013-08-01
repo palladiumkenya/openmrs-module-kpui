@@ -57,42 +57,6 @@ html, body {
 	margin-left: 330px;
 }
 
-.ke-page-tabs {
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	padding: 3px 5px 0 5px;
-	background-color: #7f7b72;
-	overflow: auto;
-}
-
-.ke-page-tabs .ke-page-tab {
-	background-color: #D1D0C9;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	display: block;
-	float: left;
-	padding: 6px 10px 5px 10px;
-	margin-right: 5px;
-	cursor: pointer;
-	color: #413c32;
-	text-align: center;
-	font-weight: bold;
-	font-size: 16px;
-}
-
-.ke-page-tabs .ke-page-tab-active {
-	background-color: #FFF;
-}
-
-.ke-page-tabcontent {
-	padding-top: 5px;
-	display: none;
-}
-
-.ke-page-tabcontent:first-of-type {
-	display: block;
-}
-
 /***** Top menu *****/
 
 .ke-toolbar {
@@ -142,6 +106,41 @@ html, body {
 
 .ke-usertoolbar .ke-toolbar-item:first-child {
 	border-left: 0;
+}
+
+/***** Tabs *****/
+
+.ke-tabmenu {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 3px 5px 0 5px;
+	background-color: #7f7b72;
+	overflow: auto;
+}
+
+.ke-tabmenu .ke-tabmenu-item {
+	background-color: #D1D0C9;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-right: 1px #555 solid;
+	display: block;
+	float: left;
+	padding: 6px 10px 5px 10px;
+	margin-right: 5px;
+	cursor: pointer;
+	color: #413c32;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.ke-tabmenu .ke-tabmenu-item-active {
+	background-color: #FFF;
+}
+
+.ke-tab {
+	padding-top: 5px;
+	display: none;
 }
 
 /***** Forms *****/

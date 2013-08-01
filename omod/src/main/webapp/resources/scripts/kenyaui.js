@@ -45,21 +45,25 @@ jq(function() {
 	/**
 	 * Initialize all tabs
 	 */
-	jq('.ke-page-tabs').each(function() {
-		// Make first tab active
-		jq(this).find('.ke-page-tab:first').addClass('ke-page-tab-active');
+	jq('.ke-tabmenu').each(function() {
+		// Make first tab mean item active
+		var first = jq(this).find('.ke-tabmenu-item:first');
+		first.addClass('ke-tabmenu-item-active');
+
+		// And make it's tab visible
+		jq('.ke-tab[data-tabid=' + first.data('tabid') + ']').show();
 
 		// Configure click handlers for each tab button
-		jq(this).find('.ke-page-tab').click(function() {
+		jq(this).find('.ke-tabmenu-item').click(function() {
 			// Get tabid from data attribute
 			var tabid = jq(this).data('tabid');
 
 			// Make only this tab active
-			jq('.ke-page-tab-active').removeClass('ke-page-tab-active');
-			jq(this).addClass('ke-page-tab-active');
+			jq('.ke-tabmenu-item-active').removeClass('ke-tabmenu-item-active');
+			jq(this).addClass('ke-tabmenu-item-active');
 
 			// Make only this tab's content visible
-			jq('.ke-page-tabcontent').each(function() {
+			jq('.ke-tab').each(function() {
 				if (jq(this).data('tabid') == tabid) {
 					jq(this).show();
 				} else {

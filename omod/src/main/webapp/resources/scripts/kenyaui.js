@@ -46,21 +46,25 @@ jq(function() {
 	 * Initialize all tabs
 	 */
 	jq('.ke-page-tabs').each(function() {
+		// Make first tab active
 		jq(this).find('.ke-page-tab:first').addClass('ke-page-tab-active');
 
+		// Configure click handlers for each tab button
 		jq(this).find('.ke-page-tab').click(function() {
+			// Get tabid from data attribute
+			var tabid = jq(this).data('tabid');
+
+			// Make only this tab active
 			jq('.ke-page-tab-active').removeClass('ke-page-tab-active');
 			jq(this).addClass('ke-page-tab-active');
 
-			var tabid = jq(this).data('tabid');
-
+			// Make only this tab's content visible
 			jq('.ke-page-tabcontent').each(function() {
 				if (jq(this).data('tabid') == tabid) {
 					jq(this).show();
 				} else {
 					jq(this).hide();
 				}
-
 			});
 		});
 	});

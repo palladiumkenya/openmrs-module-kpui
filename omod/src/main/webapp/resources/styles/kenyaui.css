@@ -36,10 +36,60 @@ html, body {
 	padding: 0;
 }
 
-#content {
-	margin: 0;
-	padding: 5px;
+.ke-page-container {
 	position: relative;
+}
+
+.ke-page-sidebar {
+	width: 320px;
+	position: absolute;
+	padding: 5px;
+	overflow: auto;
+}
+
+.ke-page-content {
+	padding: 5px;
+	overflow: auto;
+}
+
+.ke-page-sidebar + .ke-page-content {
+	margin-left: 330px;
+}
+
+.ke-page-tabs {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	padding: 3px 5px 0 5px;
+	background-color: #7f7b72;
+	overflow: auto;
+}
+
+.ke-page-tabs .ke-page-tab {
+	background-color: #D1D0C9;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	display: block;
+	float: left;
+	padding: 6px 10px 5px 10px;
+	margin-right: 5px;
+	cursor: pointer;
+	color: #413c32;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.ke-page-tabs .ke-page-tab-active {
+	background-color: #FFF;
+}
+
+.ke-page-tabcontent {
+	padding-top: 5px;
+	display: none;
+}
+
+.ke-page-tabcontent:first-of-type {
+	display: block;
 }
 
 /***** Top menu *****/
@@ -303,7 +353,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	padding: 3px;
 }
 
-#content-side .ke-panel-frame {
+.ke-page-sidebar .ke-panel-frame {
 	background-color: #7f7b72;
 }
 
@@ -315,7 +365,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	font-size: 16px;
 }
 
-#content-side .ke-panel-heading {
+.ke-page-sidebar .ke-panel-heading {
 	color: white;
 }
 

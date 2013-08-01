@@ -43,6 +43,29 @@ jq(function() {
 	jq('input[type=text]').attr('autocomplete', 'off');
 
 	/**
+	 * Initialize all tabs
+	 */
+	jq('.ke-page-tabs').each(function() {
+		jq(this).find('.ke-page-tab:first').addClass('ke-page-tab-active');
+
+		jq(this).find('.ke-page-tab').click(function() {
+			jq('.ke-page-tab-active').removeClass('ke-page-tab-active');
+			jq(this).addClass('ke-page-tab-active');
+
+			var tabid = jq(this).data('tabid');
+
+			jq('.ke-page-tabcontent').each(function() {
+				if (jq(this).data('tabid') == tabid) {
+					jq(this).show();
+				} else {
+					jq(this).hide();
+				}
+
+			});
+		});
+	});
+
+	/**
 	 * Initialize search widgets
 	 */
 	jq('.ke-search').each(function() {

@@ -285,6 +285,9 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 .ke-appbutton {
 	padding: 8px;
 	width: 120px;
+	height: 120px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .ke-appbutton .ke-button-text {

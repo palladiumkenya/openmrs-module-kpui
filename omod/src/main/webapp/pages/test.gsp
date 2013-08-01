@@ -65,3 +65,22 @@
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/reports.png") }" />
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/admin.png") }" />
 </div>
+
+<h2>Layout</h2>
+
+<h3>Tabs</h3>
+<div class="holder">
+	<div class="ke-page-tabs">
+		<div class="ke-page-tab" data-tabid="tab1">Tab #1</div>
+		<div class="ke-page-tab" data-tabid="tab2">Tab #2</div>
+		<div class="ke-page-tab" data-tabid="tab3">Tab #3</div>
+		<div class="ke-page-tab" data-tabid="tab4">Tab #4</div>
+	</div>
+
+	<div class="ke-page-tabcontents">
+		<div class="ke-page-tabcontent" data-tabid="tab1">Lorem ipsum...</div>
+		<div class="ke-page-tabcontent" data-tabid="tab2">Lorem ipsum...</div>
+		<div class="ke-page-tabcontent" data-tabid="tab3">Lorem ipsum...</div>
+		<div class="ke-page-tabcontent" data-tabid="tab4">Lorem ipsum...</div>
+	</div>
+</div>

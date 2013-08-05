@@ -46,7 +46,7 @@ public class PermissionCheckPageRequestInterceptor implements PageRequestInterce
 		SharedPage sharedPage = controllerClazz.getAnnotation(SharedPage.class);
 
 		if (countNonNull(publicPage, appPage, sharedPage) > 1) {
-			throw new RuntimeException("Page controller should have only one of the @OpenPage, @AppPage and @SharedPage annotations");
+			throw new RuntimeException("Page controller should have only one of the @PublicPage, @AppPage and @SharedPage annotations");
 		}
 
 		// Start by checking if a login is required
@@ -58,18 +58,20 @@ public class PermissionCheckPageRequestInterceptor implements PageRequestInterce
 
 		// Set the current request app based on @AppPage or @SharedPage
 		if (appPage != null) {
+			// Read app id from annotation
 			requestAppId = appPage.value();
 		}
 		else if (sharedPage != null) {
-			List<String> allowedAppIds = Arrays.asList(sharedPage.value());
-
 			// Read app id from request
 			requestAppId = (String) context.getRequest().getAttribute("appId");
 
 			if (requestAppId == null) {
 				throw new RuntimeException("Shared page controller requires the appId request parameter");
 			}
-			else if (!allowedAppIds.contains(requestAppId)) {
+
+			List<String> allowedAppIds = Arrays.asList(sharedPage.value());
+
+			if (allowedAppIds != null && allowedAppIds.size() > 0 && !allowedAppIds.contains(requestAppId)) {
 				throw new RuntimeException("Shared page accessed with invalid appId: " + requestAppId);
 			}
 		}

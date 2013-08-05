@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
 public @interface SharedPage {
 
 	/**
-	 * The allowed application ids
+	 * The allowed application ids. Empty array means any app.
 	 */
-	String[] value();
+	String[] value() default {};
 }

@@ -7,6 +7,7 @@ omod/target
 .idea
 *iml
 .DS_Store
-
 target/checkout/
 /target
+*.sass-cache
+omod/src/main/webapp/resources/styles/kenyaui.css

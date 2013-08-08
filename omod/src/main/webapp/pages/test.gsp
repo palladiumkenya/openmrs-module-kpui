@@ -34,6 +34,12 @@
 
 <h2>Widgets</h2>
 
+<h3>appButton</h3>
+<div class="holder">
+	${ ui.includeFragment("kenyaui", "widget/appButton", [ label: "My App", iconProvider: "kenyaui", icon: "apps/admin.png", onClick: defaultOnClick ]) }
+	${ ui.includeFragment("kenyaui", "widget/appButton", [ iconProvider: "kenyaui", icon: "apps/clinician.png", onClick: defaultOnClick ]) }
+</div>
+
 <h3>button</h3>
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/button", [ label: "OK", onClick: defaultOnClick ]) }
@@ -44,14 +50,26 @@
 	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", extra: "Icon has an overlay ", iconProvider: "kenyaui", icon: "buttons/patient_search.png", iconOverlayProvider: "kenyaui", iconOverlay: "buttons/_overlay_edit.png", onClick: defaultOnClick ]) }
 </div>
 
+<h3>dataPoint</h3>
+<div class="holder">
+	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
+	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Regular value with extra date", value: "Value", extra: new Date() ]) }
+</div>
+
 <h3>editButton</h3>
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/editButton", [ onClick: defaultOnClick ]) }
 </div>
 
-<h3>appButton</h3>
-<div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/appButton", [ label: "My App", iconProvider: "kenyaui", icon: "apps/admin.png", onClick: defaultOnClick ]) }
+<h3>panelMenu</h3>
+<div class="holder" style="width: 400px">
+	${ ui.includeFragment("kenyaui", "widget/panelMenu", [
+			heading: "Header",
+			items: [
+					[ iconProvider: "kenyaui", icon: "buttons/users_manage.png", label: "Menu Item #1 (Active)", active: true, href: ui.pageLink("kenyaui", "test") ],
+					[ iconProvider: "kenyaui", icon: "buttons/admin_setup.png", label: "Menu Item #2", href: ui.pageLink("kenyaui", "test") ]
+			]
+	]) }
 </div>
 
 <h3>tabMenu</h3>
@@ -69,6 +87,14 @@
 	<div class="ke-tab" data-tabid="tab4">Fourth tab content</div>
 </div>
 
+<h2>Fields</h2>
+
+<h3>java.util.Date</h3>
+<div class="holder">
+	Date only ${ ui.includeFragment("kenyaui", "field/java.util.Date", [ initialValue: new Date() ]) }<br />
+	Date and time ${ ui.includeFragment("kenyaui", "field/java.util.Date", [ initialValue: new Date(), showTime: true ]) }
+</div>
+
 <h2>Decorators</h2>
 
 <h3>panel</h3>
@@ -76,29 +102,59 @@
 	${ ui.decorate("kenyaui", "panel", [ heading: "Heading" ], "Panel content") }
 </div>
 
-<h2>Styling</h2>
+<h2>Styles</h2>
+
+<h3>error</h3>
+<div class="holder">
+	<div class="error">Error message</div>
+</div>
+
+<h3>flagtag</h3>
+<div class="holder">
+	<div class="ke-flagtag">Tag message</div>
+</div>
+
+<h3>form-footer</h3>
+<div class="holder">
+	Form content
+	<div class="ke-form-footer"><input type="submit" value="Save Changes" /><input type="button" value="Discard Changes" /></div>
+</div>
+
+<h3>form-globalerrors</h3>
+<div class="holder">
+	<div class="ke-form-globalerrors">
+		<div>Error message #1</div>
+		<div>Error message #2</div>
+	</div>
+</div>
+
+<h3>form-header</h3>
+<div class="holder">
+	<div class="ke-form-header">Form header <select><option>Something</option></select></div>
+	Form content
+</div>
 
 <h3>table-vertical</h3>
 <div class="holder">
 	<table class="ke-table-vertical">
 		<thead>
-			<tr>
-				<th>Header #1</th>
-				<th>Header #2</th>
-				<th>Header #3</th>
-			</tr>
+		<tr>
+			<th>Header #1</th>
+			<th>Header #2</th>
+			<th>Header #3</th>
+		</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Cell #1</td>
-				<td>Cell #2</td>
-				<td>Cell #3</td>
-			</tr>
-			<tr>
-				<td>Cell #4</td>
-				<td>Cell #5</td>
-				<td>Cell #6</td>
-			</tr>
+		<tr>
+			<td>Cell #1</td>
+			<td>Cell #2</td>
+			<td>Cell #3</td>
+		</tr>
+		<tr>
+			<td>Cell #4</td>
+			<td>Cell #5</td>
+			<td>Cell #6</td>
+		</tr>
 		</tbody>
 	</table>
 </div>
@@ -108,16 +164,25 @@
 	<div class="ke-warning">Warning content</div>
 </div>
 
+<h2>Javascript</h2>
+
+<h3>modal dialogs</h3>
+<div class="holder">
+	<input type="button" value="openPanelDialog" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: 'Dialog content' })" />
+	<input type="button" value="openAlertDialog" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })" />
+	<input type="button" value="openConfirmDialog" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })" />
+</div>
+
 <h2>Icons</h2>
 
-<h3>Apps</h3>
+<h3>apps</h3>
 <div class="holder">
 	<% [ "registration", "intake", "clinician", "chart", "reports", "admin" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>
 
-<h3>Buttons</h3>
+<h3>buttons</h3>
 <div class="holder">
 	<%
 	[
@@ -131,21 +196,21 @@
 	<% } %>
 </div>
 
-<h3>Forms</h3>
+<h3>forms</h3>
 <div class="holder">
 	<% [ "generic", "completion", "family_history", "labresults", "moh257", "obstetric" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/forms/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>
 
-<h3>Glyphs</h3>
+<h3>glyphs</h3>
 <div class="holder">
 	<% [ "email", "phone" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>
 
-<h3>Toolbar</h3>
+<h3>toolbar</h3>
 <div class="holder">
 	<div class="ke-toolbar">
 	<% [ "home", "help" ].each { name -> %>

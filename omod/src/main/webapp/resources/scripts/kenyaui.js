@@ -204,7 +204,7 @@ var kenyaui = (function(jq) {
 		html += '<div class="ke-button" id="' + cancelButtonId + '"><div><span class="ke-label">' + options.cancelLabel + '</span></div></div>';
 		html += '</div>';
 
-		_public.openPanelDialog(options.heading, html, 40, 20);
+		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
 		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
 		jq('#' + cancelButtonId).click(function() { options.cancelCallback(); _public.closeDialog(); });
@@ -220,28 +220,30 @@ var kenyaui = (function(jq) {
 
 		var okButtonId = kenyaui.generateId();
 
-		var html = message + '<br /><br />';
+		var html = options.message + '<br /><br />';
 		html += '<div style="text-align: center">';
 		html += '<div class="ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
 		html += '</div>';
 
-		_public.openPanelDialog(options.heading, html, 40, 20);
+		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
 		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
 	};
 
 	/**
 	 * Opens a modal panel style dialog
-	 * @param heading the panel heading
-	 * @param content the panel content
+	 * @param options the options
 	 */
-	_public.openPanelDialog = function(heading, content, width, height) {
+	_public.openPanelDialog = function(options) {
+		var defaults = { heading: null, width: null, height: null };
+		var options = options ? jq.extend(defaults, options) : defaults;
+
 		var html = '<div class="ke-panel-frame">';
-		if (heading) {
-			html += '<div class="ke-panel-heading">' + heading + '</div>';
+		if (options.heading) {
+			html += '<div class="ke-panel-heading">' + options.heading + '</div>';
 		}
-		html += '<div class="ke-panel-content">' + content + '</div></div>';
-		openModalContent(html, width, height);
+		html += '<div class="ke-panel-content">' + options.content + '</div></div>';
+		openModalContent(html, options.width, options.height);
 	};
 
 	/**

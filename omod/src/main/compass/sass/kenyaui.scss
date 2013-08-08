@@ -23,11 +23,13 @@ $color_bkgd_gutter: #7f7b72;
 $color_bkgd_toolbar: #464640;
 $color_bkgd_highlight: #ffffdd;
 $color_bkgd_error: #ffd1d7;
-$color_bkgd_warning: #ffc7d3;
+$color_bkgd_warning: #ffda95;
 
 /***** Size constants *****/
 
 $size_text_general: 14px;
+$size_text_header: 16px;
+$size_text_extra: 12px;
 
 /***** Font styles *****/
 
@@ -40,20 +42,8 @@ html, body, p, input, button, select, legend, label {
 	color: $color_text_general;
 }
 
-h4 {
-	font-size: 16px;
-}
-
-h3 {
-	font-size: 18px;
-}
-
-h2 {
-	font-size: 20px;
-}
-
 small {
-	font-size: 12px;
+	font-size: $size_text_extra;
 }
 
 /************************** Re-usables **************************/
@@ -79,6 +69,19 @@ small {
 	margin: 0;
 	text-decoration: none;
 	overflow: auto;
+}
+
+/* Rounded corners */
+.ke-rounded {
+	border-radius: 3px;
+}
+
+/* Any inline text tag */
+.ke-tag {
+	@extend .ke-rounded;
+
+	display: inline-block;
+	padding: 2px 4px 2px 4px;
 }
 
 /************************** Page layout **************************/
@@ -119,45 +122,54 @@ html, body {
 
 .ke-toolbar-item {
 	display: inline-block;
-}
 
-.ke-toolbar-item > span, .ke-toolbar-item > a {
-	display: inline-block;
-	padding: 5px 10px 5px 10px;
-}
+	span, a {
+		display: inline-block;
+		padding: 5px 10px 5px 10px;
+	}
+	a {
+		font-weight: bold;
+		color: white;
+		text-decoration: none;
 
-.ke-toolbar-item > a {
-	font-weight: bold;
-	color: white;
-	text-decoration: none;
-}
-
-.ke-toolbar-item > a:hover {
-	background-color: lighten($color_bkgd_toolbar, 12%);
+		&:hover {
+			background-color: lighten($color_bkgd_toolbar, 12%);
+		}
+	}
 }
 
 .ke-apptoolbar {
 	float: left;
-}
 
-.ke-apptoolbar .ke-toolbar-item {
-	border-right: 1px solid white;
-}
+	.ke-toolbar-item {
+		border-right: 1px solid white;
 
-.ke-apptoolbar .ke-toolbar-item:last-child {
-	border-right: 0;
+		&:last-child {
+			border-right: 0;
+		}
+	}
 }
 
 .ke-usertoolbar {
 	float: right;
+
+	.ke-toolbar-item {
+		border-left: 1px solid white;
+
+		&:first-child {
+			border-left: 0;
+		}
+	}
 }
 
-.ke-usertoolbar .ke-toolbar-item {
-	border-left: 1px solid white;
-}
+/************************** Panelbar **************************/
 
-.ke-usertoolbar .ke-toolbar-item:first-child {
-	border-left: 0;
+.ke-panelbar {
+	@extend .ke-rounded;
+
+	background-color: $color_bkgd_frame;
+	padding: 3px;
+	margin-bottom: 5px;
 }
 
 /************************** Tabs **************************/
@@ -183,7 +195,7 @@ html, body {
 		color: #413c32;
 		text-align: center;
 		font-weight: bold;
-		font-size: 16px;
+		font-size: $size_text_header;
 
 		&:hover {
 			background-color: lighten($color_bkgd_frame, 7%);
@@ -217,16 +229,27 @@ legend {
 }
 
 .ke-form-header {
-	background-color: $color_bkgd_frame;
-	padding: 3px;
-	border-radius: 3px;
+	@extend .ke-panelbar;
+
+	margin-bottom: 5px;
+}
+
+.ke-form-footer {
+	@extend .ke-panelbar;
+
+	text-align: center;
+	margin-top: 5px;
+
+	.ke-button {
+		margin: 2px;
+	}
 }
 
 .ke-field-label {
 	padding: 2px;
 	background-color: #F7F7F7;
 	color: $color_text_general;
-	font-size: 12px;
+	font-size: $size_text_extra;
 }
 
 span.ke-field-label, label.ke-field-label {
@@ -240,41 +263,30 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-field-instructions {
 	font-style: italic;
-	font-size: 12px;
+	font-size: $size_text_extra;
 }
 
 .error {
-	padding: 2px;
-	border-radius: 2px;
-	display: inline-block;
+	@extend .ke-tag;
+
 	background-color: $color_bkgd_error;
 }
 
 .ke-form-globalerrors {
+	@extend .ke-rounded;
+
 	background-color: $color_bkgd_error;
 	padding: 3px;
-}
 
-.ke-form-globalerrors div:before {
-	content: '\0000a0\002192\0000a0';
+	div:before {
+		content: '\0000a0\002192\0000a0';
+	}
 }
 
 .ke-form-instructions {
 	text-align: right;
 	color: #444;
-	font-size: 12px;
-}
-
-.ke-form-footer, .ke-form-buttons {
-	text-align: center;
-	background-color: $color_bkgd_frame;
-	border-radius: 3px;
-	padding: 3px;
-	margin-top: 5px;
-}
-
-.ke-form-footer .ke-button, .ke-form-buttons .ke-button {
-	margin: 2px;
+	font-size: $size_text_extra;
 }
 
 /************************** Buttons **************************/
@@ -282,34 +294,33 @@ span.ke-field-label, label.ke-field-label {
 .ke-button {
 	@extend .ke-clickable;
 	@extend .ke-control;
+	@extend .ke-rounded;
 
 	display: inline-block;
 	position: relative;
-	border-radius: 3px;
 	font-weight: bold;
 	border-top: 0px;
 	border-bottom: 1px darken($color_bkgd_control, 20%) solid;
 	border-left: 0px;
 	border-right: 1px darken($color_bkgd_control, 20%) solid;
 	text-align: center;
+
+	.ke-icon {
+		float: left;
+		padding-right: 5px;
+	}
+	.ke-button-text {
+		float: left;
+
+		.ke-label {
+			font-weight: bold;
+			min-width: 75px;
+		}
+	}
 }
 
 .ke-button:hover {
 	background-color: darken($color_bkgd_control, 8%);
-}
-
-.ke-button .ke-icon {
-	float: left;
-	padding-right: 5px;
-}
-
-.ke-button .ke-button-text {
-	float: left;
-}
-
-.ke-button .ke-button-text .ke-label {
-	font-weight: bold;
-	min-width: 75px;
 }
 
 .ke-extra {
@@ -323,24 +334,24 @@ span.ke-field-label, label.ke-field-label {
 	height: 120px;
 	display: table-cell;
 	vertical-align: middle;
+
+	.ke-icon {
+		width: 64px;
+		height: 64px;
+		float: none;
+		text-align: center;
+		padding: 0;
+		margin: auto;
+	}
+	.ke-button-text {
+		float: none;
+
+		.ke-label {
+			margin-top: 5px;
+		}
+	}
 }
 
-.ke-appbutton .ke-button-text {
-	float: none;
-}
-
-.ke-appbutton .ke-button-text .ke-label {
-	margin-top: 5px;
-}
-
-.ke-appbutton .ke-icon {
-	width: 64px;
-	height: 64px;
-	float: none;
-	text-align: center;
-	padding: 0;
-	margin: auto;
-}
 
 .ke-editbutton .ke-button-text .ke-label, .ke-appbutton .ke-button-text .ke-label {
 	min-width: inherit;
@@ -354,30 +365,27 @@ span.ke-field-label, label.ke-field-label {
 
 	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #CCC;
-}
 
-.ke-menu-item:hover {
-	background-color: darken($color_bkgd_control, 8%);
-}
+	&:hover {
+		background-color: darken($color_bkgd_control, 8%);
+	}
+	&:first-of-type {
+		border-top: none;
+	}
+	&:last-of-type {
+		border-bottom: none;
+	}
 
-.ke-menu-item:first-child {
-	border-top: none;
-}
-
-.ke-menu-item:last-child {
-	border-bottom: none;
-}
-
-.ke-menu-item .ke-icon {
-	float: left;
-	margin-right: 5px;
-}
-
-.ke-menu-item a {
-	color: $color_text_control;
-	font-weight: bold;
-	text-decoration: none;
-	display: inline-block;
+	a {
+		color: $color_text_control;
+		font-weight: bold;
+		text-decoration: none;
+		display: inline-block;
+	}
+	.ke-icon {
+		float: left;
+		margin-right: 5px;
+	}
 }
 
 .ke-menu-item-active, .ke-menu-item-active:hover {
@@ -387,8 +395,9 @@ span.ke-field-label, label.ke-field-label {
 /************************** Panels **************************/
 
 .ke-panel-frame {
+	@extend .ke-rounded;
+
 	background-color: $color_bkgd_frame;
-	border-radius: 3px;
 	margin-bottom: 5px;
 	padding: 3px;
 }
@@ -402,7 +411,7 @@ span.ke-field-label, label.ke-field-label {
 	padding: 5px;
 	text-align: center;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: $size_text_header;
 }
 
 .ke-page-sidebar .ke-panel-heading {
@@ -474,26 +483,16 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-datapoint {
 	margin: 1px 0 1px 0;
-}
 
-.ke-datapoint .ke-label {
-}
-
-.ke-datapoint .ke-value {
-	font-weight: bold;
-}
-
-.ke-datapoint .ke-extra {
-	font-size: 12px;
+	.ke-value {
+		font-weight: bold;
+	}
+	.ke-extra {
+		font-size: $size_text_extra;
+	}
 }
 
 /************************** Tags **************************/
-
-.ke-tag {
-	display: inline-block;
-	border-radius: 2px;
-	padding: 2px 4px 2px 4px;
-}
 
 .ke-flagtag {
 	@extend .ke-tag;
@@ -509,7 +508,7 @@ span.ke-field-label, label.ke-field-label {
 	background-color: #EEF;
 }
 
-/*** Modal dialogs ***/
+/************************** Modal dialogs **************************/
 
 .ke-modal-overlay {
 	position: fixed;
@@ -530,13 +529,17 @@ span.ke-field-label, label.ke-field-label {
 /************************** Miscellaneous **************************/
 
 .ke-warning {
-	color: #52040b;
-	background-color: $color_bkgd_warning;
+	@extend .ke-rounded;
+
+	color: #4b362b;
 	padding: 5px;
+	background-color: $color_bkgd_warning;
 	font-weight: bold;
 	font-size: $size_text_general;
-	border-radius: 3px;
-	margin-bottom: 5px;
+}
+
+.ke-search {
+	width: 300px;
 }
 
 .ke-loading {
@@ -546,7 +549,7 @@ span.ke-field-label, label.ke-field-label {
 }
 
 .ke-tip {
-	font-size: 12px;
+	font-size: $size_text_extra;
 }
 
 .ke-identifier-type {

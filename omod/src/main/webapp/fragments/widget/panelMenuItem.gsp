@@ -4,10 +4,9 @@
 	config.require("label");
 
 	def styles = [ "ke-menu-item" ]
-	if (config.active)
+	if (config.active) {
 		styles << "ke-menu-item-active"
-	if (config.href)
-		styles << "ke-clickable"
+	}
 %>
 
 <div class="${ styles.join(" ") }">

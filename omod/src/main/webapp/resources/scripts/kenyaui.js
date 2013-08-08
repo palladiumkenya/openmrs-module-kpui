@@ -199,9 +199,9 @@ var kenyaui = (function(jq) {
 
 		var html = options.message + '<br /><br />';
 		html += '<div style="text-align: center">';
-		html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
+		html += '<div class="ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
 		html += '&nbsp;'
-		html += '<div class="ke-control ke-button" id="' + cancelButtonId + '"><div><span class="ke-label">' + options.cancelLabel + '</span></div></div>';
+		html += '<div class="ke-button" id="' + cancelButtonId + '"><div><span class="ke-label">' + options.cancelLabel + '</span></div></div>';
 		html += '</div>';
 
 		_public.openPanelDialog(options.heading, html, 40, 20);
@@ -222,7 +222,7 @@ var kenyaui = (function(jq) {
 
 		var html = message + '<br /><br />';
 		html += '<div style="text-align: center">';
-		html += '<div class="ke-control ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
+		html += '<div class="ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
 		html += '</div>';
 
 		_public.openPanelDialog(options.heading, html, 40, 20);

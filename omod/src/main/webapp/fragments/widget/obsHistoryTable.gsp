@@ -3,7 +3,7 @@
 	config.require("concepts")
 %>
 
-<table class="ke-table-decorated ke-table-vertical" id="${ config.id }" style="${ config.style ? config.style : "" }">
+<table class="ke-table-vertical" id="${ config.id }" style="${ config.style ? config.style : "" }">
 	<thead>
 	<tr>
 		<th>Date</th>

@@ -3,7 +3,7 @@
 
 	config.require("label");
 
-	def styles = [ "ke-control", "ke-menu-item" ]
+	def styles = [ "ke-menu-item" ]
 	if (config.active)
 		styles << "ke-menu-item-active"
 	if (config.href)

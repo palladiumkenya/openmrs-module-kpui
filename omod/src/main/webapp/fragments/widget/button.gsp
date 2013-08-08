@@ -6,7 +6,7 @@
 
 	def id = config.id ?: ui.randomId("button")
 
-	def classes = [ "ke-control", "ke-button" ];
+	def classes = [ "ke-button" ];
 
 	if (config.classes) {
 		classes.addAll(config.classes)

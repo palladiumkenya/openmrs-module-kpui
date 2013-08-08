@@ -12,15 +12,32 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-/***** General font styles *****/
+/***** Color constants *****/
+
+$color_text_general: #333333;
+$color_text_control: #444444;
+$color_bkgd_general: #ffffff;
+$color_bkgd_control: #eeeeee;
+$color_bkgd_frame: #d1d0c9;
+$color_bkgd_gutter: #7f7b72;
+$color_bkgd_toolbar: #464640;
+$color_bkgd_highlight: #ffffdd;
+$color_bkgd_error: #ffd1d7;
+$color_bkgd_warning: #ffc7d3;
+
+/***** Size constants *****/
+
+$size_text_general: 14px;
+
+/***** Font styles *****/
 
 * {
 	font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 html, body, p, input, button, select, legend, label {
-	font-size: 14px;
-	color: #333;
+	font-size: $size_text_general;
+	color: $color_text_general;
 }
 
 h4 {
@@ -39,7 +56,32 @@ small {
 	font-size: 12px;
 }
 
-/***** Page layout *****/
+/************************** Re-usables **************************/
+
+/* Anything which can be clicked */
+.ke-clickable {
+	cursor: pointer;
+}
+
+/* Content which can be clicked to navigate elsewhere */
+.ke-navigable {
+	@extend .ke-clickable;
+}
+.ke-navigable:hover {
+	background-color: $color_bkgd_highlight;
+}
+
+/* Anything which is an input control */
+.ke-control {
+	color: $color_text_control;
+	background-color: $color_bkgd_control;
+	padding: 5px;
+	margin: 0;
+	text-decoration: none;
+	overflow: auto;
+}
+
+/************************** Page layout **************************/
 
 html, body {
 	margin: 0;
@@ -67,12 +109,12 @@ html, body {
 	margin-left: 330px;
 }
 
-/***** Top menu *****/
+/************************** Toolbar menu **************************/
 
 .ke-toolbar {
-	font-size: 14px;
+	font-size: $size_text_general;
 	color: white;
-	background-color: #464640;
+	background-color: $color_bkgd_toolbar;
 }
 
 .ke-toolbar-item {
@@ -91,7 +133,7 @@ html, body {
 }
 
 .ke-toolbar-item > a:hover {
-	background-color: #686862;
+	background-color: lighten($color_bkgd_toolbar, 12%);
 }
 
 .ke-apptoolbar {
@@ -118,34 +160,43 @@ html, body {
 	border-left: 0;
 }
 
-/***** Tabs *****/
+/************************** Tabs **************************/
 
 .ke-tabmenu {
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	padding: 3px 5px 0 5px;
-	background-color: #7f7b72;
+	background-color: $color_bkgd_gutter;
 	overflow: auto;
-}
 
-.ke-tabmenu .ke-tabmenu-item {
-	background-color: #D1D0C9;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-	border-right: 1px #555 solid;
-	display: block;
-	float: left;
-	padding: 6px 10px 5px 10px;
-	margin-right: 5px;
-	cursor: pointer;
-	color: #413c32;
-	text-align: center;
-	font-weight: bold;
-	font-size: 16px;
-}
+	.ke-tabmenu-item {
+		@extend .ke-clickable;
 
-.ke-tabmenu .ke-tabmenu-item-active {
-	background-color: #FFF;
+		background-color: $color_bkgd_frame;
+		border-top-left-radius: 3px;
+		border-top-right-radius: 3px;
+		border-right: 1px #555 solid;
+		display: block;
+		float: left;
+		padding: 6px 10px 5px 10px;
+		margin-right: 5px;
+		color: #413c32;
+		text-align: center;
+		font-weight: bold;
+		font-size: 16px;
+
+		&:hover {
+			background-color: lighten($color_bkgd_frame, 7%);
+		}
+	}
+
+	.ke-tabmenu-item-active {
+		background-color: $color_bkgd_general;
+
+		&:hover {
+			background-color: $color_bkgd_general;
+		}
+	}
 }
 
 .ke-tab {
@@ -153,20 +204,20 @@ html, body {
 	display: none;
 }
 
-/***** Forms *****/
+/************************** Forms **************************/
 
 fieldset {
-	border: 2px solid #D1D0C9;
+	border: 2px solid $color_bkgd_frame;
 	margin: 3px 0 3px 0;
 }
 
 legend {
-	color: #333;
+	color: $color_text_general;
 	font-weight: bold;
 }
 
 .ke-form-header {
-	background-color: #D1D0C9;
+	background-color: $color_bkgd_frame;
 	padding: 3px;
 	border-radius: 3px;
 }
@@ -174,7 +225,7 @@ legend {
 .ke-field-label {
 	padding: 2px;
 	background-color: #F7F7F7;
-	color: #333;
+	color: $color_text_general;
 	font-size: 12px;
 }
 
@@ -196,11 +247,11 @@ span.ke-field-label, label.ke-field-label {
 	padding: 2px;
 	border-radius: 2px;
 	display: inline-block;
-	background-color: #ffd1d7;
+	background-color: $color_bkgd_error;
 }
 
 .ke-form-globalerrors {
-	background-color: #ffd1d7;
+	background-color: $color_bkgd_error;
 	padding: 3px;
 }
 
@@ -216,7 +267,7 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-form-footer, .ke-form-buttons {
 	text-align: center;
-	background-color: #D1D0C9;
+	background-color: $color_bkgd_frame;
 	border-radius: 3px;
 	padding: 3px;
 	margin-top: 5px;
@@ -226,43 +277,25 @@ span.ke-field-label, label.ke-field-label {
 	margin: 2px;
 }
 
-/* Datepicker uses size attribute which Chrome doesn't respect. This ensures inputs are wide enough */
-input.hasDatepicker {
-	width: 105px;
-}
-
-/* Make input field highlighting same across different browsers */
-input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
-	background-color: #FFD;
-	outline: none;
-}
-
-/***** Buttons *****/
-
-.ke-control {
-	color: #444;
-	background-color: #EEEEEE;
-	padding: 5px;
-	margin: 0;
-	text-decoration: none;
-	overflow: auto;
-}
+/************************** Buttons **************************/
 
 .ke-button {
-	cursor: pointer;
+	@extend .ke-clickable;
+	@extend .ke-control;
+
 	display: inline-block;
 	position: relative;
 	border-radius: 3px;
 	font-weight: bold;
 	border-top: 0px;
-	border-bottom: 1px #BBB solid;
+	border-bottom: 1px darken($color_bkgd_control, 20%) solid;
 	border-left: 0px;
-	border-right: 1px #BBB solid;
+	border-right: 1px darken($color_bkgd_control, 20%) solid;
 	text-align: center;
 }
 
 .ke-button:hover {
-	background-color: #DDD;
+	background-color: darken($color_bkgd_control, 8%);
 }
 
 .ke-button .ke-icon {
@@ -282,14 +315,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 .ke-extra {
 	font-size: 11px;
 	font-weight: normal;
-}
-
-.ke-clickable {
-	cursor: pointer;
-}
-
-.ke-clickable:hover {
-	background-color: #FFD;
 }
 
 .ke-appbutton {
@@ -321,16 +346,18 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	min-width: inherit;
 }
 
-/***** Menus *****/
+/************************** Side menu **************************/
 
 .ke-menu-item {
-	overflow: auto;
+	@extend .ke-clickable;
+	@extend .ke-control;
+
 	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #CCC;
 }
 
 .ke-menu-item:hover {
-	background-color: #DDD;
+	background-color: darken($color_bkgd_control, 8%);
 }
 
 .ke-menu-item:first-child {
@@ -347,7 +374,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 }
 
 .ke-menu-item a {
-	color: #444;
+	color: $color_text_control;
 	font-weight: bold;
 	text-decoration: none;
 	display: inline-block;
@@ -357,17 +384,17 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	background-color: #EEB;
 }
 
-/*** Panel style set ***/
+/************************** Panels **************************/
 
 .ke-panel-frame {
-	background-color: #D1D0C9;
+	background-color: $color_bkgd_frame;
 	border-radius: 3px;
 	margin-bottom: 5px;
 	padding: 3px;
 }
 
 .ke-page-sidebar .ke-panel-frame {
-	background-color: #7f7b72;
+	background-color: $color_bkgd_gutter;
 }
 
 .ke-panel-heading {
@@ -383,14 +410,14 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 }
 
 .ke-panel-content {
-	background-color: #FFF;
+	background-color: $color_bkgd_general;
 	padding: 5px;
 }
 
-/*** Stacks (e.g. patient search results) ***/
+/************************** Stacks **************************/
 
 .ke-stack-item {
-	border-top: 2px dotted #d1d0c9;
+	border-top: 2px dotted $color_bkgd_frame;
 	padding: 3px;
 	overflow: auto;
 }
@@ -409,45 +436,41 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	float: right;
 }
 
-/***** Tables *****/
+/************************** Tables **************************/
 
-.ke-table-decorated {
+.ke-table-vertical {
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
+
+	thead tr {
+		border-bottom: 2px solid $color_bkgd_gutter;
+	}
+	tbody tr {
+		border-top: 1px solid #AAA;
+
+		&:first-of-type {
+			border-top: 0;
+		}
+		&:nth-child(odd) {
+			background-color: #F7F7F7;
+		}
+	}
+	th {
+		font-weight: bold;
+		color: #444;
+	}
+	th, td {
+		padding: 2px;
+		text-align: center;
+
+		&:first-of-type {
+			text-align: left;
+		}
+	}
 }
 
-.ke-table-decorated th {
-	font-weight: bold;
-	color: #444;
-}
-
-.ke-table-decorated th, .ke-table-decorated td {
-	padding: 2px;
-	text-align: center;
-}
-
-.ke-table-decorated th:first-of-type, .ke-table-decorated td:first-of-type {
-	text-align: left;
-}
-
-.ke-table-vertical thead tr {
-	border-bottom: 2px solid #7f7b72;
-}
-
-.ke-table-vertical tbody tr {
-	border-top: 1px solid #AAA;
-}
-
-.ke-table-vertical tbody tr:first-of-type {
-	border-top: 0;
-}
-
-.ke-table-vertical tbody tr:nth-child(odd) {
-	background-color: #F7F7F7;
-}
-
-/*** Data points ***/
+/************************** Data points **************************/
 
 .ke-datapoint {
 	margin: 1px 0 1px 0;
@@ -464,7 +487,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	font-size: 12px;
 }
 
-/***** Tags *****/
+/************************** Tags **************************/
 
 .ke-tag {
 	display: inline-block;
@@ -473,11 +496,15 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 }
 
 .ke-flagtag {
+	@extend .ke-tag;
+
 	color: #443;
 	background-color: yellow;
 }
 
 .ke-visittag {
+	@extend .ke-tag;
+
 	color: #223;
 	background-color: #EEF;
 }
@@ -500,14 +527,14 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	z-index: 2002;
 }
 
-/***** Misc styles *****/
+/************************** Miscellaneous **************************/
 
 .ke-warning {
 	color: #52040b;
-	background-color: #ffc7d3;
+	background-color: $color_bkgd_warning;
 	padding: 5px;
 	font-weight: bold;
-	font-size: 14px;
+	font-size: $size_text_general;
 	border-radius: 3px;
 	margin-bottom: 5px;
 }
@@ -536,4 +563,17 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 
 .ke-hidden {
 	display: none;
+}
+
+/************************** Fixes **************************/
+
+/* Datepicker uses size attribute which Chrome doesn't respect. This ensures inputs are wide enough */
+input.hasDatepicker {
+	width: 105px;
+}
+
+/* Make input field highlighting same across different browsers */
+input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
+	background-color: $color_bkgd_highlight;
+	outline: none;
 }

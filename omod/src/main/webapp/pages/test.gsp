@@ -69,14 +69,87 @@
 	<div class="ke-tab" data-tabid="tab4">Fourth tab content</div>
 </div>
 
+<h2>Decorators</h2>
+
+<h3>panel</h3>
+<div class="holder">
+	${ ui.decorate("kenyaui", "panel", [ heading: "Heading" ], "Panel content") }
+</div>
+
+<h2>Styling</h2>
+
+<h3>table-vertical</h3>
+<div class="holder">
+	<table class="ke-table-vertical">
+		<thead>
+			<tr>
+				<th>Header #1</th>
+				<th>Header #2</th>
+				<th>Header #3</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Cell #1</td>
+				<td>Cell #2</td>
+				<td>Cell #3</td>
+			</tr>
+			<tr>
+				<td>Cell #4</td>
+				<td>Cell #5</td>
+				<td>Cell #6</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<h3>warning</h3>
+<div class="holder">
+	<div class="ke-warning">Warning content</div>
+</div>
+
 <h2>Icons</h2>
 
 <h3>Apps</h3>
 <div class="holder">
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/registration.png") }" />
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/intake.png") }" />
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/clinician.png") }" />
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/chart.png") }" />
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/reports.png") }" />
-	<img src="${ ui.resourceLink("kenyaui", "images/apps/admin.png") }" />
+	<% [ "registration", "intake", "clinician", "chart", "reports", "admin" ].each { name -> %>
+	<img src="${ ui.resourceLink("kenyaui", "images/apps/" + name + ".png") }" title="${ name }" />
+	<% } %>
+</div>
+
+<h3>Buttons</h3>
+<div class="holder">
+	<%
+	[
+			"account", "account_add", "admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
+			"back", "close", "patient_add", "patient_overview", "patient_search", "profile_password", "profile_secret_question",
+			"program_complete", "program_enroll", "provider", "regimen", "regimen_change", "regimen_restart",
+			"regimen_start", "regimen_stop", "registration", "report_configure", "report_download_excel", "report_generate",
+			"undo", "user_disable", "user_enable", "users_manage", "visit_end", "visit_retrospective", "visit_void"
+	].each { name -> %>
+	<img src="${ ui.resourceLink("kenyaui", "images/buttons/" + name + ".png") }" title="${ name }" />
+	<% } %>
+</div>
+
+<h3>Forms</h3>
+<div class="holder">
+	<% [ "generic", "completion", "family_history", "labresults", "moh257", "obstetric" ].each { name -> %>
+	<img src="${ ui.resourceLink("kenyaui", "images/forms/" + name + ".png") }" title="${ name }" />
+	<% } %>
+</div>
+
+<h3>Glyphs</h3>
+<div class="holder">
+	<% [ "email", "phone" ].each { name -> %>
+	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />
+	<% } %>
+</div>
+
+<h3>Toolbar</h3>
+<div class="holder">
+	<div class="ke-toolbar">
+	<% [ "home", "help" ].each { name -> %>
+	<img src="${ ui.resourceLink("kenyaui", "images/toolbar/" + name + ".png") }" title="${ name }" />
+	<% } %>
+	</div>
 </div>

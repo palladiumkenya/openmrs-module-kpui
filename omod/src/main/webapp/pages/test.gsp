@@ -169,6 +169,7 @@
 <h3>modal dialogs</h3>
 <div class="holder">
 	<input type="button" value="openPanelDialog" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: 'Dialog content' })" />
+	<input type="button" value="openLoadingDialog" onclick="kenyaui.openLoadingDialog({})" />
 	<input type="button" value="openAlertDialog" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })" />
 	<input type="button" value="openConfirmDialog" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })" />
 </div>

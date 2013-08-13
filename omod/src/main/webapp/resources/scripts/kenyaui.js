@@ -183,7 +183,7 @@ var kenyaui = (function(jq) {
 		}
 		html += '</div>';
 
-		_public.openPanelDialog(null, html, 40, 20);
+		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 	};
 
 	/**

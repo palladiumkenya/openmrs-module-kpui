@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>kenyaui</artifactId>
-	<version>1.9</version>
+	<version>1.10-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 	<name>KenyaUI Library</name>
@@ -24,7 +24,7 @@
 		<connection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</connection>
 		<developerConnection>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</developerConnection>
 		<url>scm:git:git@github.com:I-TECH/openmrs-module-kenyaui.git</url>
-		<tag>1.9</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<modules>

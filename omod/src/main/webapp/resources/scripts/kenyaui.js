@@ -78,6 +78,7 @@ jq(function() {
 	 */
 	jq('.ke-search').each(function() {
 		var searchType = jq(this).data('searchtype');
+		var searchParams = kenyaui.deparam(jq(this).data('searchparams').replace('&amp;', '&'));
 		var searchConfig = kenyaui.getSearchConfig(searchType);
 
 		if (searchConfig) {
@@ -87,7 +88,7 @@ jq(function() {
 				ajax: {
 					url: ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType + 's'),
 					dataType: 'json',
-					data: function (term, page) { return { q: term }; },
+					data: function (term, page) { return jq.extend({}, { q: term }, searchParams); },
 					results: function (data, page) { return { results: data }; }
 				},
 				formatResult: function(object, container, query) { return searchConfig.format(object); },
@@ -378,6 +379,35 @@ var kenyaui = (function(jq) {
 	 */
 	_public.clearFieldErrors = function(fieldId) {
 		jq('#' + fieldId + '-error').html('').hide();
+	};
+
+	/**
+	 * Reverse of jQuery.param()
+	 * @param query the query
+	 */
+	_public.deparam = function(query) {
+		if (!query) {
+			return {};
+		}
+
+		var params = {};
+		var pairs = query.split('&');
+
+		for (var i = 0; i < pairs.length; i++) {
+			var pair = pairs[i].split("=");
+			pair[0] = decodeURIComponent(pair[0]);
+			pair[1] = decodeURIComponent(pair[1]);
+
+			if (typeof params[pair[0]] === 'undefined') {  // first entry with this name
+				params[pair[0]] = pair[1];
+			} else if (typeof params[pair[0]] === 'string') { // second entry with this name
+				var arr = [ params[pair[0]], pair[1] ];
+				params[pair[0]] = arr;
+			} else { // third or later entry with this name
+				params[pair[0]].push(pair[1]);
+			}
+		}
+		return params;
 	};
 
 	return _public;

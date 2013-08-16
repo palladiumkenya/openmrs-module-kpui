@@ -78,8 +78,12 @@ jq(function() {
 	 */
 	jq('.ke-search').each(function() {
 		var searchType = jq(this).data('searchtype');
-		var searchParams = kenyaui.deparam(jq(this).data('searchparams').replace('&amp;', '&'));
+		var searchParams = jq(this).data('searchparams');
 		var searchConfig = kenyaui.getSearchConfig(searchType);
+
+		if (searchParams) {
+			searchParams = kenyaui.deparam(searchParams.replace('&amp;', '&'));
+		}
 
 		if (searchConfig) {
 			jq(this).select2({

@@ -22,6 +22,8 @@
 		optionsValueField: 'id'
 ]) %>
 
+<span id="${ config.id }-error" class="error" style="display: none"></span>
+
 <% if (config.parentFormId) { %>
 <script type="text/javascript">
 	FieldUtils.defaultSubscriptions('${ config.parentFormId }', '${ config.formFieldName }', '${ config.id }');

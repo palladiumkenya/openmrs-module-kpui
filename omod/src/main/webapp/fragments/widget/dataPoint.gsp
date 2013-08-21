@@ -1,25 +1,29 @@
 <%
-    config.require("label")
+	config.require("label")
 
-	def val = null
-	def extra = config.extra
+	def valueHtml = null
+	def extraHtml = null
 
 	if (config.value instanceof java.util.Date) {
 		if (config.showTime) {
-			val = ui.format(config.value)
+			valueHtml = ui.format(config.value)
 		} else {
-			val = kenyaUi.formatDate(config.value)
+			valueHtml = kenyaUi.formatDate(config.value)
 		}
 
 		if (config.showDateInterval) {
-			extra = kenyaUi.formatInterval(config.value)
+			extraHtml = kenyaUi.formatInterval(config.value)
 		}
-	} else {
-		val = ui.format(config.value)
+	}
+	else if (config.value instanceof org.openmrs.ui.framework.Link) {
+		valueHtml = """<a href="${ config.value.link }">${ config.value.label }</a>"""
+	}
+	else {
+		valueHtml = ui.format(config.value)
 	}
 
 	if (config.extra instanceof java.util.Date) {
-		extra = kenyaUi.formatDate(config.extra)
+		extraHtml = kenyaUi.formatDate(config.extra)
 	}
 %>
-<div class="ke-datapoint"><span class="ke-label">${ config.label }</span>: <span class="ke-value">${ ui.escapeHtml(val) }</span><% if (extra) { %> <span class="ke-extra">(${ ui.escapeHtml(extra) })</span><% } %></div>
+<div class="ke-datapoint"><span class="ke-label">${ config.label }</span>: <span class="ke-value">${ valueHtml }</span><% if (extraHtml) { %> <span class="ke-extra">(${ extraHtml })</span><% } %></div>

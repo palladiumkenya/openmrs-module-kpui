@@ -30,14 +30,6 @@ jq(function() {
 	});
 
 	/**
-	 * Give html buttons same styles as kenyaui controls
-	 */
-	jq('input[type="button"], input[type="submit"], input[type="reset"]')
-		.addClass('ke-control')
-		.addClass('ke-button')
-		.css('font-weight', 'bold');
-
-	/**
 	 * Disable autocomplete on all text inputs
 	 */
 	jq('input[type=text]').attr('autocomplete', 'off');
@@ -150,6 +142,15 @@ var kenyaui = (function(jq) {
 	}
 
 	/**
+	 * Creates a button control
+	 * @param id the button id
+	 * @param label the label
+	 */
+	function createButton(id, label) {
+		return '<div class="ke-button" id="' + id + '"><div class="ke-button-text"><div class="ke-label">' + label + '</div></div></div>';
+	}
+
+	/**
 	 * Takes an existing form and sets it up to submit via AJAX and get a json response.
 	 * @param fieldId the field id
 	 * @param options:
@@ -182,7 +183,7 @@ var kenyaui = (function(jq) {
 		var defaults = { heading: null, message: null };
 		var options = options ? jq.extend(defaults, options) : defaults;
 
-		var html = '<div style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
+		var html = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 		if (options.message) {
 			html += '<br /><br />' + options.message;
 		}
@@ -202,12 +203,8 @@ var kenyaui = (function(jq) {
 		var okButtonId = kenyaui.generateId();
 		var cancelButtonId = kenyaui.generateId();
 
-		var html = options.message + '<br /><br />';
-		html += '<div style="text-align: center">';
-		html += '<div class="ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
-		html += '&nbsp;'
-		html += '<div class="ke-button" id="' + cancelButtonId + '"><div><span class="ke-label">' + options.cancelLabel + '</span></div></div>';
-		html += '</div>';
+		var html = '<div class="ke-panel-content">' + options.message + '</div>';
+		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '&nbsp;' + createButton(cancelButtonId, options.cancelLabel) + '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
@@ -225,10 +222,8 @@ var kenyaui = (function(jq) {
 
 		var okButtonId = kenyaui.generateId();
 
-		var html = options.message + '<br /><br />';
-		html += '<div style="text-align: center">';
-		html += '<div class="ke-button" id="' + okButtonId + '"><div><span class="ke-label">' + options.okLabel + '</span></div></div>';
-		html += '</div>';
+		var html = '<div class="ke-panel-content">' + options.message + '</div>';
+		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
@@ -247,7 +242,7 @@ var kenyaui = (function(jq) {
 		if (options.heading) {
 			html += '<div class="ke-panel-heading">' + options.heading + '</div>';
 		}
-		html += '<div class="ke-panel-content">' + options.content + '</div></div>';
+		html += options.content + '</div>';
 		openModalContent(html, options.width, options.height);
 	};
 

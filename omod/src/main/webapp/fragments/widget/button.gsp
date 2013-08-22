@@ -2,17 +2,13 @@
 	// Supports icon, iconProvider, iconOverlay, label, extra
 	// Supports onClick (javascript snippet)
 	// Supports href (link url)
-	// Supports classes (applied to button)
+	// Supports cssClass (applied to button)
 
 	def id = config.id ?: ui.randomId("button")
 
-	def classes = [ "ke-button" ];
-
-	if (config.classes) {
-		classes.addAll(config.classes)
-	}
+	def cssClass = config.cssClass ?: "ke-button"
 %>
-<div id="${ id }" class="${ classes.join(' ') }">
+<div id="${ id }" class="${ cssClass }">
 	<% if (config.icon && config.iconProvider) { %>
 		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconOverlay, iconOverlayProvider: config.iconOverlayProvider ]) }
 	<% } %>

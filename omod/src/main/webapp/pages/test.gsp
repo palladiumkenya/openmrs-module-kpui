@@ -50,15 +50,18 @@
 	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", extra: "Icon has an overlay ", iconProvider: "kenyaui", icon: "buttons/patient_search.png", iconOverlayProvider: "kenyaui", iconOverlay: "buttons/_overlay_edit.png", onClick: defaultOnClick ]) }
 </div>
 
+<h3>buttonlet</h3>
+<div class="holder">
+	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "add", onClick: defaultOnClick ]) }
+	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "edit", onClick: defaultOnClick ]) }
+	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "void", onClick: defaultOnClick ]) }
+	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "add", label: "Add", onClick: defaultOnClick ]) }
+</div>
+
 <h3>dataPoint</h3>
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Regular value with extra date", value: "Value", extra: new Date() ]) }
-</div>
-
-<h3>editButton</h3>
-<div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/editButton", [ onClick: defaultOnClick ]) }
 </div>
 
 <h3>panelMenu</h3>
@@ -99,7 +102,9 @@
 
 <h3>panel</h3>
 <div class="holder">
-	${ ui.decorate("kenyaui", "panel", [ heading: "Heading" ], "Panel content") }
+	${ ui.decorate("kenyaui", "panel", [ heading: "Simple Panel" ], """Panel content""") }
+	${ ui.decorate("kenyaui", "panel", [ heading: "Panel with footer", frameOnly: true ],
+			"""<div class="ke-panel-content">Panel content</div><div class="ke-panel-footer">Panel footer</div>""") }
 </div>
 
 <h2>Styles</h2>
@@ -134,6 +139,17 @@
 	Form content
 </div>
 
+<h3>stack-item</h3>
+<div class="holder">
+	<div class="ke-stack-item">Stack item #1</div>
+	<div class="ke-stack-item">Stack item #2</div>
+	<div class="ke-stack-item">
+		${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "void", onClick: defaultOnClick ]) }
+		${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "edit", onClick: defaultOnClick ]) }
+		Stack item #3 with buttonlets
+	</div>
+</div>
+
 <h3>table-vertical</h3>
 <div class="holder">
 	<table class="ke-table-vertical">
@@ -162,6 +178,13 @@
 <h3>warning</h3>
 <div class="holder">
 	<div class="ke-warning">Warning content</div>
+</div>
+
+<h3>HTML overrides</h3>
+<div class="holder">
+	<input type="submit" value="submit" />
+	<input type="button" value="button" />
+	<input type="text" value="text" />
 </div>
 
 <h2>Javascript</h2>

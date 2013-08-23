@@ -96,7 +96,7 @@ public class PermissionCheckPageRequestInterceptor implements PageRequestInterce
 
 			// Check logged in user has require privilege for this app
 			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
-				throw new APIAuthenticationException("Insufficient privileges for app");
+				throw new APIAuthenticationException("Insufficient privileges for " + app.getLabel() + " app");
 			}
 		}
 

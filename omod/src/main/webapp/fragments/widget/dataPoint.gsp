@@ -16,7 +16,12 @@
 		}
 	}
 	else if (config.value instanceof org.openmrs.ui.framework.Link) {
-		valueHtml = """<a href="${ config.value.link }">${ config.value.label }</a>"""
+		if (config.value.icon) {
+			valueHtml = """<a href="${ config.value.link }"><img src="${ config.value.icon }" class="ke-glyph" /> ${ config.value.label }</a>"""
+		}
+		else {
+			valueHtml = """<a href="${ config.value.link }">${ config.value.label }</a>"""
+		}
 	}
 	else {
 		valueHtml = ui.format(config.value)

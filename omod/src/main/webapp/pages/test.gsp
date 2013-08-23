@@ -182,6 +182,7 @@
 
 <h3>HTML overrides</h3>
 <div class="holder">
+	This is text and <a href="#">this is a link</a>
 	<input type="submit" value="submit" />
 	<input type="button" value="button" />
 	<input type="text" value="text" />
@@ -229,7 +230,7 @@
 
 <h3>glyphs</h3>
 <div class="holder">
-	<% [ "email", "phone" ].each { name -> %>
+	<% [ "email", "phone", "patient_f", "patient_m", "person_f", "person_m" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>

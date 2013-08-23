@@ -16,6 +16,7 @@
 
 $color_text_general: #333333;
 $color_text_control: #444444;
+$color_text_link: #495998;
 $color_bkgd_general: #ffffff;
 $color_bkgd_control: #eeeeee;
 $color_bkgd_frame: #d1d0c9;
@@ -40,6 +41,12 @@ $size_text_extra: 12px;
 html, body, p, input, button, select, legend, label {
 	font-size: $size_text_general;
 	color: $color_text_general;
+}
+
+a {
+	color: $color_text_link;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 small {
@@ -567,6 +574,10 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-search {
 	width: 300px;
+
+	a {
+		font-weight: normal;
+	}
 }
 
 .ke-loading {
@@ -577,6 +588,11 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-tip {
 	font-size: $size_text_extra;
+}
+
+/* Images that appear inline with regular text */
+.ke-glyph {
+	vertical-align: text-bottom;
 }
 
 .ke-identifier-type {

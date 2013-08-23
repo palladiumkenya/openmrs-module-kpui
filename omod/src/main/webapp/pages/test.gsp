@@ -186,6 +186,7 @@
 	<input type="submit" value="submit" />
 	<input type="button" value="button" />
 	<input type="text" value="text" />
+	<select><option>Option #1</option><option>Option #2</option><option>Option #3</option></select>
 </div>
 
 <h2>Javascript</h2>

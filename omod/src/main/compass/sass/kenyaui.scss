@@ -574,10 +574,6 @@ span.ke-field-label, label.ke-field-label {
 
 .ke-search {
 	width: 300px;
-
-	a {
-		font-weight: normal;
-	}
 }
 
 .ke-loading {
@@ -618,16 +614,32 @@ input.hasDatepicker {
 	width: 105px;
 }
 
+/* Make input fields look similar to select2 controls */
+input[type=text], input[type=password], input[type=file] {
+	border-radius: 3px;
+	padding: 4px;
+	margin: 0;
+	border: 1px solid #aaa;
+	font-size: $size_text_general;
+}
+
 /* Make input field highlighting same across different browsers */
 input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	background-color: $color_bkgd_highlight;
 	outline: none;
 }
 
-/* Give native buttons same style */
-input[type=button], input[type=submit], input[type=reset], button {
+/* Give native buttons same style. Not applied to <button> as this messes up jQueryUI */
+input[type=button], input[type=submit], input[type=reset] {
 	@extend .ke-button;
 
 	/* Usually this is applied to the label, but these elements don't have that */
 	min-width: 75px;
+}
+
+/* Don't bold a tags used by select2 */
+.select2-container {
+	a {
+		font-weight: normal;
+	}
 }

@@ -8,7 +8,7 @@
 	def icons = [ edit: "edit.png", add: "add.png", void: "void.png" ]
 %>
 <div id="${ id }" class="ke-buttonlet">
-	<img src="${ ui.resourceLink("kenyaui", "images/buttonlets/" + icons[config.type]) }" />
+	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + icons[config.type]) }" />
 	<% if (config.label) { %>
 		<span class="ke-label">${ config.label }</span>
 	<% } %>

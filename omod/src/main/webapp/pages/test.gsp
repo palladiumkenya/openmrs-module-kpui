@@ -230,7 +230,7 @@
 
 <h3>glyphs</h3>
 <div class="holder">
-	<% [ "email", "phone", "patient_f", "patient_m", "person_f", "person_m" ].each { name -> %>
+	<% [ "add", "edit", "void", "email", "phone", "patient_f", "patient_m", "person_f", "person_m" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>

@@ -8,12 +8,14 @@
 		<property name="moduleId" value="kenyaui"/>
 		<property name="resourceShortcuts">
 			<map>
+				<!-- JS -->
 				<entry key="scripts/jquery.js" value="scripts/jquery-1.9.1.min.js" />
 				<entry key="scripts/jquery-ui.js" value="scripts/jquery-ui-1.10.3.min.js" />
-				<entry key="scripts/select2.js" value="scripts/select2-3.4.0.min.js" />
+				<entry key="scripts/select2.js" value="scripts/select2-3.4.2.min.js" />
 
+				<!-- CSS -->
 				<entry key="styles/jquery-ui.css" value="styles/jquery-ui-1.10.3.custom.css" />
-				<entry key="styles/select2.css" value="styles/select2-3.4.0.css" />
+				<entry key="styles/select2.css" value="styles/select2-3.4.2.css" />
 			</map>
 		</property>
 	</bean>

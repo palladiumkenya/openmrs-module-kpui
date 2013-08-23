@@ -212,7 +212,8 @@
 	<%
 	[
 			"account", "account_add", "admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
-			"back", "close", "patient_add", "patient_overview", "patient_search", "profile_password", "profile_secret_question",
+			"back", "close", "patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
+			"person_f", "person_m", "profile_password", "profile_secret_question",
 			"program_complete", "program_enroll", "provider", "regimen", "regimen_change", "regimen_restart",
 			"regimen_start", "regimen_stop", "registration", "report_configure", "report_download_excel", "report_generate",
 			"undo", "user_disable", "user_enable", "users_manage", "visit_end", "visit_retrospective", "visit_void"

@@ -7,7 +7,7 @@
 
 	<packaging>pom</packaging>
 	<name>KenyaUI Library</name>
-	<description>Library of useful widgets, decorators, and fragments for the Kenya EMR</description>
+	<description>Re-usable UI components for KenyaEMR</description>
 
 	<developers>
 		<developer>

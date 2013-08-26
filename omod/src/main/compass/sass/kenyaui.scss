@@ -21,6 +21,7 @@ $color_bkgd_general: #ffffff;
 $color_bkgd_control: #eeeeee;
 $color_bkgd_frame: #d1d0c9;
 $color_bkgd_gutter: #7f7b72;
+$color_bkgd_label: lighten($color_bkgd_frame, 15%);
 $color_bkgd_toolbar: #464640;
 $color_bkgd_highlight: #ffffdd;
 $color_bkgd_error: #ffd1d7;
@@ -240,6 +241,42 @@ html, body {
 	display: none;
 }
 
+/************************** Panels **************************/
+
+.ke-panel-frame {
+	@extend .ke-rounded;
+
+	background-color: $color_bkgd_frame;
+	margin-bottom: 5px;
+	padding: 3px;
+
+	.ke-panel-heading {
+		color: #413c32;
+		padding: 5px;
+		text-align: center;
+		font-weight: bold;
+		font-size: $size_text_header;
+	}
+	.ke-panel-content {
+		background-color: $color_bkgd_general;
+		padding: 5px;
+	}
+	.ke-panel-controls, .ke-panel-footer /* Deprecated: use .ke-panel-controls*/ {
+		background-color: $color_bkgd_label;
+		padding: 5px;
+		text-align: center;
+	}
+}
+
+.ke-page-sidebar {
+	.ke-panel-frame {
+		background-color: $color_bkgd_gutter;
+	}
+	.ke-panel-heading {
+		color: white;
+	}
+}
+
 /************************** Forms **************************/
 
 fieldset {
@@ -253,16 +290,22 @@ legend {
 }
 
 .ke-form-header {
-	@extend .ke-panelbar;
+	@extend .ke-panel-controls;
+}
 
-	margin-bottom: 5px;
+.ke-form-content {
+	@extend .ke-panel-content;
+
+	table th {
+		background-color: #EEE;
+		font-weight: bold;
+		padding: 3px;
+		color: #444;
+	}
 }
 
 .ke-form-footer {
-	@extend .ke-panelbar;
-
-	text-align: center;
-	margin-top: 5px;
+	@extend .ke-panel-controls;
 
 	.ke-button {
 		margin: 2px;
@@ -271,7 +314,7 @@ legend {
 
 .ke-field-label {
 	padding: 2px;
-	background-color: #F7F7F7;
+	background-color: $color_bkgd_label;
 	color: $color_text_general;
 	font-size: $size_text_extra;
 }
@@ -422,42 +465,6 @@ span.ke-field-label, label.ke-field-label {
 	background-color: #EEB;
 }
 
-/************************** Panels **************************/
-
-.ke-panel-frame {
-	@extend .ke-rounded;
-
-	background-color: $color_bkgd_frame;
-	margin-bottom: 5px;
-	padding: 3px;
-
-	.ke-panel-heading {
-		color: #413c32;
-		padding: 5px;
-		text-align: center;
-		font-weight: bold;
-		font-size: $size_text_header;
-	}
-	.ke-panel-content {
-		background-color: $color_bkgd_general;
-		padding: 5px;
-	}
-	.ke-panel-footer {
-		background-color: lighten($color_bkgd_frame, 15%);
-		padding: 5px;
-		text-align: center;
-	}
-}
-
-.ke-page-sidebar {
-	.ke-panel-frame {
-		background-color: $color_bkgd_gutter;
-	}
-	.ke-panel-heading {
-		color: white;
-	}
-}
-
 /************************** Stacks **************************/
 
 .ke-stack-item {
@@ -488,6 +495,13 @@ span.ke-field-label, label.ke-field-label {
 
 	thead tr {
 		border-bottom: 2px solid $color_bkgd_gutter;
+
+		th {
+			font-weight: bold;
+			color: $color_text_control;
+			padding: 2px;
+			text-align: left;
+		}
 	}
 	tbody tr {
 		border-top: 1px solid #AAA;
@@ -498,17 +512,11 @@ span.ke-field-label, label.ke-field-label {
 		&:nth-child(odd) {
 			background-color: #F7F7F7;
 		}
-	}
-	th {
-		font-weight: bold;
-		color: #444;
-	}
-	th, td {
-		padding: 2px;
-		text-align: center;
-
-		&:first-of-type {
+		td {
+			padding: 2px;
+			text-align: center;
 			text-align: left;
+			vertical-align: top;
 		}
 	}
 }

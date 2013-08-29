@@ -14,10 +14,13 @@
 
 package org.openmrs.module.kenyaui.interceptor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.module.appframework.api.AppFrameworkService;
+import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.module.kenyaui.annotation.PublicAction;
 import org.openmrs.module.kenyaui.annotation.PublicPage;
@@ -25,10 +28,15 @@ import org.openmrs.module.kenyaui.annotation.SharedPage;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.interceptor.FragmentActionInterceptor;
 import org.openmrs.ui.framework.interceptor.PageRequestInterceptor;
+import org.openmrs.ui.framework.page.PageAction;
 import org.openmrs.ui.framework.page.PageContext;
+import org.openmrs.ui.framework.page.Redirect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,12 +46,21 @@ import java.util.List;
 @Component
 public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentActionInterceptor {
 
+	protected static final Log log = LogFactory.getLog(AppSecurityInterceptor.class);
+
+	@Autowired
+	private KenyaUiUtils kenyaUi;
+
 	/**
 	 * @see PageRequestInterceptor#beforeHandleRequest(org.openmrs.ui.framework.page.PageContext)
 	 */
 	@Override
-	public void beforeHandleRequest(PageContext context) {
+	public void beforeHandleRequest(PageContext context) throws PageAction {
 		Class<?> controllerClazz = context.getController().getClass();
+
+		if (log.isDebugEnabled()) {
+			log.debug("Intercepted page request to " + controllerClazz.getCanonicalName());
+		}
 
 		PublicPage publicPage = controllerClazz.getAnnotation(PublicPage.class);
 		AppPage appPage = controllerClazz.getAnnotation(AppPage.class);
@@ -55,7 +72,7 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 
 		// Start by checking if a login is required
 		if (publicPage == null && !Context.isAuthenticated()) {
-			throw new APIAuthenticationException("Login is required");
+			redirectToLogin(context, "Login is required");
 		}
 
 		String requestAppId = null;
@@ -88,6 +105,10 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 	 */
 	@Override
 	public void beforeHandleRequest(FragmentActionRequest request, Method controllerMethod) {
+		if (log.isDebugEnabled()) {
+			log.debug("Intercepted action request to " + controllerMethod.getDeclaringClass().getCanonicalName() + "." + controllerMethod.getName());
+		}
+
 		PublicAction publicAction = controllerMethod.getAnnotation(PublicAction.class);
 
 		if (publicAction == null && !Context.isAuthenticated()) {
@@ -96,11 +117,31 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 	}
 
 	/**
+	 * Performs a redirect to the login page
+	 * @param pageContext the page context
+	 * @param message the message to display to the user
+	 */
+	public void redirectToLogin(PageContext pageContext, String message) throws Redirect {
+		HttpServletRequest request = pageContext.getRequest().getRequest();
+
+		kenyaUi.notifyError(request.getSession(), message);
+
+		String loginUrl = "login.htm";
+
+		// Logout servlet redirects to index.htm?noredirect=true
+		if (! "true".equals(request.getParameter("noredirect"))) {
+			loginUrl += "?redirect=" + URLEncoder.encode(pageContext.getUrl(false));
+		}
+
+		throw new Redirect(loginUrl);
+	}
+
+	/**
 	 * Sets the app associated with the given request
 	 * @param pageContext the page context
 	 * @param appId the app id (may be null)
 	 */
-	public static void setRequestApp(PageContext pageContext, String appId) {
+	public void setRequestApp(PageContext pageContext, String appId) throws Redirect {
 		AppDescriptor app = null;
 
 		if (appId != null) {
@@ -112,7 +153,7 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 
 			// Check logged in user has require privilege for this app
 			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
-				throw new APIAuthenticationException("Insufficient privileges for " + app.getLabel() + " app");
+				redirectToLogin(pageContext, "Insufficient privileges for " + app.getLabel() + " app");
 			}
 		}
 

@@ -23,6 +23,7 @@ import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
+import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.WebConstants;
@@ -226,10 +227,19 @@ public class KenyaUiUtils {
 
 	/**
 	 * Convenience method to get the current app for the request
-	 * @param request the request
+	 * @param request the page request
 	 * @return the app descriptor
 	 */
 	public AppDescriptor getCurrentApp(PageRequest request) {
-		return (AppDescriptor) request.getRequest().getAttribute("currentApp");
+		return (AppDescriptor) request.getRequest().getAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP);
+	}
+
+	/**
+	 * Convenience method to get the current app for the request
+	 * @param request the fragment action request
+	 * @return the app descriptor
+	 */
+	public AppDescriptor getCurrentApp(FragmentActionRequest request) {
+		return (AppDescriptor) request.getHttpRequest().getAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP);
 	}
 }

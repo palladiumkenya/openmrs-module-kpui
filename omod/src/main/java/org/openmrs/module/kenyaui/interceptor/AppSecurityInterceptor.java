@@ -20,7 +20,9 @@ import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.module.appframework.api.AppFrameworkService;
+import org.openmrs.module.kenyaui.KenyaUiConstants;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
+import org.openmrs.module.kenyaui.annotation.AppAction;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.module.kenyaui.annotation.PublicAction;
 import org.openmrs.module.kenyaui.annotation.PublicPage;
@@ -110,9 +112,24 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 		}
 
 		PublicAction publicAction = controllerMethod.getAnnotation(PublicAction.class);
+		AppAction appAction = controllerMethod.getAnnotation(AppAction.class);
 
+		if (countNonNull(publicAction, appAction) > 1) {
+			throw new RuntimeException("Fragment action method should have only one of the @PublicAction and @AppAction annotations");
+		}
+
+		// Start by checking if a login is required
 		if (publicAction == null && !Context.isAuthenticated()) {
-			throw new APIAuthenticationException("Login is required");
+			throw new APIAuthenticationException("Must be logged in");
+		}
+
+		if (appAction != null) {
+			// Check that the current app is the app for this action
+			AppDescriptor currentApp = kenyaUi.getCurrentApp(request);
+
+			if (currentApp == null || !currentApp.getId().equals(appAction.value())) {
+				throw new APIAuthenticationException("Fragment action accessed from invalid app");
+			}
 		}
 	}
 
@@ -157,9 +174,9 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 			}
 		}
 
-		// Important to add these attributes even if they're null
-		pageContext.getRequest().getRequest().setAttribute("currentApp", app);
-		pageContext.getModel().addAttribute("currentApp", app);
+		// Important to add these attributes even if null
+		pageContext.getRequest().getRequest().setAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP, app);
+		pageContext.getModel().addAttribute(KenyaUiConstants.MODEL_ATTR_CURRENT_APP, app);
 	}
 
 	/**

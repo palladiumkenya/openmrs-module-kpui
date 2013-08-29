@@ -26,11 +26,21 @@ public class KenyaUiConstants {
 	 */
 	public static final String MODULE_ID = "kenyaui";
 
+	/**
+	 * Localization
+	 */
 	public static final Locale LOCALE = Locale.ENGLISH;
-
 	public static final String DATE_FORMAT = "dd-MMM-yyyy";
-
 	public static final String TIME_FORMAT = "HH:mm";
-
 	public static final String DATETIME_FORMAT = "dd-MMM-yyyy HH:mm";
+
+	/**
+	 * Request attributes
+	 */
+	public static final String REQUEST_ATTR_CURRENT_APP = MODULE_ID + ".current-app";
+
+	/**
+	 * Page model attributes
+	 */
+	public static final String MODEL_ATTR_CURRENT_APP = "currentApp";
 }

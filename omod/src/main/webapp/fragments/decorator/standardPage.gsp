@@ -14,17 +14,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>${ config.pageTitle }</title>
-		<link rel="shortcut icon" type="image/ico" href="${ config.faviconIco }">
-		<link rel="icon" type="image/png" href="${ config.faviconPng }">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<% if (config.pageTitle) { %><title>${ config.pageTitle }</title><% } %>
+		<% if (config.faviconIco) { %><link rel="shortcut icon" type="image/ico" href="${ config.faviconIco }"><% } %>
+		<% if (config.faviconPng) { %><link rel="icon" type="image/png" href="${ config.faviconPng }"><% } %>
 
 		<%= ui.resourceLinks() %>
-
 	</head>
 	<body>
 		<script type="text/javascript">
 			var OPENMRS_CONTEXT_PATH = '${ contextPath }';
-			var CONTEXT_PATH = '${ contextPath }';
 		</script>
 
 		${ ui.includeFragment("kenyaui", "notifications") }
@@ -36,6 +35,5 @@
 		<div class="ke-page-container">
 			<%= config.content %>
 		</div>
-
 	</body>
 </html>

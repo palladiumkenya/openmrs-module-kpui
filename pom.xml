@@ -3,7 +3,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>kenyaui</artifactId>
-	<version>1.10.3-SNAPSHOT</version>
+	<version>1.11-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 	<name>KenyaUI Library</name>

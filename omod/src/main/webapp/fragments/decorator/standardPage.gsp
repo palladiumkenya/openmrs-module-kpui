@@ -8,8 +8,8 @@
 
 <% ui.includeCss("kenyaui", "jquery-ui.css") %>
 <% ui.includeCss("kenyaui", "select2.css") %>
-<% ui.includeCss("kenyaui", "kenyaui.css") %>
 <% ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css") %>
+<% ui.includeCss("kenyaui", "kenyaui.css") %>
 
 <!DOCTYPE html>
 <html>
@@ -26,20 +26,6 @@
 			var OPENMRS_CONTEXT_PATH = '${ contextPath }';
 			var CONTEXT_PATH = '${ contextPath }';
 		</script>
-
-		<style type="text/css">
-			.ke-loading {
-				background-image: url('${ ui.resourceLink("kenyaui", "images/loader_small.gif") }');
-			}
-			/**
-			 * Override styles for toasts
-			 */
-			.toast-item {
-				background-color: #464640;
-				border-radius: 3px;
-				border: 0;
-			}
-		</style>
 
 		${ ui.includeFragment("kenyaui", "notifications") }
 

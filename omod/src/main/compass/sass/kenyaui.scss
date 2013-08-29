@@ -585,6 +585,7 @@ span.ke-field-label, label.ke-field-label {
 }
 
 .ke-loading {
+	background-image: url('../images/loader_small.gif');
 	background-repeat: no-repeat;
 	min-height: 16px;
 	min-width: 16px;
@@ -650,4 +651,11 @@ input[type=button], input[type=submit], input[type=reset] {
 	a {
 		font-weight: normal;
 	}
+}
+
+/* Override styles for toasts */
+.toast-item {
+	background-color: #464640;
+	border-radius: 3px;
+	border: 0;
 }

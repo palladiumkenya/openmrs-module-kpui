@@ -14,9 +14,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Kenya EMR</title>
-		<link rel="shortcut icon" type="image/ico" href="${ ui.resourceLink("kenyaui", "images/logos/favicon.ico") }">
-		<link rel="icon" type="image/png" href="${ ui.resourceLink("kenyaui", "images/logos/favicon.png") }">
+		<title>${ config.pageTitle }</title>
+		<link rel="shortcut icon" type="image/ico" href="${ config.faviconIco }">
+		<link rel="icon" type="image/png" href="${ config.faviconPng }">
 
 		<%= ui.resourceLinks() %>
 
@@ -31,9 +31,9 @@
 			.ke-loading {
 				background-image: url('${ ui.resourceLink("kenyaui", "images/loader_small.gif") }');
 			}
-				/**
-				 * Override styles for toasts
-				 */
+			/**
+			 * Override styles for toasts
+			 */
 			.toast-item {
 				background-color: #464640;
 				border-radius: 3px;

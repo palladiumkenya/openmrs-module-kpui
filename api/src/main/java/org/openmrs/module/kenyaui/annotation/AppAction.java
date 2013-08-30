@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation for fragment actions which belong to a specific app
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AppAction {
 

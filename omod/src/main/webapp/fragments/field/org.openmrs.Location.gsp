@@ -7,10 +7,10 @@ ${ ui.includeFragment("kenyaui", "widget/search", config.mergeAttributes([ searc
 		jq('#${ config.id }').data('default-value', jq('#${ config.id }').val());
 
 		subscribe('${ config.parentFormId }.reset', function() {
-			kenyaui.updateSearchDisplay('${ config.id }', jq('#${ config.id }').data('default-value'));
+			kenyaui.setSearchFieldValue('${ config.id }', jq('#${ config.id }').data('default-value'));
 		});
 
-		jq('#${ config.id }').change(function() {
+		jq('#${ config.id }').on('change', function() {
 			publish('${ config.parentFormId }/changed');
 		});
 	});

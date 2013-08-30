@@ -283,7 +283,7 @@ var kenyaui = (function(jq) {
 	 * @param fieldId
 	 * @param value
 	 */
-	_public.updateSearchDisplay = function(fieldId, value) {
+	_public.setSearchFieldValue = function(fieldId, value) {
 		jq('#' + fieldId).select2('val', value);
 	};
 

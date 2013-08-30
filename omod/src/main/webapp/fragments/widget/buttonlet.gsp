@@ -5,7 +5,7 @@
 
 	def id = config.id ?: ui.randomId("button")
 
-	def icons = [ edit: "edit.png", add: "add.png", void: "void.png" ]
+	def icons = [ edit: "edit.png", add: "add.png", void: "void.png", switch: "switch.png" ]
 %>
 <div id="${ id }" class="ke-buttonlet">
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + icons[config.type]) }" />

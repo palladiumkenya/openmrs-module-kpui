@@ -26,6 +26,7 @@ import org.openmrs.module.kenyaui.annotation.AppAction;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.module.kenyaui.annotation.PublicAction;
 import org.openmrs.module.kenyaui.annotation.PublicPage;
+import org.openmrs.module.kenyaui.annotation.SharedAction;
 import org.openmrs.module.kenyaui.annotation.SharedPage;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.interceptor.FragmentActionInterceptor;
@@ -86,7 +87,7 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 		}
 		else if (sharedPage != null) {
 			// Read app id from request
-			requestAppId = (String) context.getRequest().getAttribute("appId");
+			requestAppId = context.getRequest().getRequest().getParameter("appId");
 
 			if (requestAppId == null) {
 				throw new RuntimeException("Shared page controller requires the appId request parameter");
@@ -113,9 +114,10 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 
 		PublicAction publicAction = controllerMethod.getAnnotation(PublicAction.class);
 		AppAction appAction = controllerMethod.getAnnotation(AppAction.class);
+		SharedAction sharedAction = controllerMethod.getAnnotation(SharedAction.class);
 
-		if (countNonNull(publicAction, appAction) > 1) {
-			throw new RuntimeException("Fragment action method should have only one of the @PublicAction and @AppAction annotations");
+		if (countNonNull(publicAction, appAction, sharedAction) > 1) {
+			throw new RuntimeException("Fragment action method should have only one of the @PublicAction, @AppAction and @SharedAction annotations");
 		}
 
 		// Start by checking if a login is required
@@ -123,14 +125,80 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 			throw new APIAuthenticationException("Must be logged in");
 		}
 
-		if (appAction != null) {
-			// Check that the current app is the app for this action
-			AppDescriptor currentApp = kenyaUi.getCurrentApp(request);
+		String requestAppId = null;
 
-			if (currentApp == null || !currentApp.getId().equals(appAction.value())) {
-				throw new APIAuthenticationException("Fragment action accessed from invalid app");
+		// Set the current request app based on @AppPage or @SharedPage
+		if (appAction != null) {
+			// Read app id from annotation
+			requestAppId = appAction.value();
+		}
+		else if (sharedAction != null) {
+			// Read app id from request
+			requestAppId = request.getHttpRequest().getParameter("appId");
+
+			if (requestAppId == null) {
+				throw new RuntimeException("Shared action method requires the appId request parameter");
+			}
+
+			List<String> allowedAppIds = Arrays.asList(sharedAction.value());
+
+			if (allowedAppIds != null && allowedAppIds.size() > 0 && !allowedAppIds.contains(requestAppId)) {
+				throw new RuntimeException("Shared page accessed with invalid appId: " + requestAppId);
 			}
 		}
+
+		setRequestApp(request, requestAppId);
+	}
+
+	/**
+	 * Sets the app associated with the given page request
+	 * @param pageContext the page context
+	 * @param appId the app id (may be null)
+	 */
+	public void setRequestApp(PageContext pageContext, String appId) throws Redirect {
+		AppDescriptor app = null;
+
+		if (appId != null) {
+			app = Context.getService(AppFrameworkService.class).getAppById(appId);
+
+			if (app == null) {
+				throw new IllegalArgumentException("No such app with appId " + appId);
+			}
+
+			// Check logged in user has require privilege for this app
+			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
+				redirectToLogin(pageContext, "Insufficient privileges for " + app.getLabel() + " app");
+			}
+		}
+
+		// Important to add these attributes even if null
+		pageContext.getRequest().getRequest().setAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP, app);
+		pageContext.getModel().addAttribute(KenyaUiConstants.MODEL_ATTR_CURRENT_APP, app);
+	}
+
+	/**
+	 * Sets the app associated with the given action request
+	 * @param request the action request
+	 * @param appId the app id (may be null)
+	 */
+	public void setRequestApp(FragmentActionRequest request, String appId) {
+		AppDescriptor app = null;
+
+		if (appId != null) {
+			app = Context.getService(AppFrameworkService.class).getAppById(appId);
+
+			if (app == null) {
+				throw new IllegalArgumentException("No such app with appId " + appId);
+			}
+
+			// Check logged in user has require privilege for this app
+			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
+				throw new APIAuthenticationException("Insufficient privileges for " + app.getLabel() + " app");
+			}
+		}
+
+		// Important to add these attributes even if null
+		request.getHttpRequest().setAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP, app);
 	}
 
 	/**
@@ -154,37 +222,11 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 	}
 
 	/**
-	 * Sets the app associated with the given request
-	 * @param pageContext the page context
-	 * @param appId the app id (may be null)
-	 */
-	public void setRequestApp(PageContext pageContext, String appId) throws Redirect {
-		AppDescriptor app = null;
-
-		if (appId != null) {
-			app = Context.getService(AppFrameworkService.class).getAppById(appId);
-
-			if (app == null) {
-				throw new RuntimeException("No such app with appId " + appId);
-			}
-
-			// Check logged in user has require privilege for this app
-			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
-				redirectToLogin(pageContext, "Insufficient privileges for " + app.getLabel() + " app");
-			}
-		}
-
-		// Important to add these attributes even if null
-		pageContext.getRequest().getRequest().setAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP, app);
-		pageContext.getModel().addAttribute(KenyaUiConstants.MODEL_ATTR_CURRENT_APP, app);
-	}
-
-	/**
 	 * Counts the number of non-null arguments
 	 * @param args the arguments
 	 * @return the number which are non-null
 	 */
-	private static int countNonNull(Object... args) {
+	protected static int countNonNull(Object... args) {
 		int count = 0;
 		for (Object arg : args) {
 			if (arg != null) {

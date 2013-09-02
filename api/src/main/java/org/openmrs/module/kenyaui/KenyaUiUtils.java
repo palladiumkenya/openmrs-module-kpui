@@ -71,8 +71,9 @@ public class KenyaUiUtils {
 	 * @return the string value
 	 */
 	public String formatDateTime(Date date) {
-		if (date == null)
+		if (date == null) {
 			return "";
+		}
 
 		return dateFormatter.format(date) + " " + timeFormatter.format(date);
 	}
@@ -85,8 +86,9 @@ public class KenyaUiUtils {
 	 * @should format null date as empty string
 	 */
 	public String formatDate(Date date) {
-		if (date == null)
+		if (date == null) {
 			return "";
+		}
 
 		return dateFormatter.format(date);
 	}
@@ -96,10 +98,12 @@ public class KenyaUiUtils {
 	 * @param date the date
 	 * @return the string value
 	 * @should format date as a string without time information
+	 * @should format null date as empty string
 	 */
 	public String formatTime(Date date) {
-		if (date == null)
+		if (date == null) {
 			return "";
+		}
 
 		return timeFormatter.format(date);
 	}
@@ -128,20 +132,25 @@ public class KenyaUiUtils {
 	 * Formats a person's name
 	 * @param person the person
 	 * @return the string value
+	 * @should format voided person as empty string
 	 */
 	public String formatPersonName(Person person) {
 		PersonName name = person.getPersonName();
-		List<String> items = new ArrayList<String>();
-		if (name.getFamilyName() != null) {
-			items.add(name.getFamilyName() + ",");
+		if (name != null) {
+			List<String> items = new ArrayList<String>();
+
+			if (name.getFamilyName() != null) {
+				items.add(name.getFamilyName() + ",");
+			}
+			if (name.getGivenName() != null) {
+				items.add(name.getGivenName());
+			}
+			if (name.getMiddleName() != null) {
+				items.add(name.getMiddleName());
+			}
+			return OpenmrsUtil.join(items, " ");
 		}
-		if (name.getGivenName() != null) {
-			items.add(name.getGivenName());
-		}
-		if (name.getMiddleName() != null) {
-			items.add(name.getMiddleName());
-		}
-		return OpenmrsUtil.join(items, " ");
+		return "";
 	}
 
 	/**

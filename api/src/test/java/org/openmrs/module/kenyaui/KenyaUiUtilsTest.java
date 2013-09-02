@@ -44,7 +44,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		MockHttpSession session = new MockHttpSession();
 		kenyaUi.notifySuccess(session, "test");
 
-		Assert.assertEquals("test", session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+		Assert.assertThat((String) session.getAttribute(WebConstants.OPENMRS_MSG_ATTR), is("test"));
 	}
 
 	@Test
@@ -52,7 +52,25 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		MockHttpSession session = new MockHttpSession();
 		kenyaUi.notifyError(session, "test");
 
-		Assert.assertEquals("test", session.getAttribute(WebConstants.OPENMRS_ERROR_ATTR));
+		Assert.assertThat((String) session.getAttribute(WebConstants.OPENMRS_ERROR_ATTR), is("test"));
+	}
+
+	/**
+	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @verifies format null date as empty string
+	 */
+	@Test
+	public void formatDateTime_shouldFormatDateAndTime() throws Exception {
+		Assert.assertThat(kenyaUi.formatDateTime(TestUtils.date(2013, 5, 4, 3, 2, 1)), is("04-May-2013 03:02"));
+	}
+
+	/**
+	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @verifies format null date as empty string
+	 */
+	@Test
+	public void formatDateTime_shouldFormatNullDateAsEmptyString() throws Exception {
+		Assert.assertThat(kenyaUi.formatDateTime(null), is(""));
 	}
 
 	/**
@@ -69,7 +87,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		cal.set(Calendar.MINUTE, 30);
 		cal.set(Calendar.SECOND, 12);
 
-		Assert.assertEquals("28-May-1981", kenyaUi.formatDate(cal.getTime()));
+		Assert.assertThat(kenyaUi.formatDate(cal.getTime()), is("28-May-1981"));
 	}
 
 	/**
@@ -78,7 +96,25 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 */
 	@Test
 	public void formatDate_shouldFormatNullDateAsEmptyString() throws Exception {
-		Assert.assertEquals("", kenyaUi.formatDate(null));
+		Assert.assertThat(kenyaUi.formatDate(null), is(""));
+	}
+
+	/**
+	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @verifies format date as a string without date information
+	 */
+	@Test
+	public void formatTime_shouldFormatTimeWithoutDate() throws Exception {
+		Assert.assertThat(kenyaUi.formatTime(TestUtils.date(2013, 5, 4, 3, 2, 1)), is("03:02"));
+	}
+
+	/**
+	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatTime(java.util.Date)
+	 * @verifies format null date as empty string
+	 */
+	@Test
+	public void formatTime_shouldFormatNullDateAsEmptyString() throws Exception {
+		Assert.assertThat(kenyaUi.formatTime(null), is(""));
 	}
 
 	/**
@@ -87,7 +123,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 */
 	@Test
 	public void formatInterval_shouldReturnNonEmptyString() throws Exception {
-		Assert.assertTrue(StringUtils.isNotEmpty(kenyaUi.formatInterval(new Date())));
+		Assert.assertThat(StringUtils.isNotEmpty(kenyaUi.formatInterval(new Date())), is(true));
 	}
 
 	/**
@@ -95,22 +131,28 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 */
 	@Test
 	public void formatPersonName_shouldFormatPersonName() {
+		Person p = new Person();
+
 		PersonName pn = new PersonName();
 		pn.setFamilyName("fff");
 		pn.setGivenName("ggg");
 		pn.setMiddleName("mmm");
-
-		Person p = new Person();
 		p.setNames(Collections.singleton(pn));
+
 		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg mmm"));
 
 		// Check no middle name
 		pn = new PersonName();
 		pn.setFamilyName("fff");
 		pn.setGivenName("ggg");
-
 		p.setNames(Collections.singleton(pn));
+
 		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg"));
+
+		// Check with voided person who has no-name
+		p.setNames(Collections.<PersonName>emptySet());
+
+		Assert.assertThat(kenyaUi.formatPersonName(p), is(""));
 	}
 
 	/**

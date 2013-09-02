@@ -18,10 +18,8 @@ import org.apache.commons.lang3.BooleanUtils;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.ocpsoft.prettytime.PrettyTime;
-import org.openmrs.Concept;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
@@ -33,7 +31,6 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -178,60 +175,6 @@ public class KenyaUiUtils {
 	 */
 	public String formatPersonBirthdate(Person person) {
 		return (BooleanUtils.isTrue(person.isBirthdateEstimated()) ? "approx " : "") + formatDate(person.getBirthdate());
-	}
-
-	/**
-	 * Gets a concept by an identifier (id, mapping or UUID)
-	 * @param identifier the identifier
-	 * @return the concept
-	 * @throws RuntimeException if no concept could be found
-	 */
-	public static Concept getConcept(Object identifier) {
-		Concept concept = null;
-
-		if (identifier instanceof Integer) {
-			concept = Context.getConceptService().getConcept((Integer) identifier);
-		}
-		else if (identifier instanceof String) {
-			String str = (String) identifier;
-
-			if (str.contains(":")) {
-				String[] tokens = str.split(":");
-				concept = Context.getConceptService().getConceptByMapping(tokens[1].trim(), tokens[0].trim());
-			}
-			else {
-				// Assume its a UUID
-				concept = Context.getConceptService().getConceptByUuid(str);
-			}
-		}
-
-		if (concept == null) {
-			throw new IllegalArgumentException("No concept with identifier '" + identifier + "'");
-		}
-
-		return concept;
-	}
-
-	/**
-	 * Fetches a list of concepts from a collection of concepts, concept ids, concept mappings or concept UUIDs
-	 * @param references the collection of concepts, concept ids, concept mappings or concept UUIDs
-	 * @return the list of concepts
-	 * @throws IllegalArgumentException if item in list is not a concept, and Integer or a String
-	 * @throws NumberFormatException if a String identifier is not a valid integer
-	 * @should fetch from concepts, integers or strings
-	 * @should throw exception for non concepts, integers or strings
-	 */
-	public List<Concept> fetchConcepts(Collection<?> references) {
-		List<Concept> concepts = new ArrayList<Concept>();
-		for (Object o : references) {
-			if (o instanceof Concept) {
-				concepts.add((Concept) o);
-			}
-			else {
-				concepts.add(getConcept(o));
-			}
-		}
-		return concepts;
 	}
 
 	/**

@@ -36,11 +36,11 @@ import org.openmrs.util.OpenmrsUtil;
  */
 public class ObsHistoryTableFragmentController {
 
-	public void controller(@FragmentParam("patient") Patient patient, @FragmentParam("concepts") List<?> conceptConfig, FragmentModel model, @SpringBean KenyaUiUtils kenyaUi) {
-		if (conceptConfig.size() < 1)
+	public void controller(@FragmentParam("patient") Patient patient, @FragmentParam("concepts") List<Concept> concepts, FragmentModel model, @SpringBean KenyaUiUtils kenyaUi) {
+		if (concepts.size() < 1) {
 			throw new IllegalArgumentException("Concept list must be non-empty");
+		}
 
-		List<Concept> concepts = kenyaUi.fetchConcepts(conceptConfig);
 		model.addAttribute("concepts", concepts);
 
 		TableData data = new TableData();

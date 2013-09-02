@@ -11,6 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+
 package org.openmrs.module.kenyaui.fragment.controller.widget;
 
 import org.openmrs.Concept;
@@ -30,28 +31,28 @@ import java.util.*;
  */
 public class ObsHistoryGraphFragmentController {
 
-	public void controller(@FragmentParam("patient") Patient patient, @FragmentParam("concepts") List<?> conceptConfig, FragmentModel model, @SpringBean KenyaUiUtils kenyaUi) {
-		if (conceptConfig.size() < 1)
+	public void controller(@FragmentParam("patient") Patient patient, @FragmentParam("concepts") List<Concept> concepts, FragmentModel model, @SpringBean KenyaUiUtils kenyaUi) {
+		if (concepts.size() < 1) {
 			throw new IllegalArgumentException("Concept list must be non-empty");
+		}
 
-		List<Concept> concepts = kenyaUi.fetchConcepts(conceptConfig);
 		model.addAttribute("concepts", concepts);
 		model.addAttribute("data", getObsAsSeries(patient, concepts));
 	}
 
-    /**
-     * Loads the obs for each of the specified concepts for the given person
-     * @param person the person
-     * @param concepts the concepts
-     * @return the map of concepts to lists of obs
-     */
+	/**
+	 * Loads the obs for each of the specified concepts for the given person
+	 * @param person the person
+	 * @param concepts the concepts
+	 * @return the map of concepts to lists of obs
+	 */
 	private Map<Concept, List<Obs>> getObsAsSeries(Person person, List<Concept> concepts) {
-        Map<Concept, List<Obs>> series = new HashMap<Concept, List<Obs>>();
+		Map<Concept, List<Obs>> series = new HashMap<Concept, List<Obs>>();
 
-        for (Concept concept : concepts) {
-            List<Obs> obss = Context.getObsService().getObservationsByPersonAndConcept(person, concept);
-            series.put(concept, obss);
-        }
+		for (Concept concept : concepts) {
+			List<Obs> obss = Context.getObsService().getObservationsByPersonAndConcept(person, concept);
+			series.put(concept, obss);
+		}
 		return series;
 	}
 }

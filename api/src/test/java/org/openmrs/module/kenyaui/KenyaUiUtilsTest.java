@@ -17,10 +17,8 @@ package org.openmrs.module.kenyaui;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openmrs.Concept;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.test.TestUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.web.WebConstants;
@@ -168,36 +166,5 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		p.setBirthdate(TestUtils.date(1980, 6, 30));
 		p.setBirthdateEstimated(true);
 		Assert.assertThat(kenyaUi.formatPersonBirthdate(p), is("approx 30-Jun-1980"));
-	}
-
-	/**
-	 * @see KenyaUiUtils#fetchConcepts(java.util.Collection)
-	 * @verifies fetch from concepts, integers or strings
-	 */
-	@Test
-	public void fetchConcepts_shouldFetchFromConceptsIntegersOrStrings() {
-		Concept weightKg = Context.getConceptService().getConcept(5089);
-		List<Object> conceptsOrIds = new ArrayList<Object>();
-		conceptsOrIds.add(weightKg);
-		conceptsOrIds.add(5089);
-		conceptsOrIds.add("c607c80f-1ea9-4da3-bb88-6276ce8868dd");
-		List<Concept> concepts = kenyaUi.fetchConcepts(conceptsOrIds);
-		org.junit.Assert.assertEquals(weightKg, concepts.get(0));
-		org.junit.Assert.assertEquals(weightKg, concepts.get(1));
-		org.junit.Assert.assertEquals(weightKg, concepts.get(2));
-	}
-
-	/**
-	 * @see KenyaUiUtils#fetchConcepts(java.util.Collection)
-	 * @verifies throw exception for non concepts, integers or strings
-	 */
-	@Test
-	public void fetchConcepts_shouldThrowExceptionForNonConceptsIntegersOrString() {
-		try {
-			kenyaUi.fetchConcepts(Collections.singletonList(new Date()));
-			org.junit.Assert.fail();
-		}
-		catch (IllegalArgumentException ex) {
-		}
 	}
 }

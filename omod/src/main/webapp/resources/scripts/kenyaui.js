@@ -203,7 +203,7 @@ var kenyaui = (function(jq) {
 		var okButtonId = kenyaui.generateId();
 		var cancelButtonId = kenyaui.generateId();
 
-		var html = '<div class="ke-panel-content">' + options.message + '</div>';
+		var html = '<div class="ke-panel-content" style="padding: 10px">' + options.message + '</div>';
 		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '&nbsp;' + createButton(cancelButtonId, options.cancelLabel) + '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
@@ -222,7 +222,7 @@ var kenyaui = (function(jq) {
 
 		var okButtonId = kenyaui.generateId();
 
-		var html = '<div class="ke-panel-content">' + options.message + '</div>';
+		var html = '<div class="ke-panel-content" style="padding: 10px">' + options.message + '</div>';
 		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });

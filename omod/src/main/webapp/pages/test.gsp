@@ -62,6 +62,7 @@
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Regular value with extra date", value: "Value", extra: new Date() ]) }
+	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Collections of values", value: [ "abc", 123, new Date() ] ]) }
 </div>
 
 <h3>panelMenu</h3>

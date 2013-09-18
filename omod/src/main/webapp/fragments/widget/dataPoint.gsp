@@ -1,34 +1,41 @@
 <%
 	config.require("label")
 
-	def valueHtml = null
-	def extraHtml = null
-
-	if (config.value instanceof java.util.Date) {
-		if (config.showTime) {
-			valueHtml = ui.format(config.value)
-		} else {
-			valueHtml = kenyaUi.formatDate(config.value)
+	def formatValue = { val ->
+		if (val instanceof Date) {
+			return config.showTime ? kenyaUi.formatDateTime(val): kenyaUi.formatDate(val)
 		}
-
-		if (config.showDateInterval) {
-			extraHtml = kenyaUi.formatInterval(config.value)
-		}
-	}
-	else if (config.value instanceof org.openmrs.ui.framework.Link) {
-		if (config.value.icon) {
-			valueHtml = """<a href="${ config.value.link }"><img src="${ config.value.icon }" class="ke-glyph" /> ${ config.value.label }</a>"""
+		else if (val instanceof org.openmrs.ui.framework.Link) {
+			if (val.icon) {
+				return """<a href="${ val.link }"><img src="${ val.icon }" class="ke-glyph" /> ${ val.label }</a>"""
+			} else {
+				return """<a href="${ val.link }">${ val.label }</a>"""
+			}
 		}
 		else {
-			valueHtml = """<a href="${ config.value.link }">${ config.value.label }</a>"""
+			return ui.format(val)
 		}
 	}
+
+	def formattedValues = []
+	def formattedExtra = null
+
+	if (config.value instanceof Collection) {
+		formattedValues = config.value.collect({ val -> formatValue(val) })
+	}
 	else {
-		valueHtml = ui.format(config.value)
+		formattedValues = [ formatValue(config.value) ]
 	}
 
-	if (config.extra instanceof java.util.Date) {
-		extraHtml = kenyaUi.formatDate(config.extra)
+	if (config.extra instanceof Date) {
+		formattedExtra = kenyaUi.formatDate(config.extra)
+	}
+	else if (config.value instanceof Date && config.showDateInterval) {
+		formattedExtra = kenyaUi.formatInterval(config.value)
 	}
 %>
-<div class="ke-datapoint"><span class="ke-label">${ config.label }</span>: <span class="ke-value">${ valueHtml }</span><% if (extraHtml) { %> <span class="ke-extra">(${ extraHtml })</span><% } %></div>
+<div class="ke-datapoint">
+	<span class="ke-label">${ config.label }</span>:
+	<%=  formattedValues.collect({ """<span class="ke-value">${ it }</span>""" }).join(", ") %>
+	<% if (formattedExtra) { %><span class="ke-extra">(${ formattedExtra })</span><% } %>
+</div>

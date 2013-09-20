@@ -231,6 +231,23 @@ var kenyaui = (function(jq) {
 	};
 
 	/**
+	 * Opens a modal dialog whose content is fetch dynamically
+	 * @param options the options
+	 */
+	_public.openDynamicDialog = function(options) {
+		var defaults = { heading: null, width: null, height: null };
+		var options = options ? jq.extend(defaults, options) : defaults;
+
+		var tmpContent = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
+
+		_public.openPanelDialog({ heading: options.heading, content: tmpContent, width: options.width, height: options.height });
+
+		jq.get(options.url, function(html) {
+			jq('.ke-modal-content .ke-panel-content').replaceWith(html);
+		});
+	};
+
+	/**
 	 * Opens a modal panel style dialog
 	 * @param options the options
 	 */

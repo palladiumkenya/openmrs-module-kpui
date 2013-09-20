@@ -198,6 +198,7 @@
 	<input type="button" value="openLoadingDialog" onclick="kenyaui.openLoadingDialog({})" />
 	<input type="button" value="openAlertDialog" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })" />
 	<input type="button" value="openConfirmDialog" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })" />
+	<input type="button" value="openDynamicDialog" onclick="kenyaui.openDynamicDialog({ heading: 'Confirm', url: ui.pageLink('kenyaui', 'test') })" />
 </div>
 
 <h2>Icons</h2>

@@ -11,24 +11,22 @@
 
 <script type="text/javascript">
 subscribe("${ config.id }/show", function(event, data) {
+	jq('#${ config.id } > .results').html('');
+
 	if (data.length > 0) {
 		jq('#${ config.id } > .status').html(${ config.numResultsFormatter }(data));
+		jq('#${ config.id } > .results').show();
+
+		for (var i = 0; i < data.length; ++i) {
+			var html = ${ config.itemFormatter }(data[i]);
+			jq(html)
+					.appendTo(jq('#${ config.id } > .results'))
+					<% if (config.clickFunction) { %> .click(${ config.clickFunction }) <% } %>
+		}
+
 	} else {
 		jq('#${ config.id } > .status').html('${ ui.message("general.none") }');
+		jq('#${ config.id } > .results').hide();
 	}
-
-	jq('#${ config.id } > .results').html('');
-
-	for (var i = 0; i < data.length; ++i) {
-		var html = ${ config.itemFormatter }(data[i]);
-		jq(html)
-			.appendTo(jq('#${ config.id } > .results'))
-			<% if (config.clickFunction) { %> .click(${ config.clickFunction }) <% } %>
-	}	
 });
-subscribe("${ config.id }/clear", function(event, data) {
-	jq('#${ config.id } > .status').html('${ ui.message("general.none") }');
-	jq('#${ config.id } > .results').html('');
-});
-
 </script>

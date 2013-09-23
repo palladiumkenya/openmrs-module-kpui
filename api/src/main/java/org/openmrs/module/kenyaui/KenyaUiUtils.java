@@ -44,6 +44,8 @@ public class KenyaUiUtils {
 
 	private static final DateFormat timeFormatter = new SimpleDateFormat(KenyaUiConstants.TIME_FORMAT);
 
+	private static final DateFormat iso8601Formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 	/**
 	 * Sets the notification success message
 	 * @param session the session
@@ -88,6 +90,21 @@ public class KenyaUiUtils {
 		}
 
 		return dateFormatter.format(date);
+	}
+
+	/**
+	 * Formats a date as ISO 8601 for use as a query parameter
+	 * @param date the date
+	 * @return the string value
+	 * @should format date as a string without time information
+	 * @should format null date as empty string
+	 */
+	public String formatDateParam(Date date) {
+		if (date == null) {
+			return "";
+		}
+
+		return iso8601Formatter.format(date);
 	}
 
 	/**

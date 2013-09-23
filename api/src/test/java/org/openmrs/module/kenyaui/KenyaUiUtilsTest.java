@@ -37,6 +37,9 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	@Autowired
 	private KenyaUiUtils kenyaUi;
 
+	/**
+	 * @see KenyaUiUtils#notifySuccess(javax.servlet.http.HttpSession, String)
+	 */
 	@Test
 	public void notifySuccess_shouldSetMessageSessionAttribute() {
 		MockHttpSession session = new MockHttpSession();
@@ -45,8 +48,11 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		Assert.assertThat((String) session.getAttribute(WebConstants.OPENMRS_MSG_ATTR), is("test"));
 	}
 
+	/**
+	 * @see KenyaUiUtils#notifyError(javax.servlet.http.HttpSession, String) )
+	 */
 	@Test
-	public void notifySuccess_shouldSetErrorSessionAttribute() {
+	public void notifyError_shouldSetErrorSessionAttribute() {
 		MockHttpSession session = new MockHttpSession();
 		kenyaUi.notifyError(session, "test");
 
@@ -54,7 +60,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @see KenyaUiUtils#formatDateTime(java.util.Date)
 	 * @verifies format null date as empty string
 	 */
 	@Test
@@ -63,7 +69,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @see KenyaUiUtils#formatDateTime(java.util.Date)
 	 * @verifies format null date as empty string
 	 */
 	@Test
@@ -72,7 +78,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDate(java.util.Date)
+	 * @see KenyaUiUtils#formatDate(java.util.Date)
 	 * @verifies format date as a string without time information
 	 */
 	@Test
@@ -89,7 +95,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDate(java.util.Date)
+	 * @see KenyaUiUtils#formatDate(java.util.Date)
 	 * @verifies format null date as empty string
 	 */
 	@Test
@@ -98,7 +104,33 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatDateTime(java.util.Date)
+	 * @see KenyaUiUtils#formatDateParam(java.util.Date)
+	 * @verifies format null date as empty string
+	 */
+	@Test
+	public void formatDateParam_shouldFormatDateAsISO8601() throws Exception {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.set(Calendar.YEAR, 1981);
+		cal.set(Calendar.MONTH, Calendar.MAY);
+		cal.set(Calendar.DAY_OF_MONTH, 28);
+		cal.set(Calendar.HOUR, 7);
+		cal.set(Calendar.MINUTE, 30);
+		cal.set(Calendar.SECOND, 12);
+
+		Assert.assertThat(kenyaUi.formatDateParam(cal.getTime()), is("1981-05-28"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatDateParam(java.util.Date)
+	 * @verifies format null date as empty string
+	 */
+	@Test
+	public void formatDateParam_shouldFormatNullDateAsEmptyString() throws Exception {
+		Assert.assertThat(kenyaUi.formatDateParam(null), is(""));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatDateTime(java.util.Date)
 	 * @verifies format date as a string without date information
 	 */
 	@Test
@@ -107,7 +139,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatTime(java.util.Date)
+	 * @see KenyaUiUtils#formatTime(java.util.Date)
 	 * @verifies format null date as empty string
 	 */
 	@Test
@@ -116,7 +148,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
-	 * @see org.openmrs.module.kenyaui.KenyaUiUtils#formatInterval(java.util.Date)
+	 * @see KenyaUiUtils#formatInterval(java.util.Date)
 	 * @verifies return non-empty string
 	 */
 	@Test

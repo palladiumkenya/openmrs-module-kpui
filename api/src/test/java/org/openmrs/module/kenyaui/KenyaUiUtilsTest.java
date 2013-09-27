@@ -199,4 +199,22 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		p.setBirthdateEstimated(true);
 		Assert.assertThat(kenyaUi.formatPersonBirthdate(p), is("approx 30-Jun-1980"));
 	}
+
+	/**
+	 * @see KenyaUiUtils#formatPersonGender(org.openmrs.Person)
+	 */
+	@Test
+	public void formatPersonGender() {
+		Person p = new Person();
+		p.setGender("M");
+		Assert.assertThat(kenyaUi.formatPersonGender(p), is("\u2642 Male"));
+
+		p = new Person();
+		p.setGender("F");
+		Assert.assertThat(kenyaUi.formatPersonGender(p), is("\u2640 Female"));
+
+		p = new Person();
+		p.setGender("Unknown");
+		Assert.assertThat(kenyaUi.formatPersonGender(p), is("Unknown"));
+	}
 }

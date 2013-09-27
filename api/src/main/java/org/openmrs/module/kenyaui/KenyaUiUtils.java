@@ -195,6 +195,21 @@ public class KenyaUiUtils {
 	}
 
 	/**
+	 * Formats a person's gender
+	 * @param person the person
+	 * @return the string value
+	 */
+	public String formatPersonGender(Person person) {
+		if (person.getGender().equals("M")) {
+			return "\u2642 Male";
+		}
+		else if (person.getGender().equals("F")) {
+			return "\u2640 Female";
+		}
+		return person.getGender();
+	}
+
+	/**
 	 * Convenience method to get the current app for the request
 	 * @param request the page request
 	 * @return the app descriptor

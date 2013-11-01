@@ -19,6 +19,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
+import org.openmrs.User;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.test.TestUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.web.WebConstants;
@@ -216,5 +218,15 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		p = new Person();
 		p.setGender("Unknown");
 		Assert.assertThat(kenyaUi.formatPersonGender(p), is("Unknown"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatUser(org.openmrs.User)
+	 */
+	@Test
+	public void formatUser() {
+		User user = Context.getAuthenticatedUser();
+
+		Assert.assertThat(kenyaUi.formatUser(user), is("User, Super "));
 	}
 }

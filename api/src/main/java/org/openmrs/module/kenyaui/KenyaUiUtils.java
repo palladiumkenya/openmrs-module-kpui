@@ -20,6 +20,7 @@ import org.joda.time.PeriodType;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
+import org.openmrs.User;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
@@ -207,6 +208,15 @@ public class KenyaUiUtils {
 			return "\u2640 Female";
 		}
 		return person.getGender();
+	}
+
+	/**
+	 * Formats a user
+	 * @param user the user
+	 * @return the string value
+	 */
+	public String formatUser(User user) {
+		return formatPersonName(user.getPerson());
 	}
 
 	/**

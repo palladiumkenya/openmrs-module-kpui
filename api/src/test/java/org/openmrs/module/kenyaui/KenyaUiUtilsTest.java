@@ -159,6 +159,16 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	}
 
 	/**
+	 * @see KenyaUiUtils#formatDuration(long)
+	 */
+	@Test
+	public void formatDuration() throws Exception {
+		Assert.assertThat(kenyaUi.formatDuration(1000), is("00:00:01"));
+		Assert.assertThat(kenyaUi.formatDuration(4 * 60 * 60 * 1000 + 3 * 60 * 1000 + 2 * 1000), is("04:03:02"));
+		Assert.assertThat(kenyaUi.formatDuration(100 * 60 * 60 * 1000 + 3 * 60 * 1000 + 2 * 1000), is("100:03:02"));
+	}
+
+	/**
 	 * @see KenyaUiUtils#formatPersonName(org.openmrs.Person)
 	 */
 	@Test

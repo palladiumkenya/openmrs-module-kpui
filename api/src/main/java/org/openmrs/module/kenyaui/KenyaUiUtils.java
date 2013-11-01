@@ -47,6 +47,8 @@ public class KenyaUiUtils {
 
 	private static final DateFormat iso8601Formatter = new SimpleDateFormat("yyyy-MM-dd");
 
+	private static final String DURATION_FORMAT = "%02d:%02d:%02d"; // HH:MM:SS
+
 	/**
 	 * Sets the notification success message
 	 * @param session the session
@@ -141,6 +143,16 @@ public class KenyaUiUtils {
 	public String formatInterval(Date date, Date now) {
 		PrettyTime t = new PrettyTime(now);
 		return t.format(date);
+	}
+
+	/**
+	 * Formats a duration
+	 * @param time the time in milliseconds
+	 * @return the formatted duration
+	 */
+	public String formatDuration(long time) {
+		Period period = new Period(time);
+		return String.format(DURATION_FORMAT, period.getHours(), period.getMinutes(), period.getSeconds());
 	}
 
 	/**

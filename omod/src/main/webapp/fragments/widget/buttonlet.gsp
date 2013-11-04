@@ -5,13 +5,13 @@
 
 	def id = config.id ?: ui.randomId("button")
 
-	def icons = [ edit: "edit.png", add: "add.png", void: "void.png", switch: "switch.png" ]
+	def icons = [ view: "view.png", edit: "edit.png", add: "add.png", void: "void.png", switch: "switch.png", excel: "excel.png" ]
+
+	def icon = config.type ? icons[config.type] : config.icon
 %>
 <div id="${ id }" class="ke-buttonlet">
-	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + icons[config.type]) }" />
-	<% if (config.label) { %>
-		<span class="ke-label">${ config.label }</span>
-	<% } %>
+	<% if (icon) { %><img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + icons[config.type]) }" /><% } %>
+	<% if (config.label) { %><span class="ke-label">${ config.label }</span><% } %>
 </div>
 
 <% if (config.href || config.onClick) { %>

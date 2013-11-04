@@ -5,7 +5,7 @@
 
 	def id = config.id ?: ui.randomId("button")
 
-	def icons = [ view: "view.png", edit: "edit.png", add: "add.png", void: "void.png", switch: "switch.png", excel: "excel.png" ]
+	def icons = [ view: "view.png", edit: "edit.png", add: "add.png", void: "void.png", switch: "switch.png", excel: "excel.png", csv: "csv.png" ]
 
 	def icon = config.type ? icons[config.type] : config.icon
 %>

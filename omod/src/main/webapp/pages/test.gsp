@@ -1,7 +1,7 @@
 <%
 	ui.decorateWith("kenyaui", "standardPage")
 
-	def defaultOnClick = "alert('Clicked');"
+	def defaultOnClick = "defaultOnClick();"
 %>
 <style type="text/css">
 	h1 {
@@ -29,6 +29,9 @@
 		padding: 10px;
 	}
 </style>
+<script type="text/javascript">
+	function defaultOnClick() { alert('Clicked'); }
+</script>
 
 <h1>KenyaUI Library</h1>
 
@@ -152,9 +155,13 @@
 	<div class="ke-stack-item">Stack item #1</div>
 	<div class="ke-stack-item">Stack item #2</div>
 	<div class="ke-stack-item">
-		${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "void", onClick: defaultOnClick ]) }
-		${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "edit", onClick: defaultOnClick ]) }
-		Stack item #3 with buttonlets
+		<button type="button" class="ke-compact" onclick="defaultOnClick()">
+			<img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" />
+		</button>
+		<button type="button" class="ke-compact" onclick="defaultOnClick()">
+			<img src="${ ui.resourceLink("kenyaui", "images/glyphs/void.png") }" />
+		</button>
+		Stack item #3 with buttons
 	</div>
 </div>
 

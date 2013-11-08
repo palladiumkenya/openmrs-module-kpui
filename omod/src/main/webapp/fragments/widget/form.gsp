@@ -122,11 +122,11 @@
 <% } %>
 
 <% if (config.submitLabel) { %>
-	<input type="submit" class="button" value="${ config.submitLabel }"/>
+	<button type="submit">${ config.submitLabel }</button>
 <% } %>
 
 <% if (config.cancelLabel) { %>
-    <input type="button" class="button" value="${ config.cancelLabel }" onClick="publish('${ id }.reset'); ${ config.cancelFunction }()"/>
+	<button type="button" onclick="publish('${ id }.reset'); ${ config.cancelFunction }()">${ config.cancelLabel }</button>
 <% } %>
 
 </form>

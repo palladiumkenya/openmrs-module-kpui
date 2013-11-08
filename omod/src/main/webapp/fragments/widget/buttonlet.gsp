@@ -1,4 +1,6 @@
 <%
+	/* Deprecated - use <button type="button" class="ke-compact"> instead */
+
 	// Supports icon, iconProvider
 	// Supports onClick (javascript snippet)
 	// Supports href (link url)

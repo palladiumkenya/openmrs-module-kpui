@@ -147,7 +147,7 @@ var kenyaui = (function(jq) {
 	 * @param label the label
 	 */
 	function createButton(id, label) {
-		return '<div class="ke-button" id="' + id + '"><div class="ke-button-text"><div class="ke-label">' + label + '</div></div></div>';
+		return '<button type="button" id="' + id + '">' + label + '</button>';
 	}
 
 	/**

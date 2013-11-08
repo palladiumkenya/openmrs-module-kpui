@@ -40,24 +40,6 @@
 	${ ui.includeFragment("kenyaui", "widget/appButton", [ iconProvider: "kenyaui", icon: "apps/clinician.png", onClick: defaultOnClick ]) }
 </div>
 
-<h3>button</h3>
-<div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "OK", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Long label here", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", extra: "Extra text here", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", iconProvider: "kenyaui", icon: "buttons/patient_add.png", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", extra: "Extra text here", iconProvider: "kenyaui", icon: "buttons/patient_search.png", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/button", [ label: "Label", extra: "Icon has an overlay ", iconProvider: "kenyaui", icon: "buttons/patient_search.png", iconOverlayProvider: "kenyaui", iconOverlay: "buttons/_overlay_edit.png", onClick: defaultOnClick ]) }
-</div>
-
-<h3>buttonlet</h3>
-<div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "add", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "edit", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "void", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/buttonlet", [ type: "add", label: "Add", onClick: defaultOnClick ]) }
-</div>
-
 <h3>dataPoint</h3>
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
@@ -110,6 +92,31 @@
 
 <h2>Styles</h2>
 
+<h3>Text</h3>
+<div class="holder">
+	This is text and <a href="#">this is a link</a>.
+</div>
+
+<h3>input / select</h3>
+<div class="holder">
+	<input type="text" value="text" />
+	<select><option>Option #1</option><option>Option #2</option><option>Option #3</option></select>
+
+	<input type="submit" value="submit" />
+	<input type="button" value="button" />
+	<input type="button" value="reset" />
+</div>
+
+<h3>button</h3>
+<div class="holder">
+	<button type="button">button</button>
+	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/view.png") }" />button with glyph</button>
+	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/buttons/undo.png") }" />button with icon</button>
+	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" />compact</button>
+</div>
+
+<h2>Classes</h2>
+
 <h3>error</h3>
 <div class="holder">
 	<div class="error">Error message</div>
@@ -123,7 +130,7 @@
 <h3>form-footer</h3>
 <div class="holder">
 	Form content
-	<div class="ke-form-footer"><input type="submit" value="Save Changes" /><input type="button" value="Discard Changes" /></div>
+	<div class="ke-form-footer"><button type="submit">Save Changes</button><button type="button">Discard Changes</button></div>
 </div>
 
 <h3>form-globalerrors</h3>
@@ -181,24 +188,15 @@
 	<div class="ke-warning">Warning content</div>
 </div>
 
-<h3>HTML overrides</h3>
-<div class="holder">
-	This is text and <a href="#">this is a link</a>
-	<input type="submit" value="submit" />
-	<input type="button" value="button" />
-	<input type="text" value="text" />
-	<select><option>Option #1</option><option>Option #2</option><option>Option #3</option></select>
-</div>
-
 <h2>Javascript</h2>
 
 <h3>modal dialogs</h3>
 <div class="holder">
-	<input type="button" value="openPanelDialog" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: 'Dialog content' })" />
-	<input type="button" value="openLoadingDialog" onclick="kenyaui.openLoadingDialog({})" />
-	<input type="button" value="openAlertDialog" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })" />
-	<input type="button" value="openConfirmDialog" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })" />
-	<input type="button" value="openDynamicDialog" onclick="kenyaui.openDynamicDialog({ heading: 'Confirm', url: ui.pageLink('kenyaui', 'test') })" />
+	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: 'Dialog content' })">openPanelDialog</button>
+	<button type="button" onclick="kenyaui.openLoadingDialog({})">openLoadingDialog</button>
+	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">openAlertDialog</button>
+	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">openConfirmDialog</button>
+	<button type="button" onclick="kenyaui.openDynamicDialog({ heading: 'Dynamic', url: ui.pageLink('kenyaui', 'test') })">openDynamicDialog</button>
 </div>
 
 <h2>Icons</h2>

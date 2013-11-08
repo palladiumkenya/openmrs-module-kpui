@@ -1,4 +1,6 @@
 <%
+	/* Deprecated - use <button type="button"> instead */
+
 	// Supports icon, iconProvider, iconOverlay, label, extra
 	// Supports onClick (javascript snippet)
 	// Supports href (link url)

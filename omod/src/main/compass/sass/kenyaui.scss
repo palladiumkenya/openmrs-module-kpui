@@ -18,7 +18,7 @@ $color_text_general: #333333;
 $color_text_control: #444444;
 $color_text_link: #495998;
 $color_bkgd_general: #ffffff;
-$color_bkgd_control: #eeeeee;
+$color_bkgd_control: #ebebeb;
 $color_bkgd_frame: #d1d0c9;
 $color_bkgd_gutter: #7f7b72;
 $color_bkgd_label: lighten($color_bkgd_frame, 15%);
@@ -307,8 +307,8 @@ legend {
 .ke-form-footer {
 	@extend .ke-panel-controls;
 
-	.ke-button {
-		margin: 2px;
+	button, input {
+		margin: 0 2px 0 2px;
 	}
 }
 
@@ -358,46 +358,6 @@ span.ke-field-label, label.ke-field-label {
 
 /************************** Buttons **************************/
 
-.ke-button {
-	@extend .ke-pressable;
-	@extend .ke-rounded;
-
-	padding: 5px;
-	position: relative;
-
-	.ke-icon {
-		float: left;
-		margin-right: 5px;
-	}
-	.ke-button-text {
-		float: left;
-		text-align: center;
-
-		.ke-label {
-			min-width: 75px;
-		}
-		.ke-extra {
-			font-size: 11px;
-			font-weight: normal;
-		}
-	}
-}
-
-.ke-buttonlet {
-	@extend .ke-pressable;
-	@extend .ke-rounded;
-
-	padding: 3px;
-	overflow: hidden;
-
-	img {
-		vertical-align: middle;
-	}
-	.ke-label {
-		padding-left: 3px;
-	}
-}
-
 .ke-appbutton {
 	@extend .ke-pressable;
 	@extend .ke-rounded;
@@ -421,6 +381,28 @@ span.ke-field-label, label.ke-field-label {
 			margin-top: 5px;
 			text-align: center;
 		}
+	}
+}
+
+button, input[type=button], input[type=submit], input[type=reset] {
+	@extend .ke-pressable;
+	@extend .ke-rounded;
+
+	padding: 5px;
+	overflow: hidden;
+	min-width: 75px;
+
+	img {
+		vertical-align: middle;
+		padding-right: 5px;
+	}
+}
+
+button.ke-compact {
+	padding: 3px;
+
+	img {
+		padding-right: 3px;
 	}
 }
 
@@ -639,14 +621,6 @@ input[type=text]:focus, input[type=password]:focus, input[type=file]:focus {
 	outline: none;
 }
 
-/* Give native buttons same style. Not applied to <button> as this messes up jQueryUI */
-input[type=button], input[type=submit], input[type=reset] {
-	@extend .ke-button;
-
-	/* Usually this is applied to the label, but these elements don't have that */
-	min-width: 75px;
-}
-
 /* Don't bold a tags used by select2 */
 .select2-container {
 	a {
@@ -659,4 +633,54 @@ input[type=button], input[type=submit], input[type=reset] {
 	background-color: #464640;
 	border-radius: 3px;
 	border: 0;
+}
+
+/*********************** Deprecated *************************/
+
+/* Replaced by <button> styling */
+.ke-button {
+	@extend .ke-pressable;
+	@extend .ke-rounded;
+
+	padding: 5px;
+	position: relative;
+
+	.ke-icon {
+		float: left;
+		margin-right: 5px;
+	}
+	.ke-button-text {
+		float: left;
+		text-align: center;
+
+		.ke-label {
+			min-width: 75px;
+		}
+		.ke-extra {
+			font-size: 11px;
+			font-weight: normal;
+		}
+	}
+}
+
+/* Replaced by <button> styling */
+.ke-buttonlet {
+	@extend .ke-pressable;
+	@extend .ke-rounded;
+
+	padding: 3px;
+	overflow: hidden;
+
+	img {
+		vertical-align: middle;
+	}
+	.ke-label {
+		padding-left: 3px;
+	}
+}
+
+.ke-form-footer {
+	.ke-button {
+		margin: 2px;
+	}
 }

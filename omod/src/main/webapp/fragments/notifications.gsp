@@ -9,6 +9,6 @@
     }
 %>
 <script type="text/javascript">
-	<% if (err) { %>ui.notifyError('${ ui.message(err).replace("'", "\\'") }');<% } %>
-	<% if (msg) { %>ui.notifySuccess('${ ui.message(msg).replace("'", "\\'") }');<% } %>
+	<% if (err) { %>kenyaui.notifyError('${ ui.message(err).replace("'", "\\'") }');<% } %>
+	<% if (msg) { %>kenyaui.notifySuccess('${ ui.message(msg).replace("'", "\\'") }');<% } %>
 </script>

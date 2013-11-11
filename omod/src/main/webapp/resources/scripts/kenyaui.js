@@ -379,7 +379,7 @@ var kenyaui = (function(jq) {
 				}
 			}
 		} catch (ex) {
-			ui.notifyError("Failed " + ex + " (" + response + ")");
+			kenyaui.notifyError("Failed " + ex + " (" + response + ")");
 		}
 	};
 

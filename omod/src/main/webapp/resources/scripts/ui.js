@@ -9,7 +9,10 @@ var ui = (function(jq) {
 		var ret = "?";
 		if (options) {
 			for (key in options) {
-				ret += key + '=' + encodeURIComponent(options[key]) + '&';
+				var val = options[key];
+				if (val != null) {
+					ret += key + '=' + encodeURIComponent(options[key]) + '&';
+				}
 			}
 		}
 		return ret;

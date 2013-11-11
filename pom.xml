@@ -37,7 +37,7 @@
 
 		<!-- Module dependencies -->
 		<appframeworkVersion>1.5</appframeworkVersion>
-		<uiframeworkVersion>3.0</uiframeworkVersion>
+		<uiframeworkVersion>3.1</uiframeworkVersion>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

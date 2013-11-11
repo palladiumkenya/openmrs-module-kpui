@@ -296,6 +296,26 @@ var kenyaui = (function(jq) {
 	};
 
 	/**
+	 * Shows a success notification
+	 * @param message the message
+	 */
+	_public.notifySuccess = function(message) {
+		if (message) {
+			jq().toastmessage('showToast', { text: message, stayTime: 5000, sticky: false, type: 'success' });
+		}
+	};
+
+	/**
+	 * Shows an error notification
+	 * @param message the message
+	 */
+	_public.notifyError = function(message) {
+		if (message) {
+			jq().toastmessage('showToast', { text: message, sticky: true, type: 'error' });
+		}
+	};
+
+	/**
 	 * Updates a search field value
 	 * @param fieldId
 	 * @param value

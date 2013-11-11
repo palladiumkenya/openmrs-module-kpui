@@ -118,16 +118,18 @@ var ui = (function(jq) {
 			return string;
 		},
 
+		/**
+		 * Deprecated
+		 */
 		notifySuccess: function(html) {
-			if (html && html != '') {
-				jq().toastmessage('showToast', { text: html, stayTime: 5000, sticky: false, type: 'success' });
-			}
+			kenyaui.notifySuccess(html);
 		},
 
+		/**
+		 * Deprecated
+		 */
 	 	notifyError: function(html) {
-			if (html && html != '') {
-				jq().toastmessage('showToast', { text: html, sticky: true, type: 'error' });
-			}
+			kenyaui.notifyError(html);
 		}
 	};
 

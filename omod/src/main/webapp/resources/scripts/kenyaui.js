@@ -109,7 +109,7 @@ jq(function() {
 /**
  * Utility methods
  */
-var kenyaui = (function(jq) {
+var kenyaui = (function(jQuery) {
 
 	// For generating unique element ids
 	var next_generated_id = 0;

@@ -113,9 +113,10 @@
 <h3>button</h3>
 <div class="holder">
 	<button type="button">button</button>
-	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/view.png") }" />button with glyph</button>
-	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/buttons/undo.png") }" />button with icon</button>
-	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" />compact</button>
+	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/view.png") }" /> button with glyph</button>
+	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/buttons/undo.png") }" /> button with icon</button>
+	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" /> compact</button>
+	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" /></button>
 </div>
 
 <h2>Classes</h2>

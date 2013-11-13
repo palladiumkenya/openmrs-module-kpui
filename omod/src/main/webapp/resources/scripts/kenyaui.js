@@ -107,9 +107,6 @@ var kenyaui = (function(jQuery) {
 	// Search configurations
 	var searchConfigs = new Object();
 
-	// Holder for dialog content that needs re-attached when dialog is closed
-	var dialogContainer;
-
 	// Contains all public methods of this object
 	var _public = {};
 
@@ -141,8 +138,13 @@ var kenyaui = (function(jQuery) {
 	 * @param id the button id
 	 * @param label the label
 	 */
-	function createButton(id, label) {
-		return '<button type="button" id="' + id + '">' + label + '</button>';
+	function createButton(id, label, icon) {
+		var html = '<button type="button" id="' + id + '">';
+		if (icon) {
+			html += '<img src="' + ui.resourceLink('kenyaui', 'images/glyphs/' + icon + '.png') + '" /> '
+		}
+		html += label + '</button>';
+		return html;
 	}
 
 	/**
@@ -192,14 +194,22 @@ var kenyaui = (function(jQuery) {
 	 * @param options the options
 	 */
 	_public.openConfirmDialog = function(options) {
-		var defaults = { heading: null, message: '', okLabel: 'OK', cancelLabel: 'Cancel', okCallback: function(){}, cancelCallback: function(){} };
+		var defaults = {
+			heading: null, message: '',
+			okLabel: 'OK', cancelLabel: 'Cancel',
+			okIcon: 'ok', cancelIcon: 'cancel',
+			okCallback: function(){}, cancelCallback: function(){}
+		};
 		var options = options ? jq.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 		var cancelButtonId = kenyaui.generateId();
 
 		var html = '<div class="ke-panel-content" style="padding: 10px">' + options.message + '</div>';
-		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '&nbsp;' + createButton(cancelButtonId, options.cancelLabel) + '</div>';
+		html += '<div class="ke-panel-controls">';
+		html += createButton(okButtonId, options.okLabel, options.okIcon) + '&nbsp;';
+		html += createButton(cancelButtonId, options.cancelLabel, options.cancelIcon);
+		html += '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
@@ -212,13 +222,17 @@ var kenyaui = (function(jQuery) {
 	 * @param options the options
 	 */
 	_public.openAlertDialog = function(options) {
-		var defaults = { heading: null, message: '', okLabel: 'OK', okCallback: function(){} };
+		var defaults = {
+			heading: null, message: '',
+			okLabel: 'OK', okIcon: null,
+			okCallback: function(){}
+		};
 		var options = options ? jq.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 
 		var html = '<div class="ke-panel-content" style="padding: 10px">' + options.message + '</div>';
-		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel) + '</div>';
+		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel, options.okIcon) + '</div>';
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
@@ -249,33 +263,32 @@ var kenyaui = (function(jQuery) {
 	_public.openPanelDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
 		var options = options ? jq.extend(defaults, options) : defaults;
-		var content = null, heading = null;
-
-		if (options.containerId) {
-			dialogContainer = jq('#' + options.containerId).detach();
-			heading = dialogContainer.attr('title');
-			content = dialogContainer.html();
-		} else {
-			heading = options.heading;
-			content = options.content;
-		}
+		var template = options.templateId ? jq('#' + options.templateId) : null;
+		var content = template ? '' : options.content;
+		var heading = template ? template.attr('title') : options.heading;
 
 		var html = '<div class="ke-panel-frame">';
 		if (heading) {
 			html += '<div class="ke-panel-heading">' + heading + '</div>';
 		}
 		html += content + '</div>';
+
 		openModalContent(html, options.width, options.height);
+
+		// Insert template into dialog
+		if (template) {
+			template.appendTo(jq('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
+		}
 	};
 
 	/**
 	 * Closes any visible dialog
 	 */
 	_public.closeDialog = function() {
-		// Re-attach dialog content to body if it was used
-		if (dialogContainer) {
-			jq('body').append(dialogContainer);
-			dialogContainer = null;
+		// Re-attach and hide dialog template to body if it was used
+		var template = jq('.ke-modal-content .ke-panel-frame .ke-dialog-template')
+		if (template.length) {
+			template.hide().appendTo(jq('body'));
 		}
 
 		closeModalContent();

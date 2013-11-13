@@ -202,10 +202,12 @@
 <h3>modal dialogs</h3>
 <div class="holder">
 
-	<!-- Template for dialog loaded from existing element -->
-	<div id="dialog-container" title="Heading" style="display: none">
+	<!-- Template for dialog loaded from existing template -->
+	<div id="dialog-template" title="Heading" style="display: none">
 		<div class="ke-panel-content">
-			Content from an existing element
+			Content from an existing template
+			<br/>
+			${ ui.includeFragment("kenyaui", "field/java.util.Date", [ initialValue: new Date() ]) }
 		</div>
 		<div class="ke-panel-controls">
 			<button type="button" onclick="kenyaui.closeDialog()">Close</button>
@@ -213,7 +215,7 @@
 	</div>
 
 	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: '<div class=&quot;ke-panel-content&quot;>Dialog content</div>' })">Panel</button>
-	<button type="button" onclick="kenyaui.openPanelDialog({ containerId: 'dialog-container' })">Panel from element</button>
+	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template' })">Panel from template</button>
 	<button type="button" onclick="kenyaui.openLoadingDialog({})">Loading</button>
 	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">Alert</button>
 	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">Confirm</button>

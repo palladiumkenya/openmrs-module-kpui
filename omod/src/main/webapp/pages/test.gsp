@@ -256,7 +256,7 @@
 <h3>glyphs</h3>
 <div class="holder">
 	<% [
-			"add", "cancel", "close", "csv", "disable", "discontinue", "edit", "email", "enable", "enroll", "excel", "login",
+			"add", "cancel", "checkout", "close", "csv", "disable", "discontinue", "edit", "email", "enable", "enroll", "excel", "login",
 			"monitor", "ok", "patient_f", "patient_m", "person_f", "person_m", "phone", "start", "switch", "trash", "view", "void"
 	].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />

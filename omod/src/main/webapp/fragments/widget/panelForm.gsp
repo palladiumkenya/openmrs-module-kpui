@@ -1,6 +1,4 @@
 <%
-	// DEPRECATED use panelForm instead
-
 // supports url (submit as a form to that url)
 // supports page (submit as a form to a page)
 // supports fragment + action (submit as json to a fragment action)
@@ -86,110 +84,98 @@
     }  
 %>
 
-<form id="${ id }" action="${ url }" method="post"<% if (config.noDecoration) { %> style="display: inline"<% } %>>
+<div class="ke-panel-content">
+	<form id="${ id }" action="${ url }" method="post"<% if (config.noDecoration) { %> style="display: inline"<% } %>>
 
-    <div id="${ id }-globalerrors" class="ke-form-globalerrors" style="display: none"></div>
+		<div id="${ id }-globalerrors" class="ke-form-globalerrors" style="display: none"></div>
 
-<% fields.each {
-    def fragment, fragmentProvider
-    if (it.fragment) {
-        fragment = it.fragment
-		fragmentProvider = it.fragmentProvider
-	}
-	else if (it.class || (it.object && it.property)) {
-        fragment = "widget/field"
-		fragmentProvider = "kenyaui"
-	}
-    else if (it.value && !it.hiddenInputName) {
-    	fragment = "widget/field"
-		fragmentProvider = "kenyaui"
-	}
+	<% fields.each {
+		def fragment, fragmentProvider
+		if (it.fragment) {
+			fragment = it.fragment
+			fragmentProvider = it.fragmentProvider
+		}
+		else if (it.class || (it.object && it.property)) {
+			fragment = "widget/field"
+			fragmentProvider = "kenyaui"
+		}
+		else if (it.value && !it.hiddenInputName) {
+			fragment = "widget/field"
+			fragmentProvider = "kenyaui"
+		}
 
-	if (fragment) {
-        fieldConfig = new FragmentConfiguration(it)
-        fieldConfig.merge([ parentFormId: id, visibleFieldId: ui.randomId("field"), parentFormMode: mode ])
-        if (!config.noDecoration)
-            fieldConfig.merge([ decorator: "labeled", decoratorConfig: it ])
-%>
-		<% if (config.noDecoration && fieldConfig.label) { %>${ fieldConfig.label }<% } %>
-        ${ ui.includeFragment(fragmentProvider, fragment, fieldConfig) }
-        
-<%  } else if (it.hiddenInputName) { %>
-        <input type="hidden" name="${ it.hiddenInputName }" value="${ it.value }"/>
-        
-<%  } else { %>
-        Don't know how to handle field ${ it }
-        
-<%  } %>
-<% } %>
+		if (fragment) {
+			fieldConfig = new FragmentConfiguration(it)
+			fieldConfig.merge([ parentFormId: id, visibleFieldId: ui.randomId("field"), parentFormMode: mode ])
+			if (!config.noDecoration)
+				fieldConfig.merge([ decorator: "labeled", decoratorConfig: it ])
+	%>
+			<% if (config.noDecoration && fieldConfig.label) { %>${ fieldConfig.label }<% } %>
+			${ ui.includeFragment(fragmentProvider, fragment, fieldConfig) }
 
-<% if (config.submitLabel) { %>
-	<button type="submit">${ config.submitLabel }</button>
-<% } %>
+	<%  } else if (it.hiddenInputName) { %>
+			<input type="hidden" name="${ it.hiddenInputName }" value="${ it.value }"/>
 
-<% if (config.cancelLabel) { %>
-	<button type="button" onclick="publish('${ id }.reset'); ${ config.cancelFunction }()">${ config.cancelLabel }</button>
-<% } %>
+	<%  } else { %>
+			Don't know how to handle field ${ it }
 
-</form>
+	<%  } %>
+	<% } %>
+
+	</form>
+</div>
+
+<div class="ke-panel-controls">
+	<% if (config.submitLabel) { %>
+	<button type="submit" form="${ id }">
+		<img src="${ ui.resourceLink("kenyaui", "images/glyphs/ok.png") }" /> ${ config.submitLabel }
+	</button>
+	<% } %>
+
+	<% if (config.cancelLabel) { %>
+	<button type="button" onclick="publish('${ id }.reset'); ${ config.cancelFunction }()">
+		<img src="${ ui.resourceLink("kenyaui", "images/glyphs/cancel.png") }" /> ${ config.cancelLabel }
+	</button>
+	<% } %>
+</div>
 
 <% if (mode == "json") { %>
-    <script>
-    	jq(function() {
-	        jq('#${ id }').submit(function(e) {
-	            e.preventDefault();
-				kenyaui.clearFormErrors('${ id }');
-
-	            <% if (config.submitLoadingMessage) { %>
-	            	kenyaui.openLoadingDialog({ message: '${ ui.escapeJs(config.submitLoadingMessage) }' });
-	            <% } %>
-	            var form = jq(this);
-	            var data = form.serialize();
-	            jq.ajax({ type: "POST", url: form.attr('action'), data: data, dataType: "json" })
-	            .success(function(data) {
-	            	<% if (resetOnSubmit) { %>
-	                	publish('${ id }.reset');
-	                <% } %>
-	               	<% if (config.successEvent) { %>
-	                	publish('${ config.successEvent }', data);
-	                <% } %>
-	                ui.disableConfirmBeforeNavigating();
-	            })
-	            <% if (config.successCallbacks) config.successCallbacks.each { %>
-	                .success(function(data) {
-	                    ${ it }
-	                })
-	            <% } %>
-	            .error(function(jqXHR, textStatus, errorThrown) {
-					kenyaui.showFormErrors('${ id }', jqXHR.responseText);
-	            	<% if (config.submitLoadingMessage) { %>
-	                	kenyaui.closeDialog();
-	                <% } %>
-	            });
-	        });
-		});
-    </script>
-<% } else { /* standard form submission */ %>
-	<script>
+<script type="text/javascript">
+	jq(function() {
 		jq('#${ id }').submit(function(e) {
-			ui.disableConfirmBeforeNavigating();
-		});
-	</script>
-<% } %>
+			e.preventDefault();
+			kenyaui.clearFormErrors('${ id }');
 
-<% if (config.submitOnEvent) {
-	def idToUse = id.replace('-', '')
-%>
-	<script>
-		var timeoutId${ idToUse } = null;
-		subscribe('${ config.submitOnEvent }', function() {
-			if (timeoutId${ idToUse } != null) {
-				clearTimeout(timeoutId${ idToUse });
-				timeoutId${ idToUse } = null;
-			}
-			timeoutId${ idToUse } = setTimeout(function() {
-				jq('#${ id }').submit();
-			}, 150);
+			<% if (config.submitLoadingMessage) { %>
+			kenyaui.openLoadingDialog({ message: '${ ui.escapeJs(config.submitLoadingMessage) }' });
+			<% } %>
+			var form = jq(this);
+			var data = form.serialize();
+			jq.ajax({ type: "POST", url: form.attr('action'), data: data, dataType: "json" })
+					.success(function(data) {
+						<% if (resetOnSubmit) { %>
+						publish('${ id }.reset');
+						<% } %>
+						ui.disableConfirmBeforeNavigating();
+					})
+					<% if (config.successCallbacks) config.successCallbacks.each { %>
+					.success(function(data) {
+						${ it }
+					})
+					<% } %>
+					.error(function(jqXHR, textStatus, errorThrown) {
+						kenyaui.showFormErrors('${ id }', jqXHR.responseText);
+						<% if (config.submitLoadingMessage) { %>
+						kenyaui.closeDialog();
+						<% } %>
+					});
 		});
-	</script>
+	});
+</script>
+<% } else { /* standard form submission */ %>
+<script type="text/javascript">
+	jq('#${ id }').submit(function(e) {
+		ui.disableConfirmBeforeNavigating();
+	});
+</script>
 <% } %>

@@ -412,6 +412,7 @@ button.ke-compact {
 	border-top: 1px solid #FFF;
 	border-bottom: 1px solid #CCC;
 	padding: 5px;
+	min-height: 32px;
 
 	&:hover {
 		background-color: darken($color_bkgd_control, 8%);
@@ -423,15 +424,15 @@ button.ke-compact {
 		border-bottom: none;
 	}
 
-	a {
+	.ke-icon {
+		float: left;
+		margin-right: 10px;
+	}
+	.ke-label {
 		color: $color_text_control;
 		font-weight: bold;
 		text-decoration: none;
 		display: inline-block;
-	}
-	.ke-icon {
-		float: left;
-		margin-right: 5px;
 	}
 	.ke-extra {
 		font-size: 11px;

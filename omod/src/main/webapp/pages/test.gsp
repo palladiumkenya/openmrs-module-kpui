@@ -55,8 +55,9 @@
 	${ ui.includeFragment("kenyaui", "widget/panelMenu", [
 			heading: "Header",
 			items: [
-					[ iconProvider: "kenyaui", icon: "buttons/users_manage.png", label: "Menu Item #1 (Active)", active: true, href: ui.pageLink("kenyaui", "test") ],
-					[ iconProvider: "kenyaui", icon: "buttons/admin_setup.png", label: "Menu Item #2", href: ui.pageLink("kenyaui", "test") ]
+					[ iconProvider: "kenyaui", icon: "buttons/users_manage.png", label: "Menu Item #1 (active)", active: true, href: ui.pageLink("kenyaui", "test") ],
+					[ iconProvider: "kenyaui", label: "Menu Item #2 (no icon)", onClick: defaultOnClick ],
+					[ iconProvider: "kenyaui", icon: "buttons/admin_setup.png", label: "Menu Item #3 (extra text)", extra: "Extra text", href: ui.pageLink("kenyaui", "test") ]
 			]
 	]) }
 </div>

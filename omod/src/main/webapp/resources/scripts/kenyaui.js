@@ -9,16 +9,6 @@ jq = jQuery;
  */
 jq(function() {
 	/**
-	 * Clicking anywhere on a menu item should direct you to the target of it's <a> tag
-	 */
-	jq('.ke-menu-item').click(function() {
-		var a = jq(this).find('a').first();
-		var href = (a.length > 0) ? a.attr('href') : null;
-		if (href)
-			location.href = href;
-	});
-
-	/**
 	 * Clicking on a stack-item should direct you to the URL specified in the clickUrl hidden input
 	 */
 	jq('.ke-stack-item').click(function(evt) {

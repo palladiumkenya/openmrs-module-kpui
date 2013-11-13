@@ -521,103 +521,10 @@ function subscribe(message, callback) {
 
 //// Messaging //////////////////
 
-function patientChanged(patientId, property) {
-	jQuery.getJSON(OPENMRS_CONTEXT_PATH + '/data/getPatient.action?returnFormat=json&patientId=' + patientId, function(patient) {
-		var message = "patient/" + patientId;
-		if (property)
-			message += "/" + property;
-		message += ".changed"
-		publish(message, patient);
-	});
-}
-
 function getJsonAsEvent(url, eventTitle) {
 	jQuery.getJSON(url, function(data) {
 		publish(eventTitle, data);
 	});
-}
-
-//// Dialog support (shared modal dialog for all pages/fragments) //////////////////
-
-var openmrsDialogCurrentlyShown = null;
-var openmrsDialogIFrame = null;
-var openmrsDialogSuccessCallback = null;
-
-function showDivAsDialog(selector, title, opts) {
-	// There is (what I consider) a bug in jquery-ui dialog, where displaying a dialog that
-	// has scripts in it re-executes the scripts. We introduce a hack to get around this, by
-	// removing all scripts before we display the dialog, and then reattaching them. But we
-	// have to reattach them with normal DOM, not jquery's append, since the latter would also
-	// reexecute them
-	// TODO determine if we can rid of the hack. If not, refactor the hack, because it currently assumes the selector matches a single dialog 
-	var dialogContainer = jq(selector);
-	var dialogScripts = dialogContainer.find("script");
-	dialogScripts.remove();
-	var optsToUse = {
-			draggable: false,
-			resizable: false,
-			width: '90%',
-			height: jq(window).height()-50,
-			modal: true,
-			title: title
-		};
-	if (opts) {
-		optsToUse = jq.extend(optsToUse, opts);
-	}
-	openmrsDialogSuccessCallback = optsToUse.successCallback; // TODO attach this to the close button
-	openmrsDialogCurrentlyShown = jq(selector).dialog(optsToUse);
-	dialogScripts.each(function() {
-		dialogContainer.get(0).appendChild(this);
-	});
-}
-
-/**
- * opts must define url or fragment, and may define title and successCallback.
- */
-function showDialog(opts) {
-	var url = opts.url;
-	if (opts.fragment) {
-		url = '/' + OPENMRS_CONTEXT_PATH + '/pages/fragment.page?fragment=' + opts.fragment;
-		if (opts.config) {
-			for (var param in opts.config) {
-				url += "&" + param + "=" + opts.config[param];
-			}
-		}
-	}
-	if (!openmrsDialogIFrame) {
-		openmrsDialogIFrame = document.createElement('iframe');
-		openmrsDialogIFrame.width = '100%';
-		openmrsDialogIFrame.height = '100%';
-		openmrsDialogIFrame.marginWidth = 0;
-		openmrsDialogIFrame.marginHeight = 0;
-		openmrsDialogIFrame.frameBorder = 0;
-		openmrsDialogIFrame.scrolling = 'auto';
-		jq('#openmrsDialog').append(openmrsDialogIFrame);
-	}
-	jq("#openmrsDialog > iframe").attr("src", url);
-
-	if (!opts.title)
-		opts.title = "";
-	
-	openmrsDialogSuccessCallback = opts.successCallback; // TODO attach this to the close button
-	jq('#openmrsDialog')
-		.dialog('option', 'title', opts.title)
-		.dialog('option', 'height', jq(window).height()-50) // TODO resize dialog on window resize?
-		.dialog('open');
-	openmrsDialogCurrentlyShown = jq('#openmrsDialog');
-}
-
-function closeDialog(doCallback) {
-	if (openmrsDialogCurrentlyShown && openmrsDialogCurrentlyShown.length > 0) {
-		openmrsDialogCurrentlyShown.dialog('close');
-		var callMe = openmrsDialogSuccessCallback;
-		openmrsDialogSuccessCallback = null;
-		if (doCallback && callMe) {
-			callMe.call();
-		}
-	} else if (window.parent && window.parent != window) {
-		window.parent.closeDialog(doCallback);
-	}
 }
 
 function escapeJs(string) {

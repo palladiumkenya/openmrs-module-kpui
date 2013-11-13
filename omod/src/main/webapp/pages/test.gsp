@@ -200,11 +200,23 @@
 
 <h3>modal dialogs</h3>
 <div class="holder">
-	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: 'Dialog content' })">openPanelDialog</button>
-	<button type="button" onclick="kenyaui.openLoadingDialog({})">openLoadingDialog</button>
-	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">openAlertDialog</button>
-	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">openConfirmDialog</button>
-	<button type="button" onclick="kenyaui.openDynamicDialog({ heading: 'Dynamic', url: ui.pageLink('kenyaui', 'test') })">openDynamicDialog</button>
+
+	<!-- Template for dialog loaded from existing element -->
+	<div id="dialog-container" title="Heading" style="display: none">
+		<div class="ke-panel-content">
+			Content from an existing element
+		</div>
+		<div class="ke-panel-controls">
+			<button type="button" onclick="kenyaui.closeDialog()">Close</button>
+		</div>
+	</div>
+
+	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: '<div class=&quot;ke-panel-content&quot;>Dialog content</div>' })">Panel</button>
+	<button type="button" onclick="kenyaui.openPanelDialog({ containerId: 'dialog-container' })">Panel from element</button>
+	<button type="button" onclick="kenyaui.openLoadingDialog({})">Loading</button>
+	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">Alert</button>
+	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">Confirm</button>
+	<button type="button" onclick="kenyaui.openDynamicDialog({ heading: 'Dynamic', url: ui.pageLink('kenyaui', 'test') })">Dynamic</button>
 </div>
 
 <h2>Icons</h2>

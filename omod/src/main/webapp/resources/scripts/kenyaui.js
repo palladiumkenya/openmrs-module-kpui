@@ -114,8 +114,13 @@ var kenyaui = (function(jQuery) {
 	// For generating unique element ids
 	var next_generated_id = 0;
 
+	// Search configurations
 	var searchConfigs = new Object();
 
+	// Holder for dialog content that needs re-attached when dialog is closed
+	var dialogContainer;
+
+	// Contains all public methods of this object
 	var _public = {};
 
 	/**
@@ -254,12 +259,22 @@ var kenyaui = (function(jQuery) {
 	_public.openPanelDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
 		var options = options ? jq.extend(defaults, options) : defaults;
+		var content = null, heading = null;
+
+		if (options.containerId) {
+			dialogContainer = jq('#' + options.containerId).detach();
+			heading = dialogContainer.attr('title');
+			content = dialogContainer.html();
+		} else {
+			heading = options.heading;
+			content = options.content;
+		}
 
 		var html = '<div class="ke-panel-frame">';
-		if (options.heading) {
-			html += '<div class="ke-panel-heading">' + options.heading + '</div>';
+		if (heading) {
+			html += '<div class="ke-panel-heading">' + heading + '</div>';
 		}
-		html += options.content + '</div>';
+		html += content + '</div>';
 		openModalContent(html, options.width, options.height);
 	};
 
@@ -267,6 +282,12 @@ var kenyaui = (function(jQuery) {
 	 * Closes any visible dialog
 	 */
 	_public.closeDialog = function() {
+		// Re-attach dialog content to body if it was used
+		if (dialogContainer) {
+			jq('body').append(dialogContainer);
+			dialogContainer = null;
+		}
+
 		closeModalContent();
 	};
 

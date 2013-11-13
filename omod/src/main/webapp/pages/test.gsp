@@ -215,7 +215,7 @@
 	</div>
 
 	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: '<div class=&quot;ke-panel-content&quot;>Dialog content</div>' })">Panel</button>
-	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template' })">Panel from template</button>
+	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template' })">Panel (from template)</button>
 	<button type="button" onclick="kenyaui.openLoadingDialog({})">Loading</button>
 	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">Alert</button>
 	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">Confirm</button>
@@ -238,7 +238,7 @@
 			"account", "account_add", "admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
 			"back", "close", "patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
 			"person_f", "person_m", "profile_password", "profile_secret_question",
-			"program_complete", "program_enroll", "provider", "regimen", "regimen_change", "regimen_restart",
+			"provider", "regimen", "regimen_change", "regimen_restart",
 			"regimen_start", "regimen_stop", "registration", "report_configure", "report_download_excel", "report_generate",
 			"undo", "user_disable", "user_enable", "users_manage", "visit_end", "visit_retrospective", "visit_void"
 	].each { name -> %>
@@ -255,7 +255,10 @@
 
 <h3>glyphs</h3>
 <div class="holder">
-	<% [ "add", "edit", "void", "email", "phone", "patient_f", "patient_m", "person_f", "person_m" ].each { name -> %>
+	<% [
+			"add", "cancel", "close", "csv", "disable", "discontinue", "edit", "email", "enable", "enroll", "excel", "login",
+			"monitor", "ok", "patient_f", "patient_m", "person_f", "person_m", "phone", "start", "switch", "trash", "view", "void"
+	].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/glyphs/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>

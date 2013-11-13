@@ -10,7 +10,7 @@
 			<map>
 				<!-- JS -->
 				<entry key="scripts/jquery.js" value="scripts/jquery-1.10.2.min.js" />
-				<entry key="scripts/highcharts.js" value="scripts/highcharts-2.3.3.min.js" />
+				<entry key="scripts/highcharts.js" value="scripts/highcharts-3.0.7.min.js" />
 				<entry key="scripts/jquery-ui.js" value="scripts/jquery-ui-1.10.3.min.js" />
 				<entry key="scripts/angular.js" value="scripts/angular-1.2.0.min.js" />
 				<entry key="scripts/select2.js" value="scripts/select2-3.4.2.min.js" />

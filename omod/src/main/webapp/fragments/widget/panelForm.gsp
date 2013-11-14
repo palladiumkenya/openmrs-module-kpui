@@ -125,6 +125,7 @@
 	</form>
 </div>
 
+<% if (config.submitLabel || config.cancelLabel) { %>
 <div class="ke-panel-controls">
 	<% if (config.submitLabel) { %>
 	<button type="submit" form="${ id }">
@@ -138,6 +139,7 @@
 	</button>
 	<% } %>
 </div>
+<% } %>
 
 <% if (mode == "json") { %>
 <script type="text/javascript">

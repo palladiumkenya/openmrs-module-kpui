@@ -94,6 +94,13 @@ jq(function() {
 			alert('Search type "' + searchType + '" not configured');
 		}
 	});
+
+	/**
+	 * Optimize the size of modal content when browser is re-sized
+	 */
+	jq(window).resize(function() {
+		kenyaui.optimizeModalContent();
+	});
 });
 
 /**
@@ -116,10 +123,13 @@ var kenyaui = (function(jQuery) {
 	 */
 	function openModalContent(html, width, height) {
 		if (jq('.ke-modal-overlay').length == 0) {
-			var top = height ? (50 - height / 2) : 25;
-			var side = width ? (50 - width / 2) : 25;
-			jq('body').append('<div class="ke-modal-overlay"></div>');
-			jq('body').append('<div class="ke-modal-content" style="top: ' + top + '%; left: ' + side + '%; right: ' + side + '%;">' + html + '</div>');
+			jq('body').append('<div class="ke-modal-overlay"></div>'); // Covers the entire page
+
+			var vspace = height ? (50 - height / 2) : 25;
+			var hspace = width ? (50 - width / 2) : 25;
+			var style = 'top: ' + vspace + '%; right: ' + hspace + '%; bottom: ' + vspace + '%; left: ' + hspace + '%;';
+
+			jq('body').append('<div class="ke-modal-content" style="' + style + '">' + html + '</div>');
 		}
 	}
 
@@ -253,6 +263,8 @@ var kenyaui = (function(jQuery) {
 
 		jq.get(options.url, function(html) {
 			jq('.ke-modal-content .ke-panel-content').replaceWith(html);
+
+			kenyaui.optimizeModalContent();
 		});
 	};
 
@@ -279,6 +291,8 @@ var kenyaui = (function(jQuery) {
 		if (template) {
 			template.appendTo(jq('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
 		}
+
+		kenyaui.optimizeModalContent();
 	};
 
 	/**
@@ -293,6 +307,22 @@ var kenyaui = (function(jQuery) {
 
 		closeModalContent();
 	};
+
+	/**
+	 * Optimizes the size of a modal dialog so that the content fills the maximum vertical space
+	 */
+	_public.optimizeModalContent = function() {
+		jq('.ke-modal-content').each(function() {
+			var modalContent = jq(this);
+			var panelFrame = jq(modalContent).find('.ke-panel-frame');
+			var panelContent = jq(panelFrame).find('.ke-panel-content');
+
+			var nonContentY = panelFrame.height() - panelContent.height();
+			var maxContentY = modalContent.height() - nonContentY;
+
+			panelContent.css('max-height', maxContentY);
+		});
+	}
 
 	/**
 	 * Updates a datetime control after any of its child controls have been changed

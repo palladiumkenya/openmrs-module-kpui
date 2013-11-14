@@ -203,7 +203,7 @@
 <div class="holder">
 
 	<!-- Template for dialog loaded from existing template -->
-	<div id="dialog-template" title="Heading" style="display: none">
+	<div id="dialog-template-simple" title="Heading" style="display: none">
 		<div class="ke-panel-content">
 			Content from an existing template
 			<br/>
@@ -214,8 +214,19 @@
 		</div>
 	</div>
 
+	<!-- Vertically long template to show scrolling of content -->
+	<div id="dialog-template-scrolling" title="Long content" style="display: none">
+		<div class="ke-panel-content">
+			<% (1..100).each { it -> print "Line #" + it + "<br />" } %>
+		</div>
+		<div class="ke-panel-controls">
+			<button type="button" onclick="kenyaui.closeDialog()">Close</button>
+		</div>
+	</div>
+
 	<button type="button" onclick="kenyaui.openPanelDialog({ heading: 'Dialog', content: '<div class=&quot;ke-panel-content&quot;>Dialog content</div>' })">Panel</button>
-	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template' })">Panel (from template)</button>
+	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template-simple' })">Panel (from template)</button>
+	<button type="button" onclick="kenyaui.openPanelDialog({ templateId: 'dialog-template-scrolling' })">Panel (with scrolling)</button>
 	<button type="button" onclick="kenyaui.openLoadingDialog({})">Loading</button>
 	<button type="button" onclick="kenyaui.openAlertDialog({ heading: 'Alert', message: 'Dialog content' })">Alert</button>
 	<button type="button" onclick="kenyaui.openConfirmDialog({ heading: 'Confirm', message: 'Dialog content' })">Confirm</button>

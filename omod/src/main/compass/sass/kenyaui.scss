@@ -259,6 +259,7 @@ html, body {
 	}
 	.ke-panel-content {
 		background-color: $color_bkgd_general;
+		overflow: scroll;
 		padding: 5px;
 	}
 	.ke-panel-controls, .ke-panel-footer /* Deprecated: use .ke-panel-controls*/ {

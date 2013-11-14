@@ -17,7 +17,7 @@
 
 				<!-- CSS -->
 				<entry key="styles/jquery-ui.css" value="styles/jquery-ui-1.10.3.custom.css" />
-				<entry key="styles/select2.css" value="styles/select2-3.4.2.css" />
+				<entry key="styles/select2.css" value="styles/select2-3.4.5.css" />
 			</map>
 		</property>
 	</bean>

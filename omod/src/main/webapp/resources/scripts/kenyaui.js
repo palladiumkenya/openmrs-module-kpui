@@ -86,8 +86,7 @@ jq(function() {
 						}).done(function(data) { callback(data); });
 					}
 				},
-				escapeMarkup: function (m) { return m; }, // don't escape
-				dropdownCssClass: 'ui-dialog' // https://github.com/ivaynberg/select2/issues/940
+				escapeMarkup: function (m) { return m; } // don't escape
 			});
 		}
 		else {

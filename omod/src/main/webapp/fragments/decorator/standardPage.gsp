@@ -1,15 +1,17 @@
-<% ui.includeJavascript("kenyaui", "jquery.js") %>
-<% ui.includeJavascript("kenyaui", "jquery-ui.js") %>
-<% ui.includeJavascript("kenyaui", "select2.js") %>
-<% ui.includeJavascript("kenyaui", "jquery.toastmessage.js") %>
-<% ui.includeJavascript("kenyaui", "pagebus/simple/pagebus.js") %>
-<% ui.includeJavascript("kenyaui", "ui.js") %>
-<% ui.includeJavascript("kenyaui", "kenyaui.js") %>
+<!-- Oddly resource ordering values are highest-first -->
+<% ui.includeJavascript("kenyaui", "jquery.js", 100) %>
+<% ui.includeJavascript("kenyaui", "angular.js", 99) %>
+<% ui.includeJavascript("kenyaui", "select2.js", 98) %>
+<% ui.includeJavascript("kenyaui", "jquery-ui.js", 97) %>
+<% ui.includeJavascript("kenyaui", "jquery.toastmessage.js", 96) %>
+<% ui.includeJavascript("kenyaui", "pagebus/simple/pagebus.js", 95) %>
+<% ui.includeJavascript("kenyaui", "ui.js", 94) %>
+<% ui.includeJavascript("kenyaui", "kenyaui.js", 93) %>
 
-<% ui.includeCss("kenyaui", "jquery-ui.css") %>
-<% ui.includeCss("kenyaui", "select2.css") %>
-<% ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css") %>
-<% ui.includeCss("kenyaui", "kenyaui.css") %>
+<% ui.includeCss("kenyaui", "select2.css", 100) %>
+<% ui.includeCss("kenyaui", "jquery-ui.css", 99) %>
+<% ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css", 98) %>
+<% ui.includeCss("kenyaui", "kenyaui.css", 97) %>
 
 <!DOCTYPE html>
 <html>
@@ -32,7 +34,7 @@
 			${ config.beforeContent }
 		<% } %>
 
-		<div class="ke-page-container">
+		<div class="ke-page-container" ng-app="kenyaemr">
 			<%= config.content %>
 		</div>
 	</body>

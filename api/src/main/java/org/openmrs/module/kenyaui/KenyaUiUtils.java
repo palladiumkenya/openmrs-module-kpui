@@ -232,6 +232,19 @@ public class KenyaUiUtils {
 	}
 
 	/**
+	 * Formats a number of bytes in a human readable format
+	 * @param bytes the number of bytes
+	 * @return the string value
+	 */
+	public String formatBytes(long bytes) {
+		final int unit = 1024;
+		if (bytes < unit) return bytes + " B";
+		int exp = (int) (Math.log(bytes) / Math.log(unit));
+		String pre = "KMGTPE".charAt(exp - 1) + ("i");
+		return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+	}
+
+	/**
 	 * Convenience method to get the current app for the request
 	 * @param request the page request
 	 * @return the app descriptor

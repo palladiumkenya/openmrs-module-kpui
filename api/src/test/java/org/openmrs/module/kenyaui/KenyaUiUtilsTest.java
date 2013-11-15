@@ -239,4 +239,16 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 
 		Assert.assertThat(kenyaUi.formatUser(user), is("User, Super "));
 	}
+
+	/**
+	 * @see KenyaUiUtils#formatBytes(long)
+	 */
+	@Test
+	public void formatBytes() {
+		Assert.assertThat(kenyaUi.formatBytes(10), is("10 B"));
+		Assert.assertThat(kenyaUi.formatBytes(1024), is("1.0 KiB"));
+		Assert.assertThat(kenyaUi.formatBytes(10 * 1024), is("10.0 KiB"));
+		Assert.assertThat(kenyaUi.formatBytes(10 * 1024 * 1024), is("10.0 MiB"));
+		Assert.assertThat(kenyaUi.formatBytes(10 * 1024 * 1024 + 123), is("10.0 MiB"));
+	}
 }

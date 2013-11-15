@@ -23,7 +23,7 @@
 
 		<%= ui.resourceLinks() %>
 	</head>
-	<body>
+	<body ng-app="kenyaemr">
 		<script type="text/javascript">
 			var OPENMRS_CONTEXT_PATH = '${ contextPath }';
 		</script>
@@ -34,7 +34,7 @@
 			${ config.beforeContent }
 		<% } %>
 
-		<div class="ke-page-container" ng-app="kenyaemr">
+		<div class="ke-page-container">
 			<%= config.content %>
 		</div>
 	</body>

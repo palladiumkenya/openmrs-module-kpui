@@ -157,6 +157,19 @@ var kenyaui = (function(jQuery) {
 	}
 
 	/**
+	 * Gets the browser and version of the client
+	 * @returns [ name, version ]
+	 */
+	_public.getBrowser = function() {
+		var N = navigator.appName, ua = navigator.userAgent, tem;
+		var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+		if (M && (tem = ua.match(/version\/([\.\d]+)/i))!= null) {
+			M[2] = tem[1];
+		}
+		return M ? [M[1], M[2]] : [N, navigator.appVersion,'-?'];
+	};
+
+	/**
 	 * Takes an existing form and sets it up to submit via AJAX and get a json response.
 	 * @param fieldId the field id
 	 * @param options:
@@ -333,7 +346,7 @@ var kenyaui = (function(jQuery) {
 		jq('#' + fieldId).val(''); // clear field value
 
 		try {
-			var date = $.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
+			var date = jq.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
 			var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
 			var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
 

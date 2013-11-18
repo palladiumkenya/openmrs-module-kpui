@@ -20,9 +20,11 @@ import org.junit.Test;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.User;
+import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.test.TestUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
+import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.web.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpSession;
@@ -187,6 +189,33 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		Assert.assertThat(kenyaUi.formatDuration(1000), is("00:00:01"));
 		Assert.assertThat(kenyaUi.formatDuration(4 * 60 * 60 * 1000 + 3 * 60 * 1000 + 2 * 1000), is("04:03:02"));
 		Assert.assertThat(kenyaUi.formatDuration(100 * 60 * 60 * 1000 + 3 * 60 * 1000 + 2 * 1000), is("100:03:02"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatVisitDates(org.openmrs.Visit)
+	 */
+	@Test
+	public void formatVisitDates() {
+		// Check a retrospective visit
+		Visit visit = new Visit();
+		visit.setStartDatetime(OpenmrsUtil.firstSecondOfDay(TestUtils.date(2011, 1, 1)));
+		visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(TestUtils.date(2011, 1, 1)));
+		Assert.assertThat(kenyaUi.formatVisitDates(visit), is("01-Jan-2011"));
+
+		// Check a regular visit on single day
+		visit.setStartDatetime(TestUtils.date(2011, 1, 1, 10, 0, 0));
+		visit.setStopDatetime(TestUtils.date(2011, 1, 1, 11, 0, 0));
+		Assert.assertThat(kenyaUi.formatVisitDates(visit), is("01-Jan-2011 10:00 \u2192 11:00"));
+
+		// Check a regular visit spanning multiple days
+		visit.setStartDatetime(TestUtils.date(2011, 1, 1, 10, 0, 0));
+		visit.setStopDatetime(TestUtils.date(2011, 1, 2, 11, 0, 0));
+		Assert.assertThat(kenyaUi.formatVisitDates(visit), is("01-Jan-2011 10:00 \u2192 02-Jan-2011 11:00"));
+
+		// Check a visit with no end
+		visit.setStartDatetime(TestUtils.date(2011, 1, 1, 10, 0, 0));
+		visit.setStopDatetime(null);
+		Assert.assertThat(kenyaUi.formatVisitDates(visit), is("01-Jan-2011 10:00"));
 	}
 
 	/**

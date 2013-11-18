@@ -22,6 +22,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.User;
+import org.openmrs.Visit;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
@@ -118,7 +119,7 @@ public class KenyaUiUtils {
 	 * @return the string value
 	 */
 	public String formatDateAuto(Date date) {
-		if (DateUtils.isSameInstant(date, DateUtils.truncate(date, Calendar.DATE))) { // don't print time if there isn't any
+		if (!dateHasTime(date)) { // don't print time if there isn't any
 			return formatDate(date);
 		} else if (DateUtils.isSameDay(date, new Date())) { // don't print date if it's today
 			return formatTime(date);
@@ -170,6 +171,44 @@ public class KenyaUiUtils {
 	public String formatDuration(long time) {
 		Period period = new Period(time);
 		return String.format(DURATION_FORMAT, period.getHours(), period.getMinutes(), period.getSeconds());
+	}
+
+	/**
+	 * Formats the dates of the given visit
+	 * @param visit the visit
+	 * @return the string value
+	 */
+	public String formatVisitDates(Visit visit) {
+		StringBuilder sb = new StringBuilder();
+
+		if (dateHasTime(visit.getStartDatetime())) {
+			sb.append(formatDateTime(visit.getStartDatetime()));
+		}
+		else {
+			sb.append(formatDate(visit.getStartDatetime()));
+		}
+
+		if (visit.getStopDatetime() != null) {
+
+			// Check if stop is last second of a day, i.e. it's time is not significant
+			Calendar stop = Calendar.getInstance();
+			stop.setTime(visit.getStopDatetime());
+			boolean isLastMoment = stop.get(Calendar.HOUR_OF_DAY) == 23 && stop.get(Calendar.MINUTE) == 59 && stop.get(Calendar.SECOND) == 59;
+			boolean isSameDay = (visit.getStopDatetime() != null) && DateUtils.isSameDay(visit.getStartDatetime(), visit.getStopDatetime());
+
+			if (!(isLastMoment && isSameDay)) {
+				sb.append(" \u2192 ");
+
+				if (isSameDay) {
+					sb.append(formatTime(visit.getStopDatetime()));
+				}
+				else {
+					sb.append(formatDateTime(visit.getStopDatetime()));
+				}
+			}
+		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -277,5 +316,14 @@ public class KenyaUiUtils {
 	 */
 	public AppDescriptor getCurrentApp(FragmentActionRequest request) {
 		return (AppDescriptor) request.getHttpRequest().getAttribute(KenyaUiConstants.REQUEST_ATTR_CURRENT_APP);
+	}
+
+	/**
+	 * Checks if the given date has a time component
+	 * @param date the date
+	 * @return true if date has time
+	 */
+	protected boolean dateHasTime(Date date) {
+		return !DateUtils.isSameInstant(date, DateUtils.truncate(date, Calendar.DATE));
 	}
 }

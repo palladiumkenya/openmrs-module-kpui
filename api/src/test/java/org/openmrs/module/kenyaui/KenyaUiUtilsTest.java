@@ -36,6 +36,10 @@ import static org.hamcrest.Matchers.*;
  */
 public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 
+	private static final String TIME_REGEX = "\\d{2}:\\d{2}";
+
+	private static final String DATE_REGEX = "\\d{2}-\\w{3}-\\d{4}";
+
 	@Autowired
 	private KenyaUiUtils kenyaUi;
 
@@ -129,6 +133,23 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	@Test
 	public void formatDateParam_shouldFormatNullDateAsEmptyString() throws Exception {
 		Assert.assertThat(kenyaUi.formatDateParam(null), is(""));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatDateAuto(java.util.Date)
+	 */
+	@Test
+	public void formatDateAuto_shouldChooseSuitableFormat() {
+		Assert.assertThat(kenyaUi.formatDateParam(null), is(""));
+
+		// Check today's date formats as just time
+		Assert.assertThat(kenyaUi.formatDateAuto(new Date()).matches(TIME_REGEX), is(true));
+
+		// Check date without time formats as just date
+		Assert.assertThat(kenyaUi.formatDateAuto(TestUtils.date(2013, 5, 4)).matches(DATE_REGEX), is(true));
+
+		// Check past date with time formats as both date and time
+		Assert.assertThat(kenyaUi.formatDateAuto(TestUtils.date(2013, 5, 4, 11, 0, 0)).matches(DATE_REGEX + " " + TIME_REGEX), is(true));
 	}
 
 	/**

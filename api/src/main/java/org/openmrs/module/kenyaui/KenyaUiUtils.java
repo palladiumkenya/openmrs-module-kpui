@@ -15,6 +15,7 @@
 package org.openmrs.module.kenyaui;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.ocpsoft.prettytime.PrettyTime;
@@ -32,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -108,6 +110,21 @@ public class KenyaUiUtils {
 		}
 
 		return iso8601Formatter.format(date);
+	}
+
+	/**
+	 * Formats a date, automatically inferring the best format
+	 * @param date the date
+	 * @return the string value
+	 */
+	public String formatDateAuto(Date date) {
+		if (DateUtils.isSameInstant(date, DateUtils.truncate(date, Calendar.DATE))) { // don't print time if there isn't any
+			return formatDate(date);
+		} else if (DateUtils.isSameDay(date, new Date())) { // don't print date if it's today
+			return formatTime(date);
+		} else {
+			return formatDateTime(date);
+		}
 	}
 
 	/**

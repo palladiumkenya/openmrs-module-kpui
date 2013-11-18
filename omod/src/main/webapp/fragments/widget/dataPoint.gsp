@@ -3,7 +3,7 @@
 
 	def formatValue = { val ->
 		if (val instanceof Date) {
-			return config.showTime ? kenyaUi.formatDateTime(val): kenyaUi.formatDate(val)
+			return config.showTime ? kenyaui.formatDateTime(val): kenyaui.formatDate(val)
 		}
 		else if (val instanceof org.openmrs.ui.framework.Link) {
 			if (val.icon) {
@@ -28,10 +28,10 @@
 	}
 
 	if (config.extra instanceof Date) {
-		formattedExtra = kenyaUi.formatDate(config.extra)
+		formattedExtra = kenyaui.formatDate(config.extra)
 	}
 	else if (config.value instanceof Date && config.showDateInterval) {
-		formattedExtra = kenyaUi.formatInterval(config.value)
+		formattedExtra = kenyaui.formatInterval(config.value)
 	}
 %>
 <div class="ke-datapoint">

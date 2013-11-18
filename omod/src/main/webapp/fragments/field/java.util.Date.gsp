@@ -42,7 +42,7 @@
 	});
 </script>
 <input id="${ config.id }" type="hidden" name="${ config.formFieldName }" <% if (initialDatetime) { %>value="${ ui.dateToString(initialDatetime) }"<% } %>/>
-<input id="${ config.id }_date" type="text" <% if (initialDatetime) { %>value="${ kenyaUi.formatDate(initialDatetime) }"<% } %>/>
+<input id="${ config.id }_date" type="text" <% if (initialDatetime) { %>value="${ kenyaui.formatDate(initialDatetime) }"<% } %>/>
 <% if (config.showTime) { %>
 <select id="${ config.id }_hour"><% for (def h in 0..23) { %><option ${ initialHour == h ? "selected" : "" }>${ String.format('%02d', h) }</option><% } %></select>&nbsp;<strong>:</strong>&nbsp;<select id="${ config.id }_minute"><% for (def m in 0..59) { %><option ${ initialMinute == m ? "selected" : "" }>${ String.format('%02d', m) }</option><% } %></select>
 <% } %>

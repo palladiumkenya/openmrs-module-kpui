@@ -32,11 +32,11 @@ public class KenyaUiModelConfigurator implements PageModelConfigurator, Fragment
 
 	@Override
 	public void configureModel(PageContext pageContext) {
-		pageContext.getModel().addAttribute("kenyaUi", kenyaUiUtils);
+		pageContext.getModel().addAttribute("kenyaui", kenyaUiUtils);
 	}
 
 	@Override
 	public void configureModel(FragmentContext fragmentContext) {
-		fragmentContext.getModel().addAttribute("kenyaUi", kenyaUiUtils);
+		fragmentContext.getModel().addAttribute("kenyaui", kenyaUiUtils);
 	}
 }

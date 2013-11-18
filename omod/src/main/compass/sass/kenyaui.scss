@@ -359,32 +359,6 @@ span.ke-field-label, label.ke-field-label {
 
 /************************** Buttons **************************/
 
-.ke-appbutton {
-	@extend .ke-pressable;
-	@extend .ke-rounded;
-
-	padding: 8px;
-	width: 120px;
-	height: 120px;
-	display: table-cell;
-	vertical-align: middle;
-
-	.ke-icon {
-		width: 64px;
-		height: 64px;
-		float: none;
-		text-align: center;
-		padding: 0;
-		margin: auto;
-	}
-	.ke-button-text {
-		.ke-label {
-			margin-top: 5px;
-			text-align: center;
-		}
-	}
-}
-
 button, input[type=button], input[type=submit], input[type=reset] {
 	@extend .ke-pressable;
 	@extend .ke-rounded;
@@ -401,6 +375,17 @@ button, input[type=button], input[type=submit], input[type=reset] {
 button.ke-compact {
 	padding: 3px;
 	min-width: 0;
+}
+
+button.ke-app {
+	padding: 8px;
+	width: 128px;
+	height: 128px;
+
+	img {
+		margin: 0 auto 5px auto;
+		display: block;
+	}
 }
 
 /************************** Side menu **************************/

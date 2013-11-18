@@ -37,12 +37,6 @@
 
 <h2>Widgets</h2>
 
-<h3>appButton</h3>
-<div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/appButton", [ label: "My App", iconProvider: "kenyaui", icon: "apps/admin.png", onClick: defaultOnClick ]) }
-	${ ui.includeFragment("kenyaui", "widget/appButton", [ iconProvider: "kenyaui", icon: "apps/clinician.png", onClick: defaultOnClick ]) }
-</div>
-
 <h3>dataPoint</h3>
 <div class="holder">
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
@@ -118,6 +112,7 @@
 	<button type="button"><img src="${ ui.resourceLink("kenyaui", "images/buttons/undo.png") }" /> button with icon</button>
 	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" /> compact</button>
 	<button type="button" class="ke-compact"><img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" /></button>
+	<button type="button" class="ke-app"><img src="${ ui.resourceLink("kenyaui", "images/apps/admin.png") }" />app</button>
 </div>
 
 <h2>Classes</h2>

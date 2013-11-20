@@ -170,6 +170,16 @@ var kenyaui = (function(jQuery) {
 	};
 
 	/**
+	 * Updates the model of a AngularJS controller
+	 * @param controller the controller element id
+	 * @param update the update function
+	 */
+	_public.updateController = function(controllerId, update) {
+		var scope = angular.element(document.getElementById(controllerId)).scope();
+		scope.$apply(update(scope));
+	};
+
+	/**
 	 * Takes an existing form and sets it up to submit via AJAX and get a json response.
 	 * @param fieldId the field id
 	 * @param options:

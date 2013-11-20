@@ -571,13 +571,7 @@ function subscribe(message, callback) {
 	return window.PageBus.subscribe(message, null, callback, null);
 }
 
-//// Messaging //////////////////
-
-function getJsonAsEvent(url, eventTitle) {
-	jQuery.getJSON(url, function(data) {
-		publish(eventTitle, data);
-	});
-}
+//// Utils //////////////////
 
 function escapeJs(string) {
 	string = string.replace(/'/g, "\\'");

@@ -4,15 +4,12 @@
 	config.id = config.id ?: ui.randomId("dialogForm")
 
 	config.cancelFunction = "kenyaui.closeDialog"
+	config.successCallbacks = []
 
-	def closeCallback = "kenyaui.closeDialog();"
-
-	if (config.successCallbacks) {
-		config.successCallbacks << closeCallback
+	if (config.onSuccessCallback) {
+		config.successCallbacks << config.onSuccessCallback
 	}
-	else {
-		config.successCallbacks = [ closeCallback ]
-	}
+	config.successCallbacks << "kenyaui.closeDialog();"
 
 	def dialogHeading = config.dialogConfig.heading
 	def dialogWidth = config.dialogConfig.width ?: 80

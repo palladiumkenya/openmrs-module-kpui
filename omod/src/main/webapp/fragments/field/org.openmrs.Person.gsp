@@ -7,7 +7,7 @@ ${ ui.includeFragment("kenyaui", "widget/search", config.mergeAttributes([ searc
 		jq('#${ config.id }').data('default-value', jq('#${ config.id }').val());
 
 		subscribe('${ config.parentFormId }.reset', function() {
-			kenyaui.setSearchFieldValue('${ config.id }', jq('#${ config.id }').data('default-value'));
+			kenyaui.setSearchField('${ config.id }', jq('#${ config.id }').data('default-value'));
 		});
 
 		jq('#${ config.id }').on('change', function() {

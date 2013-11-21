@@ -490,7 +490,7 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 * @param value
 	 */
-	_public.setSearchFieldValue = function(fieldId, value) {
+	_public.setSearchField = function(fieldId, value) {
 		jQuery('#' + fieldId).select2('val', value);
 	};
 

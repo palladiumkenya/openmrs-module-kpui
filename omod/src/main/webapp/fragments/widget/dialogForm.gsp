@@ -4,7 +4,7 @@
 	config.id = config.id ?: ui.randomId("dialogForm")
 
 	config.cancelFunction = "kenyaui.closeDialog"
-    
+
 	def closeCallback = "kenyaui.closeDialog();"
 
 	if (config.successCallbacks) {
@@ -17,6 +17,8 @@
 	def dialogHeading = config.dialogConfig.heading
 	def dialogWidth = config.dialogConfig.width ?: 80
 	def dialogHeight = config.dialogConfig.height ?: 80
+
+	def onOpenCallback = config.onOpenCallback ?: ''
 %>
 
 <%
@@ -24,6 +26,7 @@
 		config.buttonConfig.onClick = """
 			kenyaui.openPanelDialog({ templateId: '${ config.id }_form', width: ${ dialogWidth }, height: ${ dialogHeight } });
 			ui.confirmBeforeNavigating('#${ config.id }_form');
+			${ onOpenCallback }
 		"""
 
 		print ui.includeFragment("kenyaui", "widget/button", config.buttonConfig)

@@ -6,7 +6,6 @@
 // supports mode (form|json)
 // supports cancelFunction
 // supports successCallbacks (a list of js snippets wrapped in function(data) { ... })
-// supports submitOnEvent (will subscribe to the given topic, and submit when it fires)
 // supports resetOnSubmit (default true)
 // supports submitLabel (button will only be shown if you provide this)
 // supports cancelLabel (button will only be shown if you provide this)

@@ -1,5 +1,6 @@
 <%
 	// Oddly resource ordering values are highest-first
+	ui.includeJavascript("kenyaui", "underscore.js", 101)
 	ui.includeJavascript("kenyaui", "jquery.js", 100)
 	ui.includeJavascript("kenyaui", "select2.js", 99)
 	ui.includeJavascript("kenyaui", "jquery-ui.js", 98)

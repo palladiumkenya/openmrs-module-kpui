@@ -9,6 +9,7 @@
 		<property name="resourceShortcuts">
 			<map>
 				<!-- JS -->
+				<entry key="scripts/underscore.js" value="scripts/underscore-1.5.2.min.js" />
 				<entry key="scripts/jquery.js" value="scripts/jquery-1.10.2.min.js" />
 				<entry key="scripts/highcharts.js" value="scripts/highcharts-3.0.7.min.js" />
 				<entry key="scripts/jquery-ui.js" value="scripts/jquery-ui-1.10.3.min.js" />

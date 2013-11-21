@@ -2,17 +2,18 @@
  * KenyaUI main javascript library
  */
 
+// Some code still uses jq
 jq = jQuery;
 
 /**
  * Page initialization tasks
  */
-jq(function() {
+jQuery(function() {
 	/**
 	 * Clicking on a stack-item should direct you to the URL specified in the clickUrl hidden input
 	 */
-	jq('.ke-stack-item').click(function(evt) {
-		var clickUrl = jq(this).find('input[name=clickUrl]').first();
+	jQuery('.ke-stack-item').click(function(evt) {
+		var clickUrl = jQuery(this).find('input[name=clickUrl]').first();
 		var url = (clickUrl.length > 0) ? clickUrl.val() : null;
 		if (url) {
 			location.href = url;
@@ -22,34 +23,34 @@ jq(function() {
 	/**
 	 * Disable autocomplete on all text inputs
 	 */
-	jq('input[type=text]').attr('autocomplete', 'off');
+	jQuery('input[type=text]').attr('autocomplete', 'off');
 
 	/**
 	 * Initialize all tabs
 	 */
-	jq('.ke-tabmenu').each(function() {
+	jQuery('.ke-tabmenu').each(function() {
 		// Make first tab mean item active
-		var first = jq(this).find('.ke-tabmenu-item:first');
+		var first = jQuery(this).find('.ke-tabmenu-item:first');
 		first.addClass('ke-tabmenu-item-active');
 
 		// And make it's tab visible
-		jq('.ke-tab[data-tabid=' + first.data('tabid') + ']').show();
+		jQuery('.ke-tab[data-tabid=' + first.data('tabid') + ']').show();
 
 		// Configure click handlers for each tab button
-		jq(this).find('.ke-tabmenu-item').click(function() {
+		jQuery(this).find('.ke-tabmenu-item').click(function() {
 			// Get tabid from data attribute
-			var tabid = jq(this).data('tabid');
+			var tabid = jQuery(this).data('tabid');
 
 			// Make only this tab active
-			jq('.ke-tabmenu-item-active').removeClass('ke-tabmenu-item-active');
-			jq(this).addClass('ke-tabmenu-item-active');
+			jQuery('.ke-tabmenu-item-active').removeClass('ke-tabmenu-item-active');
+			jQuery(this).addClass('ke-tabmenu-item-active');
 
 			// Make only this tab's content visible
-			jq('.ke-tab').each(function() {
-				if (jq(this).data('tabid') == tabid) {
-					jq(this).show();
+			jQuery('.ke-tab').each(function() {
+				if (jQuery(this).data('tabid') == tabid) {
+					jQuery(this).show();
 				} else {
-					jq(this).hide();
+					jQuery(this).hide();
 				}
 			});
 		});
@@ -58,9 +59,9 @@ jq(function() {
 	/**
 	 * Initialize search widgets
 	 */
-	jq('.ke-search').each(function() {
-		var searchType = jq(this).data('searchtype');
-		var searchParams = jq(this).data('searchparams');
+	jQuery('.ke-search').each(function() {
+		var searchType = jQuery(this).data('searchtype');
+		var searchParams = jQuery(this).data('searchparams');
 		var searchConfig = kenyaui.getSearchConfig(searchType);
 
 		if (searchParams) {
@@ -68,21 +69,21 @@ jq(function() {
 		}
 
 		if (searchConfig) {
-			jq(this).select2({
+			jQuery(this).select2({
 				placeholder: 'Search for a ' + searchType,
 				minimumInputLength: 3,
 				ajax: {
 					url: ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType + 's'),
 					dataType: 'json',
-					data: function (term, page) { return jq.extend({}, { q: term }, searchParams); },
+					data: function (term, page) { return jQuery.extend({}, { q: term }, searchParams); },
 					results: function (data, page) { return { results: data }; }
 				},
 				formatResult: function(object, container, query) { return searchConfig.format(object); },
 				formatSelection: function(object, container) { return searchConfig.format(object); },
 				initSelection: function(element, callback) {
-					var id = jq(element).val();
+					var id = jQuery(element).val();
 					if (id !== '') {
-						jq.ajax(ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType), { data: { id: id }, dataType: 'json'
+						jQuery.ajax(ui.fragmentActionLink(searchConfig.searchProvider, searchConfig.searchFragment, searchType), { data: { id: id }, dataType: 'json'
 						}).done(function(data) { callback(data); });
 					}
 				},
@@ -97,7 +98,7 @@ jq(function() {
 	/**
 	 * Optimize the size of modal content when browser is re-sized
 	 */
-	jq(window).resize(function() {
+	jQuery(window).resize(function() {
 		kenyaui.optimizeModalContent();
 	});
 });
@@ -121,14 +122,14 @@ var kenyaui = (function(jQuery) {
 	 * @param html the content
 	 */
 	function openModalContent(html, width, height) {
-		if (jq('.ke-modal-overlay').length == 0) {
-			jq('body').append('<div class="ke-modal-overlay"></div>'); // Covers the entire page
+		if (jQuery('.ke-modal-overlay').length == 0) {
+			jQuery('body').append('<div class="ke-modal-overlay"></div>'); // Covers the entire page
 
 			var vspace = height ? (50 - height / 2) : 25;
 			var hspace = width ? (50 - width / 2) : 25;
 			var style = 'top: ' + vspace + '%; right: ' + hspace + '%; bottom: ' + vspace + '%; left: ' + hspace + '%;';
 
-			jq('body').append('<div class="ke-modal-content" style="' + style + '">' + html + '</div>');
+			jQuery('body').append('<div class="ke-modal-content" style="' + style + '">' + html + '</div>');
 		}
 	}
 
@@ -138,8 +139,8 @@ var kenyaui = (function(jQuery) {
 	 */
 	function closeModalContent() {
 		// Clear any modal content
-		jq('.ke-modal-overlay').remove();
-		jq('.ke-modal-content').remove();
+		jQuery('.ke-modal-overlay').remove();
+		jQuery('.ke-modal-content').remove();
 	}
 
 	/**
@@ -190,15 +191,15 @@ var kenyaui = (function(jQuery) {
 			throw "onSuccess is required";
 		}
 
-		jq('#' + formId).submit(function(event) {
+		jQuery('#' + formId).submit(function(event) {
 			event.preventDefault();
-			var form = jq(this);
+			var form = jQuery(this);
 
 			// Clear any existing errors
 			_public.clearFormErrors(formId);
 
 			// POST and get back the result as JSON
-			jq.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
+			jQuery.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
 				_public.showFormErrors(formId, xhr.responseText);
 			});
 		});
@@ -210,7 +211,7 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.openLoadingDialog = function(options) {
 		var defaults = { heading: null, message: null };
-		var options = options ? jq.extend(defaults, options) : defaults;
+		var options = options ? jQuery.extend(defaults, options) : defaults;
 
 		var html = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 		if (options.message) {
@@ -232,7 +233,7 @@ var kenyaui = (function(jQuery) {
 			okIcon: 'ok', cancelIcon: 'cancel',
 			okCallback: function(){}, cancelCallback: function(){}
 		};
-		var options = options ? jq.extend(defaults, options) : defaults;
+		var options = options ? jQuery.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 		var cancelButtonId = kenyaui.generateId();
@@ -245,8 +246,8 @@ var kenyaui = (function(jQuery) {
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
-		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
-		jq('#' + cancelButtonId).click(function() { options.cancelCallback(); _public.closeDialog(); });
+		jQuery('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
+		jQuery('#' + cancelButtonId).click(function() { options.cancelCallback(); _public.closeDialog(); });
 	};
 
 	/**
@@ -259,7 +260,7 @@ var kenyaui = (function(jQuery) {
 			okLabel: 'OK', okIcon: null,
 			okCallback: function(){}
 		};
-		var options = options ? jq.extend(defaults, options) : defaults;
+		var options = options ? jQuery.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 
@@ -268,7 +269,7 @@ var kenyaui = (function(jQuery) {
 
 		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
-		jq('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
+		jQuery('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
 	};
 
 	/**
@@ -277,14 +278,14 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.openDynamicDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
-		var options = options ? jq.extend(defaults, options) : defaults;
+		var options = options ? jQuery.extend(defaults, options) : defaults;
 
 		var tmpContent = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 
 		_public.openPanelDialog({ heading: options.heading, content: tmpContent, width: options.width, height: options.height });
 
-		jq.get(options.url, function(html) {
-			jq('.ke-modal-content .ke-panel-content').replaceWith(html);
+		jQuery.get(options.url, function(html) {
+			jQuery('.ke-modal-content .ke-panel-content').replaceWith(html);
 
 			kenyaui.optimizeModalContent();
 		});
@@ -296,8 +297,8 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.openPanelDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
-		var options = options ? jq.extend(defaults, options) : defaults;
-		var template = options.templateId ? jq('#' + options.templateId) : null;
+		var options = options ? jQuery.extend(defaults, options) : defaults;
+		var template = options.templateId ? jQuery('#' + options.templateId) : null;
 		var content = template ? '' : options.content;
 		var heading = template ? template.attr('title') : options.heading;
 
@@ -311,7 +312,7 @@ var kenyaui = (function(jQuery) {
 
 		// Insert template into dialog
 		if (template) {
-			template.appendTo(jq('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
+			template.appendTo(jQuery('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
 		}
 
 		kenyaui.optimizeModalContent();
@@ -322,9 +323,9 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.closeDialog = function() {
 		// Re-attach and hide dialog template to body if it was used
-		var template = jq('.ke-modal-content .ke-panel-frame .ke-dialog-template')
+		var template = jQuery('.ke-modal-content .ke-panel-frame .ke-dialog-template')
 		if (template.length) {
-			template.hide().appendTo(jq('body'));
+			template.hide().appendTo(jQuery('body'));
 		}
 
 		closeModalContent();
@@ -334,10 +335,10 @@ var kenyaui = (function(jQuery) {
 	 * Optimizes the size of a modal dialog so that the content fills the maximum vertical space
 	 */
 	_public.optimizeModalContent = function() {
-		jq('.ke-modal-content').each(function() {
-			var modalContent = jq(this);
-			var panelFrame = jq(modalContent).find('.ke-panel-frame');
-			var panelContent = jq(panelFrame).find('.ke-panel-content');
+		jQuery('.ke-modal-content').each(function() {
+			var modalContent = jQuery(this);
+			var panelFrame = jQuery(modalContent).find('.ke-panel-frame');
+			var panelContent = jQuery(panelFrame).find('.ke-panel-content');
 
 			var nonContentY = panelFrame.height() - panelContent.height();
 			var maxContentY = modalContent.height() - nonContentY;
@@ -353,17 +354,17 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.updateDateTimeFromDisplay = function(fieldId, hasTime) {
 		kenyaui.clearFieldErrors(fieldId); // clear field errors
-		jq('#' + fieldId).val(''); // clear field value
+		jQuery('#' + fieldId).val(''); // clear field value
 
 		try {
-			var date = jq.datepicker.parseDate('dd-M-yy', jq('#' + fieldId + '_date').val(), null);
-			var hours = hasTime ? jq('#' + fieldId + '_hour').val() : '00';
-			var minutes = hasTime ? jq('#' + fieldId + '_minute').val() : '00';
+			var date = jQuery.datepicker.parseDate('dd-M-yy', jQuery('#' + fieldId + '_date').val(), null);
+			var hours = hasTime ? jQuery('#' + fieldId + '_hour').val() : '00';
+			var minutes = hasTime ? jQuery('#' + fieldId + '_minute').val() : '00';
 
 			if (date) {
 				// Format date with time fields
-				var timestamp = jq.datepicker.formatDate(jq.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
-				jq('#' + fieldId).val(timestamp);
+				var timestamp = jQuery.datepicker.formatDate(jQuery.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+				jQuery('#' + fieldId).val(timestamp);
 			}
 		}
 		catch (err) {
@@ -377,7 +378,7 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.notifySuccess = function(message) {
 		if (message) {
-			jq().toastmessage('showToast', { text: message, stayTime: 5000, sticky: false, type: 'success' });
+			jQuery().toastmessage('showToast', { text: message, stayTime: 5000, sticky: false, type: 'success' });
 		}
 	};
 
@@ -387,17 +388,8 @@ var kenyaui = (function(jQuery) {
 	 */
 	_public.notifyError = function(message) {
 		if (message) {
-			jq().toastmessage('showToast', { text: message, sticky: true, type: 'error' });
+			jQuery().toastmessage('showToast', { text: message, sticky: true, type: 'error' });
 		}
-	};
-
-	/**
-	 * Updates a search field value
-	 * @param fieldId
-	 * @param value
-	 */
-	_public.setSearchFieldValue = function(fieldId, value) {
-		jq('#' + fieldId).select2('val', value);
 	};
 
 	/**
@@ -432,10 +424,10 @@ var kenyaui = (function(jQuery) {
 	 * @param xhr the request object
 	 */
 	_public.showFormErrors = function(formId, response) {
-		var form = jq('#' + formId);
+		var form = jQuery('#' + formId);
 		var globalError = form.find('.ke-form-globalerrors');
 		try {
-			var err = jq.parseJSON(response);
+			var err = jQuery.parseJSON(response);
 
 			globalError.html('Please fix all errors...').show();
 
@@ -464,8 +456,8 @@ var kenyaui = (function(jQuery) {
 	 * @param formId the form id
 	 */
 	_public.clearFormErrors = function(formId) {
-		jq('#' + formId + ' .ke-form-globalerrors').html('').hide();
-		jq('#' + formId + ' .error').html('').hide();
+		jQuery('#' + formId + ' .ke-form-globalerrors').html('').hide();
+		jQuery('#' + formId + ' .error').html('').hide();
 	};
 
 	/**
@@ -473,7 +465,7 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 */
 	_public.hasErrorField = function(fieldId) {
-		return jq('#' + fieldId + '-error').length > 0;
+		return jQuery('#' + fieldId + '-error').length > 0;
 	};
 
 	/**
@@ -482,7 +474,7 @@ var kenyaui = (function(jQuery) {
 	 * @param message the error message
 	 */
 	_public.showFieldError = function(fieldId, message) {
-		jq('#' + fieldId + '-error').append(message + '<br />').show();
+		jQuery('#' + fieldId + '-error').append(message + '<br />').show();
 	};
 
 	/**
@@ -490,7 +482,35 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 */
 	_public.clearFieldErrors = function(fieldId) {
-		jq('#' + fieldId + '-error').html('').hide();
+		jQuery('#' + fieldId + '-error').html('').hide();
+	};
+
+	/**
+	 * Updates a search field value
+	 * @param fieldId the field id
+	 * @param value
+	 */
+	_public.setSearchFieldValue = function(fieldId, value) {
+		jQuery('#' + fieldId).select2('val', value);
+	};
+
+	/**
+	 * Sets a date field value
+	 * @param fieldId the field id
+	 * @param value the value to check
+	 */
+	_public.setDateField = function(fieldId, value) {
+		jQuery('#' + fieldId).val(jq.datepicker.formatDate(jq.datepicker.W3C, value));
+		jQuery('#' + fieldId + '_date').datepicker('setDate', value);
+	};
+
+	/**
+	 * Sets a radiobutton field value
+	 * @param fieldId the field id (a container element)
+	 * @param value the value to check
+	 */
+	_public.setRadioField = function(fieldId, value) {
+		jQuery('#' + fieldId + ' input[type="radio"][value="' + value + '"]').prop('checked', true);
 	};
 
 	/**

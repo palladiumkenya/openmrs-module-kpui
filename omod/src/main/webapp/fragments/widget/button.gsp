@@ -10,6 +10,9 @@
 
 	def cssClass = config.cssClass ?: "ke-button"
 %>
+
+<% if (config.extra) { %>
+
 <div id="${ id }" class="${ cssClass }">
 	<% if (config.icon && config.iconProvider) { %>
 		${ ui.includeFragment("kenyaui", "widget/icon", [ iconProvider: config.iconProvider, icon: config.icon, iconOverlay: config.iconOverlay, iconOverlayProvider: config.iconOverlayProvider ]) }
@@ -24,15 +27,23 @@
 	</div>
 </div>
 
+<% } else { %>
+
+<button id="${ id }" type="button">
+	<% if (config.icon && config.iconProvider) { %><img src="${ ui.resourceLink(config.iconProvider, "images/" + config.icon) }" /><% } %>
+	${ config.label }
+</button>
+
+<% } %>
+
 <% if (config.href || config.onClick) { %>
 <script type="text/javascript">
-jq(function() {
-	jq('#${ id }').click(function() {
+jQuery(function() {
+	jQuery('#${ id }').click(function() {
 		<% if (config.onClick) { %>
 			${ config.onClick }
-		<% } %>
-		<% if (config.href) { %>
-			location.href = '${ ui.escapeJs(config.href) }'
+		<% } else if (config.href) { %>
+			ui.navigate('${ ui.escapeJs(config.href) }');
 		<% } %>
 	});
 });

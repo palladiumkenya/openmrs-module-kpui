@@ -25,8 +25,6 @@
 
 	import org.openmrs.ui.framework.fragment.FragmentConfiguration
 	import org.apache.commons.beanutils.PropertyUtils
-
-	ui.includeJavascript("kenyaui", "coreFragments.js")
 	
     def id = config.id ?: ui.randomId("form")
 	def fields = config.fields ?: []

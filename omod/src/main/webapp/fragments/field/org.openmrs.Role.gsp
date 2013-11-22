@@ -1,5 +1,3 @@
-<% ui.includeJavascript("kenyaui", "coreFragments.js") %>
-
 <%= ui.includeFragment("kenyaui", "widget/selectList", [
 		id: config.id,
         selected: [ config.initialValue?.role ],

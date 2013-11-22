@@ -16,8 +16,6 @@
 			initialMinute = 0
 		}
 	}
-
-	ui.includeJavascript("kenyaui", "coreFragments.js")
 %>
 <script type="text/javascript">
 	jq(function() {

@@ -1,7 +1,3 @@
-<%
-    ui.includeJavascript("kenyaui", "coreFragments.js")
-%>
-
 <input id="${ config.id }" type="text" size="5" name="${ config.formFieldName }" value="${ config.initialValue ?: "" }"
     onBlur="kenyaui.clearFieldErrors('${ config.id }'); <% if (config.required) { %>validateRequired(this.value, '${ config.id }-error'); <% } %> validateNumber(this.value, '${ config.id }-error')"/>
 

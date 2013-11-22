@@ -9,6 +9,7 @@
 	ui.includeJavascript("kenyaui", "pagebus/simple/pagebus.js", 95)
 	ui.includeJavascript("kenyaui", "ui.js", 94)
 	ui.includeJavascript("kenyaui", "kenyaui.js", 93)
+	ui.includeJavascript("kenyaui", "kenyaui-legacy.js", 92)
 
 	ui.includeCss("kenyaui", "select2.css", 100)
 	ui.includeCss("kenyaui", "jquery-ui.css", 99)

@@ -6,7 +6,7 @@
 	<version>1.13.2-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
-	<name>KenyaUI Library</name>
+	<name>KenyaUI</name>
 	<description>Re-usable UI components for KenyaEMR</description>
 
 	<developers>

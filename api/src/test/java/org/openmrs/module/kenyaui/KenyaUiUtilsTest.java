@@ -17,6 +17,7 @@ package org.openmrs.module.kenyaui;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openmrs.Obs;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.User;
@@ -216,6 +217,46 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 		visit.setStartDatetime(TestUtils.date(2011, 1, 1, 10, 0, 0));
 		visit.setStopDatetime(null);
 		Assert.assertThat(kenyaUi.formatVisitDates(visit), is("01-Jan-2011 10:00"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatObsValue(org.openmrs.Obs)
+	 */
+	@Test
+	public void formatObsValue_shouldFormatTextObs() {
+		Obs obs = new Obs();
+		obs.setConcept(Context.getConceptService().getConcept(19));
+		obs.setValueText("Testing");
+		Assert.assertThat(kenyaUi.formatObsValue(obs), is("Testing"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatObsValue(org.openmrs.Obs)
+	 */
+	@Test
+	public void formatObsValue_shouldFormatNumericObs() {
+		// Check with precise concept
+		Obs obs = new Obs();
+		obs.setConcept(Context.getConceptService().getConcept(5089));
+		obs.setValueNumeric(123.4);
+		Assert.assertThat(kenyaUi.formatObsValue(obs), is("123.4 kg"));
+
+		// Check with inprecise concept
+		obs = new Obs();
+		obs.setConcept(Context.getConceptService().getConcept(5497));
+		obs.setValueNumeric(123.0);
+		Assert.assertThat(kenyaUi.formatObsValue(obs), is("123 cells/mmL"));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatObsValue(org.openmrs.Obs)
+	 */
+	@Test
+	public void formatObsValue_shouldFormatDatetimeObs() {
+		Obs obs = new Obs();
+		obs.setConcept(Context.getConceptService().getConcept(20));
+		obs.setValueDatetime(TestUtils.date(2012, 5, 4, 3, 2, 1));
+		Assert.assertThat(kenyaUi.formatObsValue(obs), is("04-May-2012 03:02"));
 	}
 
 	/**

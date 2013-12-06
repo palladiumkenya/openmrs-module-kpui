@@ -15,14 +15,20 @@
 package org.openmrs.module.kenyaui;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.ocpsoft.prettytime.PrettyTime;
+import org.openmrs.Concept;
+import org.openmrs.ConceptDatatype;
+import org.openmrs.ConceptNumeric;
+import org.openmrs.Obs;
 import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.User;
 import org.openmrs.Visit;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppDescriptor;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
@@ -209,6 +215,46 @@ public class KenyaUiUtils {
 		}
 
 		return sb.toString();
+	}
+
+	/**
+	 * Formats an obs value
+	 * @param obs the obs
+	 * @return the formatted value
+	 */
+	public String formatObsValue(Obs obs) {
+		ConceptDatatype datatype = obs.getConcept().getDatatype();
+
+		if (datatype.isText()) {
+			return "" + obs.getValueText();
+		}
+		else if (datatype.isNumeric()) {
+			// Bug in core means Obs.getConcept() won't always return a ConceptNumeric
+			ConceptNumeric numeric = (obs.getConcept() instanceof ConceptNumeric)
+			 		? ((ConceptNumeric) obs.getConcept())
+					: Context.getConceptService().getConceptNumeric(obs.getConcept().getId());
+
+			String val = numeric.isPrecise() ? String.valueOf(obs.getValueNumeric()) : String.valueOf(obs.getValueNumeric().intValue());
+
+			if (StringUtils.isNotEmpty(numeric.getUnits())) {
+				val += " " + numeric.getUnits();
+			}
+
+			return val;
+		}
+		else if (datatype.isCoded()) {
+			// TODO use UiUtils.format so concept names are localized
+			return obs.getValueCoded().getName().getName();
+		}
+		else if (datatype.isDateTime()) {
+			return formatDateTime(obs.getValueDatetime());
+		}
+		else if (datatype.isDate()) {
+			return formatDate(obs.getValueDate());
+		}
+		else {
+			throw new RuntimeException("Unsupported concept datatype");
+		}
 	}
 
 	/**

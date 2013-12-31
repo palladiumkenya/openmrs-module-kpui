@@ -69,15 +69,20 @@ small {
 	background-color: $color_bkgd_highlight;
 }
 
+.ke-clearfix {
+	overflow: hidden;
+}
+
 /* Anything which is an input control */
 .ke-control {
+	@extend .ke-clearfix;
+
 	color: $color_text_control;
 	background-color: $color_bkgd_control;
 	display: inline-block;
 	position: relative;
 	font-weight: bold;
 	margin: 0;
-	overflow: auto;
 	text-decoration: none;
 }
 
@@ -124,12 +129,10 @@ html, body {
 	width: 320px;
 	position: absolute;
 	padding: 5px;
-	overflow: auto;
 }
 
 .ke-page-content {
 	padding: 5px;
-	overflow: auto;
 	background-color: white;
 }
 
@@ -140,6 +143,8 @@ html, body {
 /************************** Toolbar menu **************************/
 
 .ke-toolbar {
+	@extend .ke-clearfix;
+
 	font-size: $size_text_general;
 	color: white;
 	background-color: $color_bkgd_toolbar;
@@ -200,11 +205,12 @@ html, body {
 /************************** Tabs **************************/
 
 .ke-tabmenu {
+	@extend .ke-clearfix;
+
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	padding: 3px 5px 0 5px;
 	background-color: $color_bkgd_gutter;
-	overflow: auto;
 
 	.ke-tabmenu-item {
 		@extend .ke-clickable;
@@ -258,8 +264,9 @@ html, body {
 		font-size: $size_text_header;
 	}
 	.ke-panel-content {
+		@extend .ke-clearfix;
+
 		background-color: $color_bkgd_general;
-		overflow: scroll;
 		padding: 5px;
 	}
 	.ke-panel-controls, .ke-panel-footer /* Deprecated: use .ke-panel-controls*/ {
@@ -362,9 +369,9 @@ span.ke-field-label, label.ke-field-label {
 button, input[type=button], input[type=submit], input[type=reset] {
 	@extend .ke-pressable;
 	@extend .ke-rounded;
+	@extend .ke-clearfix;
 
 	padding: 5px;
-	overflow: hidden;
 	min-width: 75px;
 
 	img {
@@ -433,9 +440,10 @@ button.ke-app {
 /************************** Stacks **************************/
 
 .ke-stack-item {
+	@extend .ke-clearfix;
+
 	border-top: 2px dotted $color_bkgd_frame;
 	padding: 3px;
-	overflow: auto;
 
 	&:first-of-type {
 		border-top: 0;
@@ -479,7 +487,6 @@ button.ke-app {
 		}
 		td {
 			padding: 2px;
-			text-align: center;
 			text-align: left;
 			vertical-align: top;
 		}

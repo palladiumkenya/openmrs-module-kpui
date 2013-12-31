@@ -343,7 +343,7 @@ var kenyaui = (function(jQuery) {
 			var nonContentY = panelFrame.height() - panelContent.height();
 			var maxContentY = modalContent.height() - nonContentY;
 
-			panelContent.css('max-height', maxContentY);
+			panelContent.css('max-height', maxContentY).css('overflow', 'scroll');
 		});
 	}
 

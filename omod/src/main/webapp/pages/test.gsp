@@ -241,12 +241,18 @@
 <div class="holder">
 	<%
 	[
-			"account", "account_add", "admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
-			"back", "close", "patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
-			"person_f", "person_m", "profile_password", "profile_secret_question",
-			"provider", "regimen", "regimen_change", "regimen_restart",
-			"regimen_start", "regimen_stop", "registration", "report_configure", "report_download_excel", "report_generate",
-			"undo", "user_disable", "user_enable", "users_manage", "visit_end", "visit_retrospective", "visit_void"
+			"account", "account_add",
+			"admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
+			"back", "close", "disable", "enable",
+			"patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
+			"profile_password", "profile_secret_question",
+			"provider_f", "provider_m",
+			"regimen", "regimen_change", "regimen_restart", "regimen_start", "regimen_stop",
+			"registration",
+			"report_configure", "report_download_excel", "report_generate", "report_queue",
+			"undo",
+			"user_disable", "user_enable", "user_f", "user_m", "users_manage",
+			"visit_end", "visit_retrospective", "visit_void"
 	].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/buttons/" + name + ".png") }" title="${ name }" />
 	<% } %>

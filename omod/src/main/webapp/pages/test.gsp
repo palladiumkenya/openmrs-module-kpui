@@ -232,7 +232,7 @@
 
 <h3>apps</h3>
 <div class="holder">
-	<% [ "registration", "intake", "clinician", "chart", "reports", "admin" ].each { name -> %>
+	<% [ "admin", "chart", "clinician", "default", "directory", "intake", "registration", "reports" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>

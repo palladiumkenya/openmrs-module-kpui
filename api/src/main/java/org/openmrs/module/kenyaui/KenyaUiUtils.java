@@ -29,7 +29,7 @@ import org.openmrs.PersonName;
 import org.openmrs.User;
 import org.openmrs.Visit;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.appframework.AppDescriptor;
+import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.util.OpenmrsUtil;

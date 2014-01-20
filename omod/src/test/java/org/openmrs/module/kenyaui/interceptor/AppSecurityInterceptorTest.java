@@ -17,22 +17,18 @@ package org.openmrs.module.kenyaui.interceptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.api.context.Context;
-import org.openmrs.module.appframework.AppDescriptor;
-import org.openmrs.module.appframework.SimpleAppDescriptor;
-import org.openmrs.module.appframework.api.AppFrameworkService;
+import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.appframework.repository.AllAppDescriptors;
 import org.openmrs.ui.framework.fragment.FragmentActionRequest;
 import org.openmrs.ui.framework.fragment.FragmentFactory;
 import org.openmrs.ui.framework.page.PageContext;
 import org.openmrs.ui.framework.page.PageRequest;
 import org.openmrs.ui.framework.session.Session;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockHttpSession;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import static org.hamcrest.Matchers.*;
 
@@ -45,6 +41,9 @@ public class AppSecurityInterceptorTest extends BaseModuleWebContextSensitiveTes
 
 	private AppDescriptor testApp;
 
+	@Autowired
+	private AllAppDescriptors appDescriptorsRepo;
+
 	/**
 	 * Setup each test
 	 */
@@ -53,8 +52,9 @@ public class AppSecurityInterceptorTest extends BaseModuleWebContextSensitiveTes
 		interceptor = new AppSecurityInterceptor();
 
 		// Create and register a single test app
-		testApp = new SimpleAppDescriptor("test.app1", "Test");
-		Context.getService(AppFrameworkService.class).setAllApps(new ArrayList<AppDescriptor>(Collections.singletonList(testApp)));
+		testApp = new AppDescriptor("test.app1", "", "Test App #1", null, null, null, 100);
+		appDescriptorsRepo.clear();
+		appDescriptorsRepo.add(testApp);
 	}
 
 	/**

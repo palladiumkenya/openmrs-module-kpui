@@ -18,8 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.appframework.AppDescriptor;
-import org.openmrs.module.appframework.api.AppFrameworkService;
+import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.kenyaui.KenyaUiConstants;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.module.kenyaui.annotation.AppAction;
@@ -159,14 +159,14 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 		AppDescriptor app = null;
 
 		if (appId != null) {
-			app = Context.getService(AppFrameworkService.class).getAppById(appId);
+			app = Context.getService(AppFrameworkService.class).getApp(appId);
 
 			if (app == null) {
 				throw new IllegalArgumentException("No such app with appId " + appId);
 			}
 
 			// Check logged in user has require privilege for this app
-			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
+			if (!Context.hasPrivilege(app.getRequiredPrivilege())) {
 				redirectToLogin(pageContext, "Insufficient privileges for " + app.getLabel() + " app");
 			}
 		}
@@ -185,14 +185,14 @@ public class AppSecurityInterceptor implements PageRequestInterceptor, FragmentA
 		AppDescriptor app = null;
 
 		if (appId != null) {
-			app = Context.getService(AppFrameworkService.class).getAppById(appId);
+			app = Context.getService(AppFrameworkService.class).getApp(appId);
 
 			if (app == null) {
 				throw new IllegalArgumentException("No such app with appId " + appId);
 			}
 
 			// Check logged in user has require privilege for this app
-			if (!Context.hasPrivilege(app.getRequiredPrivilegeName())) {
+			if (!Context.hasPrivilege(app.getRequiredPrivilege())) {
 				throw new APIAuthenticationException("Insufficient privileges for " + app.getLabel() + " app");
 			}
 		}

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.kenyaui.validator;
+package org.openmrs.module.kenyaui.form;
 
 import java.util.Date;
 
@@ -64,44 +64,34 @@ public abstract class ValidatingCommandObject implements Validator {
 	}
 
 	/**
-	 *
-	 * @param errors
-	 * @param field
+	 * Validates the given field using a registered validator
+	 * @param errors the bind errors
+	 * @param field the field name
 	 */
 	public void validateField(Errors errors, String field) {
-		validateField(errors, field, false);
+		validateField(errors, field, null);
 	}
 
 	/**
-	 *
-	 * @param errors
-	 * @param field
-	 * @param required
+	 * Validates the given field using the given validator
+	 * @param errors the bind errors
+	 * @param field the field name
+	 * @param validator the validator
 	 */
-	public void validateField(Errors errors, String field, boolean required) {
+	public void validateField(Errors errors, String field, Validator validator) {
 		Object value = errors.getFieldValue(field);
-		if (value == null) {
-			if (required) {
-				errors.rejectValue(field, KenyaUiConstants.MODULE_ID + ".error.required");
-			} else {
-				return;
-			}
-		}
-		errors.pushNestedPath(field);
-		ValidateUtil.validate(value, errors);
-		errors.popNestedPath();
-	}
 
-	/**
-	 *
-	 * @param data
-	 */
-	public void voidData(OpenmrsData data) {
-		if (!data.isVoided()) {
-			data.setVoided(true);
-			data.setDateVoided(new Date());
-			data.setVoidedBy(Context.getAuthenticatedUser());
+		errors.pushNestedPath(field);
+
+		if (validator != null) {
+			ValidationUtils.invokeValidator(validator, value, errors);
 		}
+		else {
+			// Use a registered OpenMRS validator
+			ValidateUtil.validate(value, errors);
+		}
+
+		errors.popNestedPath();
 	}
 
 	/**

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.module.kenyaui.validator;
+package org.openmrs.module.kenyaui.form;
 
 import org.junit.Assert;
 import org.junit.Test;

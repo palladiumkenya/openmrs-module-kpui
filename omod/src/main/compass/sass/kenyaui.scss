@@ -522,6 +522,13 @@ button.ke-app {
 	background-color: #EEF;
 }
 
+.ke-onlinetag {
+	@extend .ke-tag;
+
+	color: #232;
+	background-color: #daf0da;
+}
+
 /************************** Modal dialogs **************************/
 
 .ke-modal-overlay {

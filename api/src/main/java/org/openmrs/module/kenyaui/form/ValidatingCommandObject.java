@@ -14,11 +14,7 @@
 
 package org.openmrs.module.kenyaui.form;
 
-import java.util.Date;
-
 import org.apache.commons.beanutils.PropertyUtils;
-import org.openmrs.OpenmrsData;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.KenyaUiConstants;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.validator.ValidateUtil;
@@ -80,6 +76,11 @@ public abstract class ValidatingCommandObject implements Validator {
 	 */
 	public void validateField(Errors errors, String field, Validator validator) {
 		Object value = errors.getFieldValue(field);
+
+		// Don't validate null values
+		if (value == null) {
+			return;
+		}
 
 		errors.pushNestedPath(field);
 

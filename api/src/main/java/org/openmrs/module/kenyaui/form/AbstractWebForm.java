@@ -27,7 +27,7 @@ public abstract class AbstractWebForm extends ValidatingCommandObject {
 	/**
 	 * Saves the form
 	 */
-	public abstract void save();
+	public abstract Object save();
 
 	/**
 	 * Voids the specified data object

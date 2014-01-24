@@ -374,6 +374,10 @@ button, input[type=button], input[type=submit], input[type=reset] {
 	padding: 5px;
 	min-width: 75px;
 
+	&:disabled {
+		color: lighten($color_text_general, 33%);
+	}
+
 	img {
 		vertical-align: middle;
 	}

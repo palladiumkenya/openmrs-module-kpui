@@ -229,6 +229,12 @@
 	<button type="button" onclick="kenyaui.openDynamicDialog({ heading: 'Dynamic', url: ui.pageLink('kenyaui', 'test') })">Dynamic</button>
 </div>
 
+<h3>notifications</h3>
+<div class="holder">
+	<button type="button" onclick="kenyaui.notifySuccess('Success')">Success</button>
+	<button type="button" onclick="kenyaui.notifyError('Error')">Error</button>
+</div>
+
 <h2>Icons</h2>
 
 <h3>apps</h3>

@@ -106,7 +106,7 @@ jQuery(function() {
 /**
  * Utility methods
  */
-var kenyaui = (function(jQuery) {
+(function(kenyaui, $) {
 
 	// For generating unique element ids
 	var next_generated_id = 0;
@@ -114,22 +114,19 @@ var kenyaui = (function(jQuery) {
 	// Search configurations
 	var searchConfigs = new Object();
 
-	// Contains all public methods of this object
-	var _public = {};
-
 	/**
 	 * Opens a generic modal dialog
 	 * @param html the content
 	 */
 	function openModalContent(html, width, height) {
-		if (jQuery('.ke-modal-overlay').length == 0) {
-			jQuery('body').append('<div class="ke-modal-overlay"></div>'); // Covers the entire page
+		if ($('.ke-modal-overlay').length == 0) {
+			$('body').append('<div class="ke-modal-overlay"></div>'); // Covers the entire page
 
 			var vspace = height ? (50 - height / 2) : 25;
 			var hspace = width ? (50 - width / 2) : 25;
 			var style = 'top: ' + vspace + '%; right: ' + hspace + '%; bottom: ' + vspace + '%; left: ' + hspace + '%;';
 
-			jQuery('body').append('<div class="ke-modal-content" style="' + style + '">' + html + '</div>');
+			$('body').append('<div class="ke-modal-content" style="' + style + '">' + html + '</div>');
 		}
 	}
 
@@ -139,8 +136,8 @@ var kenyaui = (function(jQuery) {
 	 */
 	function closeModalContent() {
 		// Clear any modal content
-		jQuery('.ke-modal-overlay').remove();
-		jQuery('.ke-modal-content').remove();
+		$('.ke-modal-overlay').remove();
+		$('.ke-modal-content').remove();
 	}
 
 	/**
@@ -161,7 +158,7 @@ var kenyaui = (function(jQuery) {
 	 * Gets the browser and version of the client
 	 * @returns [ name, version ]
 	 */
-	_public.getBrowser = function() {
+	kenyaui.getBrowser = function() {
 		var N = navigator.appName, ua = navigator.userAgent, tem;
 		var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
 		if (M && (tem = ua.match(/version\/([\.\d]+)/i))!= null) {
@@ -175,7 +172,7 @@ var kenyaui = (function(jQuery) {
 	 * @param controller the controller element id
 	 * @param update the update function
 	 */
-	_public.updateController = function(controllerId, update) {
+	kenyaui.updateController = function(controllerId, update) {
 		var scope = angular.element(document.getElementById(controllerId)).scope();
 		scope.$apply(update(scope));
 	};
@@ -186,21 +183,21 @@ var kenyaui = (function(jQuery) {
 	 * @param options:
 	 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
 	 */
-	_public.setupAjaxPost = function(formId, options) {
+	kenyaui.setupAjaxPost = function(formId, options) {
 		if (typeof options.onSuccess !== 'function') {
 			throw "onSuccess is required";
 		}
 
-		jQuery('#' + formId).submit(function(event) {
+		$('#' + formId).submit(function(event) {
 			event.preventDefault();
-			var form = jQuery(this);
+			var form = $(this);
 
 			// Clear any existing errors
-			_public.clearFormErrors(formId);
+			kenyaui.clearFormErrors(formId);
 
 			// POST and get back the result as JSON
-			jQuery.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
-				_public.showFormErrors(formId, xhr.responseText);
+			$.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
+				kenyaui.showFormErrors(formId, xhr.responseText);
 			});
 		});
 	};
@@ -209,9 +206,9 @@ var kenyaui = (function(jQuery) {
 	 * Opens a modal loading dialog
 	 * @param options the options
 	 */
-	_public.openLoadingDialog = function(options) {
+	kenyaui.openLoadingDialog = function(options) {
 		var defaults = { heading: null, message: null };
-		var options = options ? jQuery.extend(defaults, options) : defaults;
+		var options = options ? $.extend(defaults, options) : defaults;
 
 		var html = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 		if (options.message) {
@@ -219,21 +216,22 @@ var kenyaui = (function(jQuery) {
 		}
 		html += '</div>';
 
-		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
+		kenyaui.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 	};
 
 	/**
 	 * Opens a modal confirm (OK/Cancel) dialog
 	 * @param options the options
 	 */
-	_public.openConfirmDialog = function(options) {
+	kenyaui.openConfirmDialog = function(options) {
 		var defaults = {
 			heading: null, message: '',
 			okLabel: 'OK', cancelLabel: 'Cancel',
 			okIcon: 'ok', cancelIcon: 'cancel',
 			okCallback: function(){}, cancelCallback: function(){}
 		};
-		var options = options ? jQuery.extend(defaults, options) : defaults;
+
+		options = options ? $.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 		var cancelButtonId = kenyaui.generateId();
@@ -244,48 +242,49 @@ var kenyaui = (function(jQuery) {
 		html += createButton(cancelButtonId, options.cancelLabel, options.cancelIcon);
 		html += '</div>';
 
-		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
+		kenyaui.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
-		jQuery('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
-		jQuery('#' + cancelButtonId).click(function() { options.cancelCallback(); _public.closeDialog(); });
+		$('#' + okButtonId).click(function() { options.okCallback(); kenyaui.closeDialog(); });
+		$('#' + cancelButtonId).click(function() { options.cancelCallback(); kenyaui.closeDialog(); });
 	};
 
 	/**
 	 * Opens a modal alert (OK) dialog
 	 * @param options the options
 	 */
-	_public.openAlertDialog = function(options) {
+	kenyaui.openAlertDialog = function(options) {
 		var defaults = {
 			heading: null, message: '',
 			okLabel: 'OK', okIcon: null,
 			okCallback: function(){}
 		};
-		var options = options ? jQuery.extend(defaults, options) : defaults;
+
+		options = options ? $.extend(defaults, options) : defaults;
 
 		var okButtonId = kenyaui.generateId();
 
 		var html = '<div class="ke-panel-content" style="padding: 10px">' + options.message + '</div>';
 		html += '<div class="ke-panel-footer">' + createButton(okButtonId, options.okLabel, options.okIcon) + '</div>';
 
-		_public.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
+		kenyaui.openPanelDialog({ heading: options.heading, content: html, width: 40, height: 20 });
 
-		jQuery('#' + okButtonId).click(function() { options.okCallback(); _public.closeDialog(); });
+		$('#' + okButtonId).click(function() { options.okCallback(); kenyaui.closeDialog(); });
 	};
 
 	/**
 	 * Opens a modal dialog whose content is fetch dynamically
 	 * @param options the options
 	 */
-	_public.openDynamicDialog = function(options) {
+	kenyaui.openDynamicDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
-		var options = options ? jQuery.extend(defaults, options) : defaults;
+		options = options ? $.extend(defaults, options) : defaults;
 
 		var tmpContent = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
 
-		_public.openPanelDialog({ heading: options.heading, content: tmpContent, width: options.width, height: options.height });
+		kenyaui.openPanelDialog({ heading: options.heading, content: tmpContent, width: options.width, height: options.height });
 
-		jQuery.get(options.url, function(html) {
-			jQuery('.ke-modal-content .ke-panel-content').replaceWith(html);
+		$.get(options.url, function(html) {
+			$('.ke-modal-content .ke-panel-content').replaceWith(html);
 
 			kenyaui.optimizeModalContent();
 		});
@@ -295,10 +294,11 @@ var kenyaui = (function(jQuery) {
 	 * Opens a modal panel style dialog
 	 * @param options the options
 	 */
-	_public.openPanelDialog = function(options) {
+	kenyaui.openPanelDialog = function(options) {
 		var defaults = { heading: null, width: null, height: null };
-		var options = options ? jQuery.extend(defaults, options) : defaults;
-		var template = options.templateId ? jQuery('#' + options.templateId) : null;
+		options = options ? $.extend(defaults, options) : defaults;
+
+		var template = options.templateId ? $('#' + options.templateId) : null;
 		var content = template ? '' : options.content;
 		var heading = template ? template.attr('title') : options.heading;
 
@@ -312,7 +312,7 @@ var kenyaui = (function(jQuery) {
 
 		// Insert template into dialog
 		if (template) {
-			template.appendTo(jQuery('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
+			template.appendTo($('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
 		}
 
 		kenyaui.optimizeModalContent();
@@ -321,11 +321,11 @@ var kenyaui = (function(jQuery) {
 	/**
 	 * Closes any visible dialog
 	 */
-	_public.closeDialog = function() {
+	kenyaui.closeDialog = function() {
 		// Re-attach and hide dialog template to body if it was used
-		var template = jQuery('.ke-modal-content .ke-panel-frame .ke-dialog-template')
+		var template = $('.ke-modal-content .ke-panel-frame .ke-dialog-template')
 		if (template.length) {
-			template.hide().appendTo(jQuery('body'));
+			template.hide().appendTo($('body'));
 		}
 
 		closeModalContent();
@@ -334,11 +334,11 @@ var kenyaui = (function(jQuery) {
 	/**
 	 * Optimizes the size of a modal dialog so that the content fills the maximum vertical space
 	 */
-	_public.optimizeModalContent = function() {
-		jQuery('.ke-modal-content').each(function() {
-			var modalContent = jQuery(this);
-			var panelFrame = jQuery(modalContent).find('.ke-panel-frame');
-			var panelContent = jQuery(panelFrame).find('.ke-panel-content');
+	kenyaui.optimizeModalContent = function() {
+		$('.ke-modal-content').each(function() {
+			var modalContent = $(this);
+			var panelFrame = $(modalContent).find('.ke-panel-frame');
+			var panelContent = $(panelFrame).find('.ke-panel-content');
 
 			var nonContentY = panelFrame.height() - panelContent.height();
 			var maxContentY = modalContent.height() - nonContentY;
@@ -352,23 +352,24 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the datetime field id
 	 * @param hasTime whether field uses time
 	 */
-	_public.updateDateTimeFromDisplay = function(fieldId, hasTime) {
+	kenyaui.updateDateTimeFromDisplay = function(fieldId, hasTime) {
 		kenyaui.clearFieldErrors(fieldId); // clear field errors
-		jQuery('#' + fieldId).val(''); // clear field value
+		var field = $('#' + fieldId);
+		field.val(''); // clear field value
 
 		try {
-			var date = jQuery.datepicker.parseDate('dd-M-yy', jQuery('#' + fieldId + '_date').val(), null);
-			var hours = hasTime ? jQuery('#' + fieldId + '_hour').val() : '00';
-			var minutes = hasTime ? jQuery('#' + fieldId + '_minute').val() : '00';
+			var date = $.datepicker.parseDate('dd-M-yy', $('#' + fieldId + '_date').val(), null);
+			var hours = hasTime ? $('#' + fieldId + '_hour').val() : '00';
+			var minutes = hasTime ? $('#' + fieldId + '_minute').val() : '00';
 
 			if (date) {
 				// Format date with time fields
-				var timestamp = jQuery.datepicker.formatDate(jQuery.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
-				jQuery('#' + fieldId).val(timestamp);
+				var timestamp = $.datepicker.formatDate($.datepicker.W3C, date) + ' ' + hours + ':' + minutes + ':00.000';
+				field.val(timestamp);
 			}
 		}
 		catch (err) {
-			_public.showFieldError(fieldId, 'Invalid date');
+			kenyaui.showFieldError(fieldId, 'Invalid date');
 		}
 	};
 
@@ -376,9 +377,9 @@ var kenyaui = (function(jQuery) {
 	 * Shows a success notification
 	 * @param message the message
 	 */
-	_public.notifySuccess = function(message) {
+	kenyaui.notifySuccess = function(message) {
 		if (message) {
-			jQuery().toastmessage('showToast', { text: message, stayTime: 5000, sticky: false, type: 'success' });
+			$().toastmessage('showToast', { text: message, stayTime: 5000, sticky: false, type: 'success' });
 		}
 	};
 
@@ -386,17 +387,17 @@ var kenyaui = (function(jQuery) {
 	 * Shows an error notification
 	 * @param message the message
 	 */
-	_public.notifyError = function(message) {
+	kenyaui.notifyError = function(message) {
 		if (message) {
-			jQuery().toastmessage('showToast', { text: message, sticky: true, type: 'error' });
+			$().toastmessage('showToast', { text: message, sticky: true, type: 'error' });
 		}
 	};
 
 	/**
 	 * Generates a unique id suitable for a DOM element
-	 * @returns the id
+	 * @returns string the id
 	 */
-	_public.generateId = function() {
+	kenyaui.generateId = function() {
 		return 'ke-element-' + (++next_generated_id);
 	};
 
@@ -405,7 +406,7 @@ var kenyaui = (function(jQuery) {
 	 * @param searchType the search type, e.g. 'location'
 	 * @param config the configuration
 	 */
-	_public.configureSearch = function(searchType, config) {
+	kenyaui.configureSearch = function(searchType, config) {
 		searchConfigs[searchType] = config;
 	};
 
@@ -414,7 +415,7 @@ var kenyaui = (function(jQuery) {
 	 * @param searchType the search type, e.g. 'location'
 	 * @returns {*}
 	 */
-	_public.getSearchConfig = function(searchType) {
+	kenyaui.getSearchConfig = function(searchType) {
 		return searchConfigs[searchType];
 	};
 
@@ -423,11 +424,11 @@ var kenyaui = (function(jQuery) {
 	 * @param formId the form id
 	 * @param xhr the request object
 	 */
-	_public.showFormErrors = function(formId, response) {
-		var form = jQuery('#' + formId);
+	kenyaui.showFormErrors = function(formId, response) {
+		var form = $('#' + formId);
 		var globalError = form.find('.ke-form-globalerrors');
 		try {
-			var err = jQuery.parseJSON(response);
+			var err = $.parseJSON(response);
 
 			globalError.html('Please fix all errors...').show();
 
@@ -440,7 +441,7 @@ var kenyaui = (function(jQuery) {
 				var errorMsg =  err.fieldErrors[key].join(', ');
 
 				if (fieldId && kenyaui.hasErrorField(fieldId)) {
-					_public.showFieldError(fieldId, errorMsg);
+					kenyaui.showFieldError(fieldId, errorMsg);
 				}
 				else {
 					globalError.append('<div>' + errorMsg + '</div>');
@@ -455,17 +456,17 @@ var kenyaui = (function(jQuery) {
 	 * Clears any errors being shown for the given form
 	 * @param formId the form id
 	 */
-	_public.clearFormErrors = function(formId) {
-		jQuery('#' + formId + ' .ke-form-globalerrors').html('').hide();
-		jQuery('#' + formId + ' .error').html('').hide();
+	kenyaui.clearFormErrors = function(formId) {
+		$('#' + formId + ' .ke-form-globalerrors').html('').hide();
+		$('#' + formId + ' .error').html('').hide();
 	};
 
 	/**
 	 * Checks if the given field has an associated error field
 	 * @param fieldId the field id
 	 */
-	_public.hasErrorField = function(fieldId) {
-		return jQuery('#' + fieldId + '-error').length > 0;
+	kenyaui.hasErrorField = function(fieldId) {
+		return $('#' + fieldId + '-error').length > 0;
 	};
 
 	/**
@@ -473,16 +474,16 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 * @param message the error message
 	 */
-	_public.showFieldError = function(fieldId, message) {
-		jQuery('#' + fieldId + '-error').append(message + '<br />').show();
+	kenyaui.showFieldError = function(fieldId, message) {
+		$('#' + fieldId + '-error').append(message + '<br />').show();
 	};
 
 	/**
 	 * Clears any errors being shown for the given field
 	 * @param fieldId the field id
 	 */
-	_public.clearFieldErrors = function(fieldId) {
-		jQuery('#' + fieldId + '-error').html('').hide();
+	kenyaui.clearFieldErrors = function(fieldId) {
+		$('#' + fieldId + '-error').html('').hide();
 	};
 
 	/**
@@ -490,8 +491,8 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 * @param value
 	 */
-	_public.setSearchField = function(fieldId, value) {
-		jQuery('#' + fieldId).select2('val', value);
+	kenyaui.setSearchField = function(fieldId, value) {
+		$('#' + fieldId).select2('val', value);
 	};
 
 	/**
@@ -499,9 +500,9 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id
 	 * @param value the value to check
 	 */
-	_public.setDateField = function(fieldId, value) {
-		jQuery('#' + fieldId).val(jq.datepicker.formatDate(jq.datepicker.W3C, value));
-		jQuery('#' + fieldId + '_date').datepicker('setDate', value);
+	kenyaui.setDateField = function(fieldId, value) {
+		$('#' + fieldId).val(jq.datepicker.formatDate(jq.datepicker.W3C, value));
+		$('#' + fieldId + '_date').datepicker('setDate', value);
 	};
 
 	/**
@@ -509,15 +510,15 @@ var kenyaui = (function(jQuery) {
 	 * @param fieldId the field id (a container element)
 	 * @param value the value to check
 	 */
-	_public.setRadioField = function(fieldId, value) {
-		jQuery('#' + fieldId + ' input[type="radio"][value="' + value + '"]').prop('checked', true);
+	kenyaui.setRadioField = function(fieldId, value) {
+		$('#' + fieldId + ' input[type="radio"][value="' + value + '"]').prop('checked', true);
 	};
 
 	/**
-	 * Reverse of jQuery.param()
+	 * Reverse of $.param()
 	 * @param query the query
 	 */
-	_public.deparam = function(query) {
+	kenyaui.deparam = function(query) {
 		if (!query) {
 			return {};
 		}
@@ -542,6 +543,4 @@ var kenyaui = (function(jQuery) {
 		return params;
 	};
 
-	return _public;
-
-})(jQuery);
+}( window.kenyaui = window.kenyaui || {}, jQuery ));

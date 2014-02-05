@@ -239,7 +239,7 @@
 
 <h3>apps</h3>
 <div class="holder">
-	<% [ "admin", "chart", "clinician", "default", "directory", "intake", "registration", "reports" ].each { name -> %>
+	<% [ "admin", "chart", "clinician", "default", "developer", "directory", "intake", "registration", "reports" ].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/apps/" + name + ".png") }" title="${ name }" />
 	<% } %>
 </div>
@@ -250,7 +250,7 @@
 	[
 			"account", "account_add",
 			"admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
-			"back", "close", "disable", "enable",
+			"back", "close", "developer_overview", "disable", "enable", "groovy", "legacy",
 			"patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
 			"profile_password", "profile_secret_question",
 			"provider_f", "provider_m",

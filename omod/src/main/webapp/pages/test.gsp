@@ -252,7 +252,7 @@
 			"admin_content", "admin_modules", "admin_overview", "admin_setup", "admin_update",
 			"back", "close", "developer_overview", "disable", "enable", "groovy", "legacy",
 			"patient_add", "patient_f", "patient_m", "patient_overview", "patient_search",
-			"profile_password", "profile_secret_question",
+			"profile_password", "profile_secret_question", "profiling",
 			"provider_f", "provider_m",
 			"regimen", "regimen_change", "regimen_restart", "regimen_start", "regimen_stop",
 			"registration",

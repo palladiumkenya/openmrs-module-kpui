@@ -179,7 +179,7 @@ jQuery(function() {
 
 	/**
 	 * Takes an existing form and sets it up to submit via AJAX and get a json response.
-	 * @param fieldId the field id
+	 * @param formId the form id
 	 * @param options:
 	 * - onSuccess (required) should should be a one-arg function that called with a parsed json object
 	 */
@@ -192,13 +192,21 @@ jQuery(function() {
 			event.preventDefault();
 			var form = $(this);
 
+			// Disable any submit buttons
+			form.find('[type="submit"]').prop('disabled', true);
+
 			// Clear any existing errors
 			kenyaui.clearFormErrors(formId);
 
 			// POST and get back the result as JSON
-			$.post(form.attr('action'), form.serialize(), options.onSuccess, "json").error(function(xhr) {
-				kenyaui.showFormErrors(formId, xhr.responseText);
-			});
+			$.post(form.attr('action'), form.serialize(), options.onSuccess, "json")
+				.error(function(xhr) {
+					kenyaui.showFormErrors(formId, xhr.responseText);
+				})
+				.always(function() {
+					// Re-enable any submit buttons
+					form.find('[type="submit"]').prop('disabled', false);
+				})
 		});
 	};
 

@@ -56,19 +56,33 @@
 	]) }
 </div>
 
-<h3>tabMenu</h3>
+<h3>tabs</h3>
 <div class="holder">
-	${ ui.includeFragment("kenyaui", "widget/tabMenu", [ items: [
-			[ label: "Tab #1", tabid: "tab1" ],
-			[ label: "Tab #2", tabid: "tab2" ],
-			[ label: "Tab #3", tabid: "tab3" ],
-			[ label: "Tab #4", tabid: "tab4" ]
-	] ]) }
+	<div id="tabs1" class="ke-tabs">
+		<div class="ke-tabmenu">
+			<div class="ke-tabmenu-item" data-tabid="tab1">Tab #1</div>
+			<div class="ke-tabmenu-item" data-tabid="tab2">Tab #2</div>
+			<div class="ke-tabmenu-item" data-tabid="tab3">Tab #3</div>
+			<div class="ke-tabmenu-item" data-tabid="tab4">Tab #4</div>
+		</div>
 
-	<div class="ke-tab" data-tabid="tab1">First tab content</div>
-	<div class="ke-tab" data-tabid="tab2">Second tab content</div>
-	<div class="ke-tab" data-tabid="tab3">Third tab content</div>
-	<div class="ke-tab" data-tabid="tab4">Fourth tab content</div>
+		<div class="ke-tab" data-tabid="tab1">First tab content</div>
+		<div class="ke-tab" data-tabid="tab2">Second tab content</div>
+		<div class="ke-tab" data-tabid="tab3">Third tab content</div>
+		<div class="ke-tab" data-tabid="tab4">Fourth tab content</div>
+	</div>
+
+	<div style="padding-top: 10px"></div>
+
+	<div id="tabs2" class="ke-tabs">
+		<div class="ke-tabmenu">
+			<div class="ke-tabmenu-item" data-tabid="tab1">Tab #1</div>
+			<div class="ke-tabmenu-item" data-tabid="tab2">Tab #2</div>
+		</div>
+
+		<div class="ke-tab" data-tabid="tab1">First tab content</div>
+		<div class="ke-tab" data-tabid="tab2">Second tab content</div>
+	</div>
 </div>
 
 <h2>Fields</h2>

@@ -26,37 +26,6 @@ jQuery(function() {
 	jQuery('input[type=text]').attr('autocomplete', 'off');
 
 	/**
-	 * Initialize all tabs
-	 */
-	jQuery('.ke-tabmenu').each(function() {
-		// Make first tab mean item active
-		var first = jQuery(this).find('.ke-tabmenu-item:first');
-		first.addClass('ke-tabmenu-item-active');
-
-		// And make it's tab visible
-		jQuery('.ke-tab[data-tabid=' + first.data('tabid') + ']').show();
-
-		// Configure click handlers for each tab button
-		jQuery(this).find('.ke-tabmenu-item').click(function() {
-			// Get tabid from data attribute
-			var tabid = jQuery(this).data('tabid');
-
-			// Make only this tab active
-			jQuery('.ke-tabmenu-item-active').removeClass('ke-tabmenu-item-active');
-			jQuery(this).addClass('ke-tabmenu-item-active');
-
-			// Make only this tab's content visible
-			jQuery('.ke-tab').each(function() {
-				if (jQuery(this).data('tabid') == tabid) {
-					jQuery(this).show();
-				} else {
-					jQuery(this).hide();
-				}
-			});
-		});
-	});
-
-	/**
 	 * Initialize search widgets
 	 */
 	jQuery('.ke-search').each(function() {

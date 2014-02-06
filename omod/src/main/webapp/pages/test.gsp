@@ -259,7 +259,7 @@
 			"report_configure", "report_download_excel", "report_generate", "report_queue",
 			"undo",
 			"user_disable", "user_enable", "user_f", "user_m", "users_manage",
-			"visit_end", "visit_retrospective", "visit_void"
+			"validation", "visit_end", "visit_retrospective", "visit_void"
 	].each { name -> %>
 	<img src="${ ui.resourceLink("kenyaui", "images/buttons/" + name + ".png") }" title="${ name }" />
 	<% } %>

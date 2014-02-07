@@ -168,14 +168,17 @@ jQuery(function() {
 			kenyaui.clearFormErrors(formId);
 
 			// POST and get back the result as JSON
-			$.post(form.attr('action'), form.serialize(), options.onSuccess, "json")
-				.error(function(xhr) {
+			$.post(form.attr('action'), form.serialize(), null, 'json')
+				.done(function(data) {
+					options.onSuccess(data);
+				})
+				.fail(function(xhr) {
 					kenyaui.showFormErrors(formId, xhr.responseText);
 				})
 				.always(function() {
 					// Re-enable any submit buttons
 					form.find('[type="submit"]').prop('disabled', false);
-				})
+				});
 		});
 	};
 

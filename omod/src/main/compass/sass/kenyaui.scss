@@ -50,7 +50,7 @@ a {
 	text-decoration: none;
 }
 
-small {
+.ke-extra, small {
 	font-size: $size_text_extra;
 }
 
@@ -223,6 +223,7 @@ html, body {
 		float: left;
 		padding: 6px 10px 5px 10px;
 		margin-right: 5px;
+		min-width: 75px;
 		color: #413c32;
 		text-align: center;
 		font-weight: bold;
@@ -460,6 +461,9 @@ button.ke-app {
 	button {
 		float: right;
 		margin: 3px;
+	}
+	.ke-extra {
+		color: gray;
 	}
 }
 

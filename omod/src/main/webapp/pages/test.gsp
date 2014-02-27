@@ -165,7 +165,9 @@
 <h3>stack-item</h3>
 <div class="holder">
 	<div class="ke-stack-item">Stack item #1</div>
-	<div class="ke-stack-item">Stack item #2</div>
+	<div class="ke-stack-item">Stack item #2
+		<div class="ke-extra">Extra description text</div>
+	</div>
 	<div class="ke-stack-item">
 		<button type="button" class="ke-compact" onclick="defaultOnClick()">
 			<img src="${ ui.resourceLink("kenyaui", "images/glyphs/edit.png") }" />

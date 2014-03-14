@@ -6,6 +6,42 @@
 jq = jQuery;
 
 /**
+ * Configure AngularJS
+ */
+angular.module('kenyaui', [])
+	.filter('keDateTime', function($filter) {
+		return function(input) {
+			return $filter('keDate')(input) + ' ' + $filter('keTime')(input);
+		};
+	})
+	.filter('keDate', function($filter) {
+		return function(input) {
+			return $filter('date')(input, 'dd-MMM-yyyy');
+		};
+	})
+	.filter('keTime', function($filter) {
+		return function(input) {
+			return $filter('date')(input, 'HH:mm');
+		};
+	})
+	.filter('keDateAuto', function($filter) {
+		return function(input) {
+			return kenyaui.isToday(new Date(input)) ? $filter('keTime')(input) : $filter('keDate')(input);
+		};
+	})
+	.filter('keGender', function() {
+		return function(input) {
+			if (input == 'm') {
+				return '\u2642 Male';
+			}
+			else if (input == 'f') {
+				return '\u2640 Female';
+			}
+			return input;
+		};
+	});
+
+/**
  * Page initialization tasks
  */
 jQuery(function() {
@@ -522,5 +558,16 @@ jQuery(function() {
 		}
 		return params;
 	};
+
+	/**
+	 * Determines if a date is today
+	 * @param date the date
+	 * @returns {boolean}
+	 */
+	kenyaui.isToday = function(date) {
+		var today = new Date();
+		return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
+	}
+
 
 }( window.kenyaui = window.kenyaui || {}, jQuery ));

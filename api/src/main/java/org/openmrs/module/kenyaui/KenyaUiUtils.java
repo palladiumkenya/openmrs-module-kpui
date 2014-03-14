@@ -17,8 +17,10 @@ package org.openmrs.module.kenyaui;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
+import org.joda.time.format.ISODateTimeFormat;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.openmrs.Concept;
 import org.openmrs.ConceptDatatype;
@@ -108,15 +110,19 @@ public class KenyaUiUtils {
 	 * Formats a date as ISO 8601 for use as a query parameter
 	 * @param date the date
 	 * @return the string value
-	 * @should format date as a string without time information
 	 * @should format null date as empty string
 	 */
 	public String formatDateParam(Date date) {
 		if (date == null) {
 			return "";
 		}
-
-		return iso8601Formatter.format(date);
+		if (!dateHasTime(date)) { // don't include time if there isn't any
+			return iso8601Formatter.format(date);
+		}
+		else { // return a full ISO8601 representation
+			DateTime dt = new DateTime(date);
+			return ISODateTimeFormat.dateTime().print(dt);
+		}
 	}
 
 	/**
@@ -258,13 +264,12 @@ public class KenyaUiUtils {
 	}
 
 	/**
-	 * Formats a person's name
-	 * @param person the person
+	 * Formats a person name
+	 * @param name the name
 	 * @return the string value
 	 * @should format voided person as empty string
 	 */
-	public String formatPersonName(Person person) {
-		PersonName name = person.getPersonName();
+	public String formatPersonName(PersonName name) {
 		if (name != null) {
 			List<String> items = new ArrayList<String>();
 
@@ -280,6 +285,18 @@ public class KenyaUiUtils {
 			return OpenmrsUtil.join(items, " ");
 		}
 		return "";
+	}
+
+	/**
+	 * Formats a person's name
+	 * @param person the person
+	 * @return the string value
+	 * @should format voided person as empty string
+	 * @deprecated use formatPersonName(PersonName name)
+	 */
+	@Deprecated
+	public String formatPersonName(Person person) {
+		return formatPersonName(person.getPersonName());
 	}
 
 	/**

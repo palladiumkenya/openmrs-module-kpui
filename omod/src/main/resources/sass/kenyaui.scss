@@ -519,22 +519,36 @@ button.ke-app {
 .ke-flagtag {
 	@extend .ke-tag;
 
-	color: #443;
 	background-color: yellow;
+	color: #443;
 }
 
 .ke-visittag {
 	@extend .ke-tag;
 
-	color: #223;
 	background-color: #EEF;
+	color: #223;
 }
 
 .ke-onlinetag {
 	@extend .ke-tag;
 
-	color: #232;
 	background-color: #daf0da;
+	color: #232;
+}
+
+.ke-deadtag {
+	@extend .ke-tag;
+
+	background-color: #FF5153;
+	color: #000;
+}
+
+.ke-voidedtag {
+	@extend .ke-tag;
+
+	background-color: #000;
+	color: #FFF
 }
 
 /************************** Modal dialogs **************************/

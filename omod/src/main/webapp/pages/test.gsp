@@ -137,9 +137,13 @@
 	<div class="error">Error message</div>
 </div>
 
-<h3>flagtag</h3>
+<h3>tags</h3>
 <div class="holder">
-	<div class="ke-flagtag">Tag message</div>
+	<span class="ke-flagtag">ke-flagtag</span>
+	<span class="ke-visittag">ke-visittag</span>
+	<span class="ke-onlinetag">ke-onlinetag</span>
+	<span class="ke-deadtag">ke-deadtag</span>
+	<span class="ke-voidedtag">ke-voidedtag</span>
 </div>
 
 <h3>form-footer</h3>

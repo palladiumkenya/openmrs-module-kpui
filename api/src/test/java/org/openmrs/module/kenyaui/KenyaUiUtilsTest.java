@@ -50,15 +50,6 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	private KenyaUiUtils kenyaUi;
 
 	/**
-	 * Setup each test
-	 */
-	@Before
-	public void setup() {
-		// Run all tests in fixed timezone
-		//TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	}
-
-	/**
 	 * @see KenyaUiUtils#notifySuccess(javax.servlet.http.HttpSession, String)
 	 */
 	@Test
@@ -124,13 +115,11 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 * @see KenyaUiUtils#formatDateParam(java.util.Date)
 	 * @verifies format null date as empty string
 	 */
-	//@Test
+	@Test
 	public void formatDateParam_shouldFormatDateWithTimeAsFullISO8601() throws Exception {
-		DateTime date = new DateTime(1981, 5, 28, 7, 30, 12, DateTimeZone.UTC);
+		DateTime date = new DateTime(1981, 5, 28, 7, 30, 12);
 
-
-		// TODO figure out how to properly test with a fixed timezone
-		Assert.assertThat(kenyaUi.formatDateParam(date.toDate()), is("1981-05-28T07:30:12.000+00:00"));
+		Assert.assertThat(kenyaUi.formatDateParam(date.toDate()), startsWith("1981-05-28T07:30:12.000"));
 	}
 
 	/**
@@ -270,7 +259,7 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	public void formatObsValue_shouldFormatDatetimeObs() {
 		Obs obs = new Obs();
 		obs.setConcept(Context.getConceptService().getConcept(20));
-		obs.setValueDatetime(TestUtils.date(2012, 5, 4, 3, 2, 1));
+		obs.setValueDatetime(new DateTime(2012, 5, 4, 3, 2, 1).toDate());
 		Assert.assertThat(kenyaUi.formatObsValue(obs), is("04-May-2012 03:02"));
 	}
 

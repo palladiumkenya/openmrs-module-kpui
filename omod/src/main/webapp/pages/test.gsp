@@ -42,6 +42,7 @@
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Date value with interval", value: new Date(), showDateInterval: true ]) }
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Regular value with extra date", value: "Value", extra: new Date() ]) }
 	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Collections of values", value: [ "abc", 123, new Date() ] ]) }
+	${ ui.includeFragment("kenyaui", "widget/dataPoint", [ label: "Value is a link", value: new org.openmrs.ui.framework.Link("Google", "http://google.com", null) ]) }
 </div>
 
 <h3>panelMenu</h3>

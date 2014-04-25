@@ -16,7 +16,12 @@
 			for (key in params) {
 				var val = params[key];
 				if (val != null) {
-					ret += key + '=' + encodeURIComponent(params[key]) + '&';
+					// If value is an object then serialize it
+					if ($.isPlainObject(val)) {
+						val = $.param(val);
+					}
+
+					ret += key + '=' + encodeURIComponent(val) + '&';
 				}
 			}
 		}

@@ -543,6 +543,10 @@ jQuery(function() {
 		var pairs = query.split('&');
 
 		for (var i = 0; i < pairs.length; i++) {
+			if (!pairs[i]) {
+				continue;
+			}
+
 			var pair = pairs[i].split("=");
 			pair[0] = decodeURIComponent(pair[0]);
 			pair[1] = decodeURIComponent(pair[1]);

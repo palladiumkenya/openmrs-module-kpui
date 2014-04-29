@@ -268,28 +268,22 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 */
 	@Test
 	public void formatPersonName_shouldFormatPersonName() {
-		Person p = new Person();
-
 		PersonName pn = new PersonName();
 		pn.setFamilyName("fff");
 		pn.setGivenName("ggg");
 		pn.setMiddleName("mmm");
-		p.setNames(Collections.singleton(pn));
 
-		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg mmm"));
+		Assert.assertThat(kenyaUi.formatPersonName(pn), is("fff, ggg mmm"));
 
 		// Check no middle name
 		pn = new PersonName();
 		pn.setFamilyName("fff");
 		pn.setGivenName("ggg");
-		p.setNames(Collections.singleton(pn));
 
-		Assert.assertThat(kenyaUi.formatPersonName(p), is("fff, ggg"));
+		Assert.assertThat(kenyaUi.formatPersonName(pn), is("fff, ggg"));
 
-		// Check with voided person who has no-name
-		p.setNames(Collections.<PersonName>emptySet());
-
-		Assert.assertThat(kenyaUi.formatPersonName(p), is(""));
+		// Check with null
+		Assert.assertThat(kenyaUi.formatPersonName((PersonName) null), is(""));
 	}
 
 	/**
@@ -297,6 +291,16 @@ public class KenyaUiUtilsTest extends BaseModuleContextSensitiveTest {
 	 */
 	@Test
 	public void formatPersonBirthdate() {
+		Assert.assertThat(kenyaUi.formatPersonBirthdate(TestUtils.date(2000, 1, 1), false), is("01-Jan-2000"));
+		Assert.assertThat(kenyaUi.formatPersonBirthdate(TestUtils.date(1980, 6, 30), true), is("approx 30-Jun-1980"));
+		Assert.assertThat(kenyaUi.formatPersonBirthdate(null, true), is(""));
+	}
+
+	/**
+	 * @see KenyaUiUtils#formatPersonBirthdate(org.openmrs.Person)
+	 */
+	@Test
+	public void formatPersonBirthdate_withPerson() {
 		Person p = new Person();
 		p.setBirthdate(TestUtils.date(2000, 1, 1));
 		Assert.assertThat(kenyaUi.formatPersonBirthdate(p), is("01-Jan-2000"));

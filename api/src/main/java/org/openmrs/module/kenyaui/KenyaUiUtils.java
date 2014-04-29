@@ -319,11 +319,24 @@ public class KenyaUiUtils {
 
 	/**
 	 * Formats a person's birth date
+	 * @param birthdate the birth date
+	 * @param estimated whether the date is estimated
+	 * @return the string value
+	 */
+	public String formatPersonBirthdate(Date birthdate, boolean estimated) {
+		if (birthdate == null) {
+			return "";
+		}
+		return (estimated ? "approx " : "") + formatDate(birthdate);
+	}
+
+	/**
+	 * Formats a person's birth date
 	 * @param person the person
 	 * @return the string value
 	 */
 	public String formatPersonBirthdate(Person person) {
-		return (BooleanUtils.isTrue(person.isBirthdateEstimated()) ? "approx " : "") + formatDate(person.getBirthdate());
+		return formatPersonBirthdate(person.getBirthdate(), BooleanUtils.isTrue(person.isBirthdateEstimated()));
 	}
 
 	/**

@@ -292,7 +292,7 @@ jQuery(function() {
 	 * @param options the options
 	 */
 	kenyaui.openDynamicDialog = function(options) {
-		var defaults = { heading: null, width: null, height: null };
+		var defaults = { heading: null, width: null, height: null, scrolling: false };
 		options = options ? $.extend(defaults, options) : defaults;
 
 		var tmpContent = '<div class="ke-panel-content" style="text-align: center; padding: 10px"><img src="' + ui.resourceLink('kenyaui', 'images/loading.gif') + '"/>';
@@ -302,7 +302,9 @@ jQuery(function() {
 		$.get(options.url, function(html) {
 			$('.ke-modal-content .ke-panel-content').replaceWith(html);
 
-			kenyaui.optimizeModalContent();
+			if (options.scrolling) {
+				kenyaui.optimizeModalContent();
+			}
 		});
 	};
 
@@ -311,7 +313,7 @@ jQuery(function() {
 	 * @param options the options
 	 */
 	kenyaui.openPanelDialog = function(options) {
-		var defaults = { heading: null, width: null, height: null };
+		var defaults = { heading: null, width: null, height: null, scrolling: false };
 		options = options ? $.extend(defaults, options) : defaults;
 
 		var template = options.templateId ? $('#' + options.templateId) : null;
@@ -331,7 +333,9 @@ jQuery(function() {
 			template.appendTo($('.ke-modal-content .ke-panel-frame')).show().addClass('ke-dialog-template');
 		}
 
-		kenyaui.optimizeModalContent();
+		if (options.scrolling) {
+			kenyaui.optimizeModalContent();
+		}
 	};
 
 	/**

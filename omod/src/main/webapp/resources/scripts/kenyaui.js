@@ -535,6 +535,26 @@ jQuery(function() {
 	};
 
 	/**
+	 * Validates a required field
+	 * @param fieldId the field id
+	 */
+	kenyaui.validateRequiredField = function(fieldId) {
+		if (($('#' + fieldId).val() + '').length == 0) {
+			kenyaui.showFieldError(fieldId, 'Required');
+		}
+	};
+
+	/**
+	 * Validates an integer field
+	 * @param fieldId the field id
+	 */
+	kenyaui.validateIntegerField = function(fieldId) {
+		if (!isValidInteger($('#' + fieldId).val())) {
+			kenyaui.showFieldError(fieldId, 'Not an integer');
+		}
+	};
+
+	/**
 	 * Reverse of $.param()
 	 * @param query the query
 	 */

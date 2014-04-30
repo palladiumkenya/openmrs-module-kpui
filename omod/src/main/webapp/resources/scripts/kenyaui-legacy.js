@@ -4,24 +4,6 @@
 
 //// Validation ///////////////////
 
-function validateRequired(val, errorDivId) {
-	if ((val + '').length == 0) {
-		kenyaui.showFieldError(errorDivId, 'Required');
-	}
-}
-
-function validateNumber(val, errorDivId) {
-	if (!isValidNumber(val)) {
-		kenyaui.showFieldError(errorDivId, 'Error');
-	}
-}
-
-function validateInteger(val, errorDivId) {
-	if (!isValidInteger(val)) {
-		kenyaui.showFieldError(errorDivId, 'Error');
-	}
-}
-
 function isValidNumber(val) {
 	var asNum = Number(val);
 	return !isNaN(asNum);

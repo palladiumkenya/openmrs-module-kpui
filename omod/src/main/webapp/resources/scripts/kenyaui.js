@@ -19,6 +19,11 @@ angular.module('kenyaui', [])
 			return $filter('date')(input, 'dd-MMM-yyyy');
 		};
 	})
+	.filter('keDateShort', function($filter) {
+		return function(input) {
+			return $filter('date')(input, 'MMM-yyyy');
+		};
+	})
 	.filter('keTime', function($filter) {
 		return function(input) {
 			return $filter('date')(input, 'HH:mm');

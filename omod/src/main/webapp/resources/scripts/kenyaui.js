@@ -219,6 +219,9 @@ jQuery(function() {
 				.always(function() {
 					// Re-enable any submit buttons
 					form.find('[type="submit"]').prop('disabled', false);
+					if (options.always) {
+						options.always();
+					}
 				});
 		});
 	};

@@ -25,6 +25,8 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptNumeric;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.kenyaui.KenyaUiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
@@ -43,13 +45,56 @@ public class ObsHistoryTableFragmentController {
 		}
 
 		model.addAttribute("concepts", concepts);
+		ConceptService service = Context.getConceptService();
+		AdministrationService as = Context.getAdministrationService();
+		Double ldl_default_value = Double.parseDouble(as.getGlobalProperty("kenyaemr.LDL_default_value"));
+
+		Concept vl = service.getConcept(856);
+		Concept LDLQuestion = service.getConcept(1305);
+		Concept LDLAnswer = service.getConcept(1302);
+
+		//get LDL obs
+		//we want to combine all VL obs together while setting LDL value to that of GP (default value for LDL which is numeric)
+		List<Obs> ldlObs = new ArrayList<Obs>();
+		List<Obs> vlObs = new ArrayList<Obs>();
+		List<Obs> allVls = new ArrayList<Obs>();
+		List<Obs> ldl = Context.getObsService().getObservationsByPersonAndConcept(patient, LDLQuestion);
+
+		for (Obs obs: ldl) {
+			if (obs.getConcept().equals(LDLQuestion) && obs.getValueCoded().equals(LDLAnswer)) {
+				obs.setConcept(vl);
+				obs.setValueNumeric(ldl_default_value);
+				ldlObs.add(obs);
+			}
+		}
+
+		// get ordinary VL obs
+		List<Obs> vlObss =  Context.getObsService().getObservationsByPersonAndConcept(patient, vl);
+		if (vlObss != null) {
+			vlObs = vlObss;
+		}
+		// merge vl related obs list
+		if(vlObs.size() > 0) {
+			allVls.addAll(vlObs);
+		}
+
+		if(ldlObs.size() > 0) {
+			allVls.addAll(ldlObs);
+		}
 
 		TableData data = new TableData();
 		for (Concept concept : concepts) {
-			List<Obs> obss = Context.getObsService().getObservationsByPersonAndConcept(patient, concept);
-			for (Obs obs : obss) {
-				data.addObs(obs);
+			// make sure only non-vl obs are considered
+			if(!concept.equals(LDLQuestion) && !concept.equals(vl)) {
+				List<Obs> obss = Context.getObsService().getObservationsByPersonAndConcept(patient, concept);
+				for (Obs obs : obss) {
+					data.addObs(obs);
+				}
 			}
+		}
+		// add vl obs
+		for (Obs obs : allVls) {
+			data.addObs(obs);
 		}
 
 		model.addAttribute("data", data);

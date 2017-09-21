@@ -44,7 +44,6 @@ public class ObsHistoryGraphFragmentController {
 
 		model.addAttribute("concepts", concepts);
 		model.addAttribute("data", getObsAsSeries(patient, concepts));
-		System.out.print("Final collection here: " + getObsAsSeries(patient, concepts));
 	}
 
 	/**

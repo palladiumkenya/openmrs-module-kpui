@@ -18,7 +18,8 @@ import org.openmrs.Concept;
 import java.util.Date;
 
 /**
- * This is a clone of the Obs object. It should only be used for plotting of numeric obs values
+ * This is a clone of the Obs object. It should only be used for plotting of numeric obs values on patient chart
+ * This model acts as proxy to help unify LDL(qualitative) and numeric (quantitative) VL results.
  */
 public class KenyaEMRObsWrapper {
 

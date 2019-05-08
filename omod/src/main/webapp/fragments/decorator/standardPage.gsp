@@ -18,6 +18,12 @@
 	ui.includeCss("kenyaui", "jquery-ui.css", 99)
 	ui.includeCss("kenyaui", "toastmessage/css/jquery.toastmessage.css", 98)
 	ui.includeCss("kenyaui", "kenyaui.css", 97)
+
+	// add font-awesome
+	ui.includeCss("kenyaemrorderentry", "font-awesome.css")
+	ui.includeCss("kenyaemrorderentry", "font-awesome.min.css")
+	ui.includeCss("kenyaemrorderentry", "font-awesome.css.map")
+	ui.includeCss("kenyaemrorderentry", "fontawesome-webfont.svg")
 %>
 <!DOCTYPE html>
 <html>
